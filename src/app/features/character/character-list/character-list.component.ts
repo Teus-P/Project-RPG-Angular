@@ -5,24 +5,29 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {Subscription} from "rxjs";
 import {TextResourceService} from "../../../core/services/text-resource-service/text-resource.service";
 import {SkirmishCharacterService} from "../../../core/services/skirmish-character-service/skirmish-character.service";
+import {MatDialog} from "@angular/material/dialog";
+import {AddToFightDialogComponent} from "./add-to-fight-dialog/add-to-fight-dialog.component";
+import {SkirmishService} from "../../../core/services/skirmish-service/skirmish.service";
 
 @Component({
-    selector: 'app-character-list',
-    templateUrl: './character-list.component.html',
-    styleUrls: ['./character-list.component.css'],
-    standalone: false
+  selector: 'app-character-list',
+  templateUrl: './character-list.component.html',
+  styleUrls: ['./character-list.component.css'],
+  standalone: false
 })
 export class CharacterListComponent implements OnInit {
 
   subscription!: Subscription;
-  characterGroupsTypes: {name: string, groups: { name: string, characters: Character[] }[]}[] = [];
+  characterGroupsTypes: { name: string, groups: { name: string, characters: Character[] }[] }[] = [];
 
   text = TextResourceService;
 
   constructor(public characterService: CharacterService,
               public skirmishCharacterService: SkirmishCharacterService,
+              public skirmishService: SkirmishService,
               private router: Router,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              public dialog: MatDialog) {
   }
 
   async ngOnInit() {
@@ -39,12 +44,29 @@ export class CharacterListComponent implements OnInit {
   }
 
   onAddGroupToFight(characters: Character[]) {
-    this.skirmishCharacterService.storeSkirmishCharactersGroup(characters);
+    const dialogRef = this.dialog.open(AddToFightDialogComponent, {
+      width: '30%',
+      data: characters[0].group
+    })
+
+    dialogRef.afterClosed().subscribe(skirmishGroup => {
+      if (skirmishGroup != undefined) {
+        this.skirmishService.addSkirmishGroup(skirmishGroup).then(newGroup => {
+          if (newGroup != undefined) {
+            this.skirmishCharacterService.storeSkirmishCharactersGroup(characters, newGroup);
+          }
+        });
+      }
+    })
     // @ts-ignore
     event.stopPropagation()
   }
 
   onAddToGroup(type: string, characterGroup: string) {
-    this.router.navigate(['new'], {relativeTo: this.route, queryParams: {groupType: type, group: characterGroup}, queryParamsHandling: 'merge'})
+    this.router.navigate(['new'], {
+      relativeTo: this.route,
+      queryParams: {groupType: type, group: characterGroup},
+      queryParamsHandling: 'merge'
+    })
   }
 }

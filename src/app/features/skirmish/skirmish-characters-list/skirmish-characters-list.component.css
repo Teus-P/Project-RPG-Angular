@@ -14,3 +14,7 @@
   border-top: 1px solid transparent;
   cursor: pointer;
 }
+
+.mat-column-color {
+  padding: 0;
+}

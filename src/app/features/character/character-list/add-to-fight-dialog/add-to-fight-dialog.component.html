@@ -1,0 +1,43 @@
+<h2 mat-dialog-title>Wybierz element lub dodaj nowy</h2>
+
+<div mat-dialog-content>
+  <mat-button-toggle-group
+    name="options"
+    [(value)]="mode"
+    aria-label="Opcje wyboru"
+    class="full-width"
+  >
+    <mat-button-toggle value="select">Wybierz z listy</mat-button-toggle>
+    <mat-button-toggle value="add">Dodaj nowy element</mat-button-toggle>
+  </mat-button-toggle-group>
+
+  <div *ngIf="mode === 'select'">
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Wybierz element</mat-label>
+      <mat-select [(value)]="selectedItem">
+        <mat-option *ngFor="let group of skirmishGroups" [value]="group">{{ group.name }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div *ngIf="mode === 'add'">
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>Nazwa nowego elementu</mat-label>
+      <input matInput [(ngModel)]="newGroup.name" placeholder="Podaj nazwę">
+    </mat-form-field>
+
+    <div>
+      <label>Wybierz kolor:</label>
+      <color-sketch
+        [color]="randomColor"
+        (onChange)="handleColorChange($event)"
+        [width]=300
+      ></color-sketch>
+    </div>
+  </div>
+</div>
+
+<div mat-dialog-actions align="end">
+  <button mat-button (click)="close()">Anuluj</button>
+  <button mat-raised-button color="primary" [disabled]="!isFormValid()" (click)="confirm()">Zatwierdź</button>
+</div>

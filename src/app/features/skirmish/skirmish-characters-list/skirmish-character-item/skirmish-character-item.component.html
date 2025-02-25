@@ -7,63 +7,70 @@
      [routerLink]="[skirmishCharacter.id]"
      routerLinkActive="active">
 
-    <div class="tile-background" [ngStyle]="getHealthBarStyle()"></div>
-
     <div fxLayout="row" style="width: 100%;">
-      <div fxFlex="60" class="tile-left">
-        <h6 class="list-group-item-heading"
-            *ngIf="!skirmishCharacter.sequenceNumber">
-          {{ skirmishCharacter.character.name }}
-        </h6>
-        <h6 class="list-group-item-heading"
-            *ngIf="skirmishCharacter.sequenceNumber">
-          {{ skirmishCharacter.character.name }} {{ skirmishCharacter.sequenceNumber }}
-        </h6>
-        <span class="list-group-item-text">
+      <div fxFlex="2" class="tile-color" [ngStyle]="{'background-color': 'rgb('
+      + skirmishCharacter.skirmishGroup.colorR
+      + ',' + skirmishCharacter.skirmishGroup.colorG
+      + ',' + skirmishCharacter.skirmishGroup.colorB + ')'}"
+      ></div>
+
+      <div fxFlex="98">
+        <div class="tile-background" [ngStyle]="getHealthBarStyle()"></div>
+        <div fxFlex="60" class="tile-left">
+          <h6 class="list-group-item-heading"
+              *ngIf="!skirmishCharacter.sequenceNumber">
+            {{ skirmishCharacter.character.name }}
+          </h6>
+          <h6 class="list-group-item-heading"
+              *ngIf="skirmishCharacter.sequenceNumber">
+            {{ skirmishCharacter.character.name }} {{ skirmishCharacter.sequenceNumber }}
+          </h6>
+          <span class="list-group-item-text">
             {{ skirmishCharacter.character.description }}
           </span>
-        <div *ngIf="skirmishCharacter.character.notes.length > 0">
-          <h6 class="list-group-item-heading">{{ text.getText().notesLabel }}</h6>
-          <p class="list-group-item-text">+</p>
-        </div>
-      </div>
-
-      <div fxFlex="40" class="tile-right">
-        <div fxLayout="row" style="margin-top: 10px" *ngIf="!skirmishCharacter.isDead">
-
-          <div fxFlex="50">
-            <h6 class="list-group-item-heading">{{ text.getText().initiativeLabel }}</h6>
-            <p class="list-group-item-text">{{ skirmishCharacter.skirmishInitiative }}</p>
+          <div *ngIf="skirmishCharacter.character.notes.length > 0">
+            <h6 class="list-group-item-heading">{{ text.getText().notesLabel }}</h6>
+            <p class="list-group-item-text">+</p>
           </div>
-          <div fxFlex="50">
-            <h6 class="list-group-item-heading">{{ text.getText().woundsLabel }}</h6>
-            <p class="list-group-item-text">{{ skirmishCharacter.currentWounds }}
-              / {{ skirmishCharacter.character.wounds.value }}</p>
-          </div>
-
         </div>
 
-        <div fxFlex="100" *ngIf="skirmishCharacter.isDead">
-          <h6 class="list-group-item-heading">{{ text.getText().deadLabel }}</h6>
-        </div>
+        <div fxFlex="40" class="tile-right">
+          <div fxLayout="row" style="margin-top: 10px" *ngIf="!skirmishCharacter.isDead">
 
-        <div fxLayout="row" *ngIf="!skirmishCharacter.isDead">
-          <div fxFlex="50">
-            <h6 class="list-group-item-heading">{{ text.getText().advantageLabel }}</h6>
-            <p class="list-group-item-text">{{ skirmishCharacter.advantage }}</p>
+            <div fxFlex="50">
+              <h6 class="list-group-item-heading">{{ text.getText().initiativeLabel }}</h6>
+              <p class="list-group-item-text">{{ skirmishCharacter.skirmishInitiative }}</p>
+            </div>
+            <div fxFlex="50">
+              <h6 class="list-group-item-heading">{{ text.getText().woundsLabel }}</h6>
+              <p class="list-group-item-text">{{ skirmishCharacter.currentWounds }}
+                / {{ skirmishCharacter.character.wounds.value }}</p>
+            </div>
+
           </div>
-          <div fxFlex="50">
-            <h6 class="list-group-item-heading">{{ text.getText().conditionsLabel }}</h6>
-            <div class="icon-container" *ngFor="let characterCondition of skirmishCharacter.character.conditions">
-              <img [ngSrc]="'../../../../../assets/icons/' + characterCondition.condition.name + '.png'"
-                   [title]="characterCondition.condition.nameTranslation + ' ' + characterCondition.value"
-                   alt="Ablaze" height="25" width="25" class="overlap-icon"/>
-              <p *ngIf="characterCondition.value > 1" class="condition-number">&nbsp; x{{characterCondition.value}}</p>
+
+          <div fxFlex="100" *ngIf="skirmishCharacter.isDead">
+            <h6 class="list-group-item-heading">{{ text.getText().deadLabel }}</h6>
+          </div>
+
+          <div fxLayout="row" *ngIf="!skirmishCharacter.isDead">
+            <div fxFlex="50">
+              <h6 class="list-group-item-heading">{{ text.getText().advantageLabel }}</h6>
+              <p class="list-group-item-text">{{ skirmishCharacter.advantage }}</p>
+            </div>
+            <div fxFlex="50">
+              <h6 class="list-group-item-heading">{{ text.getText().conditionsLabel }}</h6>
+              <div class="icon-container" *ngFor="let characterCondition of skirmishCharacter.character.conditions">
+                <img [ngSrc]="'../../../../../assets/icons/' + characterCondition.condition.name + '.png'"
+                     [title]="characterCondition.condition.nameTranslation + ' ' + characterCondition.value"
+                     alt="Ablaze" height="25" width="25" class="overlap-icon"/>
+                <p *ngIf="characterCondition.value > 1" class="condition-number">&nbsp;
+                  x{{ characterCondition.value }}</p>
+              </div>
             </div>
           </div>
         </div>
       </div>
-
     </div>
   </a>
 </div>

@@ -12,6 +12,7 @@ import {SpellService} from "./core/services/spell-service/spell.service"
 import {MatDialog} from "@angular/material/dialog"
 import {SkirmishCharacterService} from "./core/services/skirmish-character-service/skirmish-character.service"
 import {AvailabilityService} from "./core/services/availability-service/availability.service";
+import {SkirmishService} from "./core/services/skirmish-service/skirmish.service";
 
 @Component({
     selector: 'app-root',
@@ -35,6 +36,7 @@ export class AppComponent implements OnInit {
               public conditionService: ConditionService,
               public spellService: SpellService,
               public availabilityService: AvailabilityService,
+              public skirmishService: SkirmishService,
               public dialog: MatDialog) {
   }
 
@@ -67,5 +69,6 @@ export class AppComponent implements OnInit {
     await this.characterService.fetchCharacters()
     await this.skirmishCharacterService.fetchSkirmishCharacter()
     await this.availabilityService.fetchAvailabilities()
+    await this.skirmishService.fetchSkirmishGroups()
   }
 }

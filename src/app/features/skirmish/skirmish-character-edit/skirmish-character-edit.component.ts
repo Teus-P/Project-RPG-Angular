@@ -81,7 +81,8 @@ export class SkirmishCharacterEditComponent extends CharacterEditComponent imple
       'skirmishInitiative': [skirmishCharacter.skirmishInitiative],
       'advantage': [skirmishCharacter.advantage],
       'isDead': [skirmishCharacter.isDead],
-      'sequenceNumber': [skirmishCharacter.sequenceNumber]
+      'sequenceNumber': [skirmishCharacter.sequenceNumber],
+      'skirmishGroup': [skirmishCharacter.skirmishGroup]
     });
   }
 
@@ -108,6 +109,7 @@ export class SkirmishCharacterEditComponent extends CharacterEditComponent imple
     skirmishCharacter.currentWounds = this.editCharacterForm.value.currentWounds;
     skirmishCharacter.isDead = this.editCharacterForm.value.isDead;
     skirmishCharacter.sequenceNumber = this.editCharacterForm.value.sequenceNumber;
+    skirmishCharacter.skirmishGroup = this.editCharacterForm.value.skirmishGroup;
 
     return skirmishCharacter;
   }

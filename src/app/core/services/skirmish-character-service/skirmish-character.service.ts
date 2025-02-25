@@ -4,6 +4,7 @@ import {SkirmishCharacter} from "../../model/skirmish/skirmish-character.model"
 import {HttpClient} from "@angular/common/http"
 import {TranslateService} from "../translate-service/translate.service"
 import {Character} from "../../model/character/character.model";
+import {SkirmishGroup} from "../../model/skirmish/skirmish-group.model";
 
 @Injectable({
   providedIn: 'root'
@@ -89,7 +90,7 @@ export class SkirmishCharacterService {
     )
   }
 
-  async storeSkirmishCharactersGroup(characters: Character[]) {
+  async storeSkirmishCharactersGroup(characters: Character[], skirmishGroup: SkirmishGroup) {
     let index = this.skirmishCharactersList.length
     let skirmishCharacters: SkirmishCharacter[] = []
     characters.forEach(skirmishCharacter => {
@@ -99,6 +100,7 @@ export class SkirmishCharacterService {
       if (numberOfSameCharacters > 0) {
         newSkirmishCharacter.sequenceNumber = numberOfSameCharacters + 1
       }
+      newSkirmishCharacter.skirmishGroup = skirmishGroup
       skirmishCharacters.push(newSkirmishCharacter)
       ++index
     })

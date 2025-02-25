@@ -1,4 +1,5 @@
 import {Character} from "../character/character.model"
+import {SkirmishGroup} from "./skirmish-group.model";
 
 export class SkirmishCharacter {
   id!: number
@@ -8,6 +9,7 @@ export class SkirmishCharacter {
   advantage!: number
   isDead!: boolean
   sequenceNumber!: number
+  skirmishGroup!: SkirmishGroup
 
   constructor(character?: Character, id?: number) {
     if (character != undefined) {

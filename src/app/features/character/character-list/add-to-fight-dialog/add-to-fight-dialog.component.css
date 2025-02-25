@@ -1,0 +1,13 @@
+.full-width {
+  width: 100%;
+}
+
+mat-button-toggle-group {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+mat-button-toggle {
+  flex: 1;
+}

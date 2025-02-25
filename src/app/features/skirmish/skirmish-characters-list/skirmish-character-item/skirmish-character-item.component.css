@@ -64,6 +64,10 @@ span {
   z-index: 0;
 }
 
+.tile-color {
+  z-index: 2
+}
+
 .tile-left {
   border-right: 1px solid rgba(0, 0, 0, 0.1);
   color: inherit;
