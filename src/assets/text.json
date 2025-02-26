@@ -815,7 +815,7 @@
     {
       "name": "BEAT_BLADE",
       "nameTranslation": "Zbicie Broni",
-      "description": "Maksimum: Bonus z Walki Wręcz\n\nTesty: Broń Biała, by zbić broń\n\nZostałeś wyszkolony w zadawaniu krótkich i gwałtownych uderzeń w oręż przeciwnika, dzięki czemu możesz sam zaatakować lub powstrzymać nadchodzący cios. W ramach swojej Akcji możesz zadeklarować Zbicie Broni przed rzutem. Wykonaj Test Broni Białej, a jeśli się powiedzie, twój przeciwnik traci -1 Przewagę oraz kolejną -1 za każdy twój PS. Ten Test nie jest Testem Przeciwstawnym. Nie możesz korzystać z tego Talentu, jeśli wrogowie nie"
+      "description": "Maksimum: Bonus z Walki Wręcz\n\nTesty: Broń Biała, by zbić broń\n\nZostałeś wyszkolony w zadawaniu krótkich i gwałtownych uderzeń w oręż przeciwnika, dzięki czemu możesz sam zaatakować lub powstrzymać nadchodzący cios. W ramach swojej Akcji możesz zadeklarować Zbicie Broni przed rzutem. Wykonaj Test Broni Białej, a jeśli się powiedzie, twój przeciwnik traci -1 Przewagę oraz kolejną -1 za każdy twój PS (lub Pula Przewagi Przeciwników traci 1 Przewagę oraz kolejną, jeżeli osiągnąłeś Zdumiewający Sukces (6PS lub więcej)). Ten Test nie jest Testem Przeciwstawnym. Nie możesz korzystać z tego Talentu, jeśli wrogowie nie używają broni lub są większego Rozmiaru niż ty (patrz WFRP, strona 340)."
     },
     {
       "name": "BENEATH_NOTICE",
@@ -1020,7 +1020,7 @@
     {
       "name": "DISTRACT",
       "nameTranslation": "Rozproszenie Uwagi",
-      "description": "Maksimum: Bonus ze Zwinności\n\nTesty: Atletyka podczas Rozproszenia Uwagi\n\nJesteś wytrenowany tak, by twoje ruchy rozpraszały uwagę przeciwnika i ułatwiały jego zaskoczenie. Możesz wykorzystać swój Ruch, aby użyć Rozpraszania Uwagi. Jest to Test Przeciwstawny Atletyki przeciw Opanowaniu przeciwnika. Jeśli wygrasz, twój przeciwnik nie może zbierać Przewagi aż do końca następnej Rundy."
+      "description": "Maksimum: Bonus ze Zwinności\n\nTesty: Atletyka podczas Rozproszenia Uwagi\n\nJesteś wytrenowany tak, by twoje ruchy rozpraszały uwagę przeciwnika i ułatwiały jego zaskoczenie. Możesz wykorzystać swój Ruch, aby użyć Rozpraszania Uwagi. Jest to Test Przeciwstawny Atletyki przeciw Opanowaniu przeciwnika. Jeśli wygrasz, twój przeciwnik nie może zbierać Przewagi (lub do swojej Puli w przypadku Gurpowej Przewagi) aż do końca następnej Rundy."
     },
     {
       "name": "DOOMED",
@@ -1030,7 +1030,7 @@
     {
       "name": "DRILLED",
       "nameTranslation": "Musztra",
-      "description": "Maksimum: Bonus z Walki Wręcz\n\nTesty: Broń Biała, kiedy jesteś w pobliżu sojuszniczej postaci z tym Talentem\n\nZostałeś wyszkolony w walce obok innych żołnierzy. Jeśli przeciwnik sprawi, że stracisz Przewagę, a znajdujesz się obok innej, aktywnej postaci z Talentem Musztra, możesz zachować 1 Przewagę za każde wykupienie tego Talentu."
+      "description": "Maksimum: Bonus z Walki Wręcz\n\nTesty: Broń Biała, kiedy jesteś w pobliżu sojuszniczej postaci z tym Talentem\n\nZostałeś wyszkolony w walce obok innych żołnierzy. Postać z Talentem Musztra jest traktowana jak dwóch walczących, kiedy ustala się utratę Przewagi (patrz strona 134)."
     },
     {
       "name": "DUAL_WIELDER",
@@ -1114,8 +1114,8 @@
     },
     {
       "name": "FLEE",
-      "nameTranslation": "Chodu",
-      "description": "Maksimum: Bonus ze Zwinności\n\nTesty: Atletyka, gdy Uciekasz\n\nKiedy na szali znajduje się twoje życie, potrafisz niezwykle sprawnie przebierać nogami. Podczas Ucieczki (patrz strona 165) twoja Szybkość jest traktowana, jakby była o 1 wyższa."
+      "nameTranslation": "Chodu!",
+      "description": "Maksimum: Bonus ze Zwinności\n\nTesty: Atletyka, gdy Uciekasz\n\nKiedy na szali znajduje się twoje życie, potrafisz niezwykle sprawnie przebierać nogami. Podczas Ucieczki (patrz strona 165) albo kiedy jesteś ścianym podczas pościgu, twoja Szybkość jest traktowana, jakby była o 1 wyższa."
     },
     {
       "name": "FLEET_FOOTED",
@@ -1145,7 +1145,7 @@
     {
       "name": "GUNNER",
       "nameTranslation": "Artylerzysta",
-      "description": "Maksimum: Bonus ze Zręczności\n\nZ łatwością przeładowujesz broń prochową. Dodaj PS równe liczbie wykupień tego Talentu do każdego Wydłużonego Testu związanego z przeładowaniem broni prochowej."
+      "description": "Maksimum: Bonus ze Zręczności\n\nZ łatwością przeładowujesz broń prochową. Dodaj PS równe liczbie wykupień tego Talentu do każdego Wydłużonego Testu związanego z przeładowaniem broni prochowej.\n\nGrupowa Przewaga - Przeładowanie broni prochowej podczas walki jest traktowane jako Akcja Ocena Sytuacji. Otrzymujesz dodatkowy punkt Przewagi, kiedy wykonujesz ten Test Oceny Sytuacji."
     },
     {
       "name": "HARDY",
@@ -1435,7 +1435,7 @@
     {
       "name": "RAPID_RELOAD",
       "nameTranslation": "Szybkie Przeładowanie",
-      "description": "Maksimum: Bonus ze Zręczności\n\nPotrafisz z łatwością przeładowywać bronie strzeleckie. Dodaj PS równe liczbie wykupień tego Talentu do Testów przeładowania broni dystansowej."
+      "description": "Maksimum: Bonus ze Zręczności\n\nPotrafisz z łatwością przeładowywać bronie strzeleckie. Dodaj PS równe liczbie wykupień tego Talentu do każdego Testu Wydłużonego związanego z przeładowaniem broni zasięgowej.\n\nGrupowa Przewaga - Przeładowanie broni zasięgowej podczas walki jest traktowane jako Akcja Ocena Sytuacji. Otrzymujesz dodatkowy punkt Przewagi, kiedy wykonujesz ten Test Oceny Sytuacji."
     },
     {
       "name": "REACTION_STRIKE",
@@ -1450,7 +1450,7 @@
     {
       "name": "RELENTLESS",
       "nameTranslation": "Nieustępliwy",
-      "description": "Maksimum: Bonus ze Zwinności\n\nKiedy skupisz się na celu, nie sposób cię powstrzymać przed dotarciem do niego. Jeśli wykorzystujesz Przewagę podczas Odwrotu, możesz zachować jej tyle, ile razy masz wykupiony ten Talent. Co więcej, możesz wykorzystać Przewagi do Odwrotu, nawet jeśli masz ich mniej niż przeciwnik."
+      "description": "Maksimum: Bonus ze Zwinności\n\nKiedy skupisz się na celu, nie sposób cię powstrzymać przed dotarciem do niego. Jeśli wykorzystujesz Przewagę podczas Odwrotu, możesz zachować jej tyle, ile razy masz wykupiony ten Talent. Co więcej, możesz wykorzystać Przewagi do Odwrotu, nawet jeśli masz ich mniej niż przeciwnik.\n\nGrupowa Przewaga - Koszt wykonania Akcji Ucieczka przed zagrożeniem zostaje zmniejszony do 1 Przewagi."
     },
     {
       "name": "POISON_RESISTANCE",
@@ -1480,7 +1480,7 @@
     {
       "name": "REVERSAL",
       "nameTranslation": "Odwrócenie Szans",
-      "description": "Maksimum: Bonus z Walki Wręcz\n\nTesty: Broń Biała w obronie\n\nTak przywykłeś do rozpaczliwej walki o życie, że potrafisz obrócić na swoją korzyść nawet największe kłopoty. Jeśli wygrasz Przeciwstawny Test Walki Wręcz, to zamiast zdobywać +1 Przewagę, możesz zabrać przeciwnikowi jego wszystkie zebrane Przewagi. Jeśli się na to zdecydujesz, nie zadajesz wrogowi obrażeń, nawet jeśli to twoja Tura w Rundzie."
+      "description": "Maksimum: Bonus z Walki Wręcz\n\nTesty: Broń Biała w obronie\n\nTak przywykłeś do rozpaczliwej walki o życie, że potrafisz obrócić na swoją korzyść nawet największe kłopoty. Jeśli wygrasz Przeciwstawny Test Walki Wręcz, to zamiast zdobywać +1 Przewagę, możesz zabrać przeciwnikowi jego wszystkie zebrane Przewagi (lub 1 Przewagę z Puli Przewag Przeciwników, w przypadku zasady Grupowej Przewagi). Jeśli się na to zdecydujesz, nie zadajesz wrogowi obrażeń, nawet jeśli to twoja Tura w Rundzie."
     },
     {
       "name": "RIPOSTE",
@@ -1500,7 +1500,7 @@
     {
       "name": "ROUGHRIDER",
       "nameTranslation": "Urodzony w Siodle",
-      "description": "Maksimum: Bonus ze Zwinności\n\nTesty: Jeździectwo (Konie) w walce\n\nW siodle czujesz się jak w domu i nie straszne ci najtrudniejsze warunki. Wiesz, jak najlepiej wykorzystać wierzchowca w walce. Jeśli posiadasz Umiejętność Jeździectwo, możesz pokierować koniem tak, by podjął Akcję, a nie tylko wykonywał Ruch. Nie musisz w tym celu wykonywać do tego Testu Jeździectwa."
+      "description": "Maksimum: Bonus ze Zwinności\n\nTesty: Jeździectwo (Konie) w walce\n\nW siodle czujesz się jak w domu i nie straszne ci najtrudniejsze warunki. Wiesz, jak najlepiej wykorzystać wierzchowca w walce. Jeśli posiadasz Umiejętność Jeździectwo, możesz pokierować koniem tak, by podjął Akcję, a nie tylko wykonywał Ruch. Nie musisz w tym celu wykonywać do tego Testu Jeździectwa. Co więcej, ponieważ jesteś niezwykle pewny siebie, kiedy siedzisz w siodle, traktuj swój Rozmiar, jakby był równy Rozmiarowi twojego wierzchowca, podczas opierania się efektom Strachu i Grozy wywoływanym przez Rozmiar twojego przeciwnika."
     },
     {
       "name": "ROVER",
@@ -1565,7 +1565,7 @@
     {
       "name": "SHIELDSMAN",
       "nameTranslation": "Tarczownik",
-      "description": "Maksimum: Bonus z Siły\n\nTesty: Każdy Test przy obronie Tarczą\n\nPotrafisz tak posługiwać się tarczą, by wrogowie znaleźli się tam, gdzie chcesz, i umiesz wykorzystywać wynikającą z tego przewagę. Jeśli używasz tarczy do obrony i przegrasz Test Przeciwstawny, to mimo wszystko zyskujesz tyle punktów Przewagi, ile razy masz wykupiony ten Talent."
+      "description": "Maksimum: Bonus z Siły\n\nTesty: Każdy Test przy obronie Tarczą\n\nPotrafisz tak posługiwać się tarczą, by wrogowie znaleźli się tam, gdzie chcesz, i umiesz wykorzystywać wynikającą z tego przewagę. Raz na Turę, kiedy używasz tarczy do obrony, możesz wydać 2 punkty Przewagi, aby zadać Obrażenia, kiedy jesteś atakowany, tak jakby to była twoja Akcja, albo aby odepchnąć przeciwnika na dwa metry od siebie i nie być już z nim Związanym Walką."
     },
     {
       "name": "SIXTH_SENSE",
@@ -1650,7 +1650,7 @@
     {
       "name": "STRIKE_TO_INJURE",
       "nameTranslation": "Morderczy Atak",
-      "description": "Maksimum: Bonus z Inicjatywy\n\nWiesz dobrze, gdzie uderzyć, by wyrządzić jak najwięcej krzywdy. Kiedy zadasz Ranę Krytyczną, zwiększasz też obrażenia o tyle, ile razy wykupiłeś ten Talent."
+      "description": "Maksimum: Bonus z Inicjatywy\n\nWiesz dobrze, gdzie uderzyć, by wyrządzić jak najwięcej krzywdy. Kiedy rzucasz w Tabeli Ran Krytycznych, rzuć dwa razy i wybierz jeden z wyników."
     },
     {
       "name": "STRIKE_TO_STUN",
@@ -1791,7 +1791,13 @@
       "name": "ARCANE_MAGIC_DEMONOLOGY",
       "nameTranslation": "Magia Tajemna (Demonologia)",
       "description": "Maksimum: 1\n\nStudiowałeś jedną z ośmiu tradycji magii: Cienia, Metalu, Niebios, Ognia, Śmierci, Światła, Zwierząt lub Życia albo praktykujesz którąś z mniej znanych: Guślarstwa czy Nekromancji. Możesz zapamiętywać czary ze swojej wybranej tradycji, płacąc za nie koszt w Punktach Doświadczenia (strona 136). Jeśli twój Bonus z Inteligencji równy jest 4, to pierwsze cztery zaklęcia będą cię kosztowały 100 PD, kolejne 4 już 200 PD i tak dalej. Obszerniejsze zasady dotyczące nauki nowych zaklęć znajdują się w Rozdziale 8: Magia. W normalnych warunkach nie możesz nabyć więcej niż jednego Talentu Magia Tajemna (Tradycja). Co więcej, jeśli posiadasz Talent Magia Tajemna (Tradycja), nie możesz wykupić Talentów Błogosławieństwo i Inwokacja. Za 100 PD możesz wyzbyć się tego Talentu, natychmiast tracąc dostęp do wszystkich zapewnianych przez niego czarów."
+    },
+    {
+      "name": "CREW_COMMANDER",
+      "nameTranslation": "Dowódca Załogi",
+      "description": "Maksimum: Bonus z Inicjatywy\n\nTesty: Broń Zasięgowa, kiedy strzelasz z broni z Wadą Załoga\n\nUmiesz zarządzać załogą maszyn oblężniczych i artylerii. Możesz wykonać Wymagający (+0) Test Dowodzenia, by pomóc załodze obsługującej broń z Wadą Załoga, znajdującej się w zasięgu twojego głosu. Jeśli ci się uda, członkowie załogi mogą przy oddawaniu strzału wykorzystać twoją odpowiednią Umiejętność Broń Zasięgowa."
     }
+
   ],
   "traits": [
     {
