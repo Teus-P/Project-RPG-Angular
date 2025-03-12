@@ -1,19 +1,27 @@
-<h2 mat-dialog-title>Wybierz element lub dodaj nowy</h2>
+<h2 mat-dialog-title>{{ text.getText().addToFightLabel }}</h2>
 
 <div mat-dialog-content>
+  <div *ngIf="!data.isAddingGroup">
+    <p>{{ text.getText().characterNumber }}</p>
+    <mat-form-field appearance="fill">
+      <mat-label>{{ text.getText().valueLabel }}</mat-label>
+      <input matInput type="number" [(ngModel)]="number">
+    </mat-form-field>
+  </div>
+
+  <p>{{ text.getText().chooseSkirmishGroupLabel }}</p>
   <mat-button-toggle-group
     name="options"
     [(value)]="mode"
-    aria-label="Opcje wyboru"
     class="full-width"
   >
-    <mat-button-toggle value="select">Wybierz z listy</mat-button-toggle>
-    <mat-button-toggle value="add">Dodaj nowy element</mat-button-toggle>
+    <mat-button-toggle value="select">{{text.getText().selectFromListLabel}}</mat-button-toggle>
+    <mat-button-toggle value="add">{{text.getText().addSkirmishGroup}}</mat-button-toggle>
   </mat-button-toggle-group>
 
   <div *ngIf="mode === 'select'">
     <mat-form-field appearance="fill" class="full-width">
-      <mat-label>Wybierz element</mat-label>
+      <mat-label>{{text.getText().chooseSkirmishGroupLabel}}</mat-label>
       <mat-select [(value)]="selectedItem">
         <mat-option *ngFor="let group of skirmishGroups" [value]="group">{{ group.name }}</mat-option>
       </mat-select>
@@ -22,12 +30,12 @@
 
   <div *ngIf="mode === 'add'">
     <mat-form-field appearance="fill" class="full-width">
-      <mat-label>Nazwa nowego elementu</mat-label>
-      <input matInput [(ngModel)]="newGroup.name" placeholder="Podaj nazwę">
+      <mat-label>{{text.getText().newSkirmishGroupNameLabel}}</mat-label>
+      <input matInput [(ngModel)]="newGroup.name" placeholder="{{text.getText().enterNameLabel}}">
     </mat-form-field>
 
     <div>
-      <label>Wybierz kolor:</label>
+      <label>{{text.getText().chooseColorLabel}}</label>
       <color-sketch
         [color]="randomColor"
         (onChange)="handleColorChange($event)"
@@ -38,6 +46,6 @@
 </div>
 
 <div mat-dialog-actions align="end">
-  <button mat-button (click)="close()">Anuluj</button>
-  <button mat-raised-button color="primary" [disabled]="!isFormValid()" (click)="confirm()">Zatwierdź</button>
+  <button mat-button (click)="close()">{{text.getText().cancelLabel}}</button>
+  <button mat-raised-button color="primary" [disabled]="!isFormValid()" (click)="confirm()">{{text.getText().confirmLabel}}</button>
 </div>

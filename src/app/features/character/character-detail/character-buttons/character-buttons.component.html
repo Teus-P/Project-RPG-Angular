@@ -6,7 +6,6 @@
     </button>
     <mat-menu #menu="matMenu">
       <button mat-menu-item (click)="onAddToFight()">{{text.getText().addToFightLabel}}</button>
-      <button mat-menu-item (click)="onAddManyToFight()">{{text.getText().addManyToFightLabel}}</button>
       <button mat-menu-item (click)="onCopyCharacter()">{{text.getText().copyCharacterLabel}}</button>
       <app-shared-buttons [id]="character.id" [isSkirmishMode]=false></app-shared-buttons>
     </mat-menu>

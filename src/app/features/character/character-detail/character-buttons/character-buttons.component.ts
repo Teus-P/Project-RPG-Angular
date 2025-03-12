@@ -1,10 +1,11 @@
 import {Component, Input} from '@angular/core';
 import {TextResourceService} from "../../../../core/services/text-resource-service/text-resource.service";
-import {AddManyToFightDialog} from "./dialog-window/add-many-to-fight/add-many-to-fight-dialog.component";
 import {SkirmishCharacterService} from "../../../../core/services/skirmish-character-service/skirmish-character.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {MatDialog} from "@angular/material/dialog";
 import {Character} from "../../../../core/model/character/character.model";
+import {AddToFightDialogComponent} from "../../character-list/add-to-fight-dialog/add-to-fight-dialog.component";
+import {SkirmishService} from "../../../../core/services/skirmish-service/skirmish.service";
 
 @Component({
     selector: 'app-character-buttons',
@@ -17,25 +18,25 @@ export class CharacterButtonsComponent {
   text = TextResourceService
 
   constructor(public skirmishCharacterService: SkirmishCharacterService,
+              public skirmishService : SkirmishService,
               protected route: ActivatedRoute,
               protected router: Router,
               protected dialog: MatDialog) {
   }
 
   onAddToFight() {
-    this.skirmishCharacterService.storeSkirmishCharacter(this.character)
-  }
-
-  onAddManyToFight() {
-    const dialogRef = this.dialog.open(AddManyToFightDialog, {
-      width: '20%',
+    const dialogRef = this.dialog.open(AddToFightDialogComponent, {
+      width: '30%',
+      data: {groupName: this.character.group, isAddingGroup: false}
     })
 
-    dialogRef.afterClosed().subscribe(number => {
-      if (number > 1) {
-        this.skirmishCharacterService.storeSkirmishCharacters(this.character, number)
-      } else if (number == 1) {
-        this.skirmishCharacterService.storeSkirmishCharacter(this.character)
+    dialogRef.afterClosed().subscribe(result => {
+      if (result.skirmishGroup != undefined) {
+        this.skirmishService.addSkirmishGroup(result.skirmishGroup).then(newSkirmishGroup => {
+          if (newSkirmishGroup != undefined) {
+            this.skirmishCharacterService.storeSkirmishCharactersGroup([this.character], newSkirmishGroup, result.number);
+          }
+        });
       }
     })
   }

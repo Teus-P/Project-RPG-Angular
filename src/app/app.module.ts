@@ -41,7 +41,6 @@ import {WeaponListStartComponent} from './features/list-of-elements/weapon-list/
 import {WeaponGroupItemListComponent} from './features/list-of-elements/weapon-list/weapon-group-item-list/weapon-group-item-list.component';
 import {ArmorListComponent} from './features/list-of-elements/armor-list/armor-list.component';
 import {ArmorGroupItemList} from './features/list-of-elements/armor-list/armor-group-item-list/armor-group-item-list.component';
-import {AddManyToFightDialog} from './features/character/character-detail/character-buttons/dialog-window/add-many-to-fight/add-many-to-fight-dialog.component';
 import {InitiativeDialog} from './features/skirmish/skirmish-characters-list/dialog-window/initiative-dialog/initiative-dialog.component';
 import {FlexLayoutModule} from "@angular/flex-layout";
 import {LoaderComponent} from './shared/components/loader/loader.component';
@@ -111,7 +110,6 @@ import {NgOptimizedImage} from "@angular/common";
         WeaponGroupItemListComponent,
         ArmorListComponent,
         ArmorGroupItemList,
-        AddManyToFightDialog,
         InitiativeDialog,
         LoaderComponent,
         ConfirmationDialogComponent,

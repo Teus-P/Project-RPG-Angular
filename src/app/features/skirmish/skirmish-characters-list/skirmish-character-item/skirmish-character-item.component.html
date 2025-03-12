@@ -18,11 +18,11 @@
         <div class="tile-background" [ngStyle]="getHealthBarStyle()"></div>
         <div fxFlex="60" class="tile-left">
           <h6 class="list-group-item-heading"
-              *ngIf="!skirmishCharacter.sequenceNumber">
+              *ngIf="!skirmishCharacter.sequenceNumber || skirmishCharacter.sequenceNumber == 1">
             {{ skirmishCharacter.character.name }}
           </h6>
           <h6 class="list-group-item-heading"
-              *ngIf="skirmishCharacter.sequenceNumber">
+              *ngIf="skirmishCharacter.sequenceNumber && skirmishCharacter.sequenceNumber > 1">
             {{ skirmishCharacter.character.name }} {{ skirmishCharacter.sequenceNumber }}
           </h6>
           <span class="list-group-item-text">

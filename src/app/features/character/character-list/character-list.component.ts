@@ -46,14 +46,14 @@ export class CharacterListComponent implements OnInit {
   onAddGroupToFight(characters: Character[]) {
     const dialogRef = this.dialog.open(AddToFightDialogComponent, {
       width: '30%',
-      data: characters[0].group
+      data: {groupName: characters[0].group, isAddingGroup: true}
     })
 
-    dialogRef.afterClosed().subscribe(skirmishGroup => {
-      if (skirmishGroup != undefined) {
-        this.skirmishService.addSkirmishGroup(skirmishGroup).then(newGroup => {
+    dialogRef.afterClosed().subscribe(result => {
+      if (result.skirmishGroup != undefined) {
+        this.skirmishService.addSkirmishGroup(result.skirmishGroup).then(newGroup => {
           if (newGroup != undefined) {
-            this.skirmishCharacterService.storeSkirmishCharactersGroup(characters, newGroup);
+            this.skirmishCharacterService.storeSkirmishCharactersGroup(characters, newGroup, 0);
           }
         });
       }

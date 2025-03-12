@@ -41,13 +41,14 @@ import {ColorSketchModule} from "ngx-color/sketch";
 })
 export class AddToFightDialogComponent implements OnInit {
   text = TextResourceService;
+  number: number = 1;
   skirmishGroups: SkirmishGroup[] = [];
   selectedItem?: SkirmishGroup;
   newGroup = new SkirmishGroup();
   mode: 'select' | 'add' = 'select';
   randomColor: {r: number, g: number, b: number, a: number};
 
-  constructor(@Inject(MAT_DIALOG_DATA) public groupName: string,
+  constructor(@Inject(MAT_DIALOG_DATA) public data: {groupName: string, isAddingGroup: boolean},
               public dialogRef: MatDialogRef<AddToFightDialogComponent>,
               private skirmishService: SkirmishService) {
     this.randomColor = this.generateRandomColor();
@@ -57,8 +58,11 @@ export class AddToFightDialogComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.newGroup.name = this.groupName;
+    this.newGroup.name = this.data.groupName;
     this.skirmishGroups = this.skirmishService.skirmishGroupsList;
+    if(this.data.isAddingGroup) {
+      this.number = 0;
+    }
   }
 
   close(): void {
@@ -67,9 +71,9 @@ export class AddToFightDialogComponent implements OnInit {
 
   confirm(): void {
     if (this.mode === 'select') {
-      this.dialogRef.close(this.selectedItem);
+      this.dialogRef.close({skirmishGroup: this.selectedItem, number: this.number});
     } else if (this.mode === 'add') {
-      this.dialogRef.close(this.newGroup);
+      this.dialogRef.close({skirmishGroup: this.newGroup, number: this.number});
     }
   }
 

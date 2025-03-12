@@ -50,62 +50,42 @@ export class SkirmishCharacterService {
       })
   }
 
-  async storeSkirmishCharacter(character: Character) {
-    let newSkirmishCharacter = new SkirmishCharacter(character)
-    let numberOfSameCharacters = this.skirmishCharactersList.filter(skirmishCharacter => skirmishCharacter.character.name.includes(newSkirmishCharacter.character.name)).length
-    if (numberOfSameCharacters > 0) {
-      newSkirmishCharacter.sequenceNumber = numberOfSameCharacters + 1
-    }
-    await this.putSkirmishCharacter(newSkirmishCharacter).then(
-      async () => {
-        await this.fetchSkirmishCharacter().then()
-      }
-    )
-  }
-
   private putSkirmishCharacter(skirmishCharacter: SkirmishCharacter) {
     return this.http
       .put('http://localhost:8080/skirmishCharacter', skirmishCharacter)
       .toPromise()
   }
 
-  async storeSkirmishCharacters(newCharacter: Character, characterNumber: number) {
-    let numberOfSameCharacters = this.skirmishCharactersList.filter(skirmishCharacter => skirmishCharacter.character.name.includes(newCharacter.name)).length
-    let number = characterNumber + numberOfSameCharacters
-    let newSkirmishCharacters = []
+  async storeSkirmishCharactersGroup(characters: Character[], skirmishGroup: SkirmishGroup, number: number) {
+    let skirmishCharacters: SkirmishCharacter[] = []
 
-    for (let i = numberOfSameCharacters; number > i; number--) {
-      let skirmishCharacter = new SkirmishCharacter(newCharacter, 0)
-      skirmishCharacter.character.id = 0
-      if (characterNumber > 1) {
-        skirmishCharacter.sequenceNumber = number
+    if (number > 1) {
+      for (let i = 0; i < number; i++) {
+        skirmishCharacters.push(this.createSkirmishCharacter(characters[0], skirmishGroup, i));
       }
-      newSkirmishCharacters.push(skirmishCharacter)
+    } else {
+      characters.forEach(character => {
+        skirmishCharacters.push(this.createSkirmishCharacter(character, skirmishGroup, 0));
+      })
     }
 
-    await this.putSkirmishCharacters(newSkirmishCharacters).then(
-      async () => {
-        await this.fetchSkirmishCharacter().then()
-      }
-    )
+    await this.updateSkirmishCharacters(skirmishCharacters);
   }
 
-  async storeSkirmishCharactersGroup(characters: Character[], skirmishGroup: SkirmishGroup) {
-    let index = this.skirmishCharactersList.length
-    let skirmishCharacters: SkirmishCharacter[] = []
-    characters.forEach(skirmishCharacter => {
-      let newSkirmishCharacter: SkirmishCharacter = new SkirmishCharacter(skirmishCharacter, index)
-      newSkirmishCharacter.character.id = 0
-      let numberOfSameCharacters = this.skirmishCharactersList.filter(skirmishCharacter => skirmishCharacter.character.name.includes(newSkirmishCharacter.character.name)).length
-      if (numberOfSameCharacters > 0) {
-        newSkirmishCharacter.sequenceNumber = numberOfSameCharacters + 1
-      }
-      newSkirmishCharacter.skirmishGroup = skirmishGroup
-      skirmishCharacters.push(newSkirmishCharacter)
-      ++index
-    })
+  private createSkirmishCharacter(character: Character, skirmishGroup: SkirmishGroup, sequenceNumber: number) {
+    let clonedCharacter = character.clone()
+    clonedCharacter.id = 0
+    let newSkirmishCharacter: SkirmishCharacter = new SkirmishCharacter(clonedCharacter)
+    let numberOfSameCharacters = this.skirmishCharactersList.filter(skirmishCharacter => skirmishCharacter.character.name.includes(newSkirmishCharacter.character.name)).length
 
-    await this.updateSkirmishCharacters(skirmishCharacters);
+    if (sequenceNumber > 0) {
+      newSkirmishCharacter.sequenceNumber = numberOfSameCharacters + sequenceNumber + 1
+    } else {
+      newSkirmishCharacter.sequenceNumber = numberOfSameCharacters + 1
+    }
+
+    newSkirmishCharacter.skirmishGroup = skirmishGroup
+    return newSkirmishCharacter;
   }
 
   public async updateSkirmishCharacters(skirmishCharacters: SkirmishCharacter[]) {

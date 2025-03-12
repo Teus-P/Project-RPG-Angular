@@ -49,6 +49,10 @@ export class Character {
     this.status = <string>status
   }
 
+  clone(): Character {
+    return Object.assign(new Character(), this)
+  }
+
   clearIds() {
     this.characteristics.forEach(value => value.id = 0)
     this.bodyLocalizations.forEach(value => value.id = 0)
