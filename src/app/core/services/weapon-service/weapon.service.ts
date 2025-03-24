@@ -2,7 +2,6 @@ import {Injectable} from '@angular/core'
 import {HttpClient} from "@angular/common/http"
 import {Subject} from "rxjs"
 import {Weapon} from "../../model/weapon/weapon.model"
-import {TextResourceService} from "../text-resource-service/text-resource.service"
 import {Model} from "../../model/model"
 import {TranslateService} from "../translate-service/translate.service"
 import {WeaponGroup} from "../../model/weapon/weapons-group.model"
@@ -74,6 +73,8 @@ export class WeaponService {
         (a, b) => (a.nameTranslation > b.nameTranslation) ? 1 : ((b.nameTranslation > a.nameTranslation) ? -1 : 0)
       )
     })
+
+    this.weaponGroups.sort((a, b) => a.name.localeCompare(b.name));
   }
 
   async storeWeapon(weapon: Weapon) {

@@ -103,3 +103,19 @@
   </table>
   <br>
 </div>
+
+<div style="visibility: hidden; position: fixed"
+     [style.left]="contextMenuPosition.x"
+     [style.top]="contextMenuPosition.y"
+     [matMenuTriggerFor]="contextMenu">
+</div>
+
+<mat-menu #contextMenu="matMenu">
+  <ng-template matMenuContent let-weapon="weapon">
+    <button mat-menu-item (click)="onEditWeapon(weapon)">
+      <span *ngIf="weapon.isBaseWeapon == true">{{text.getText().copyLabel}}</span>
+      <span *ngIf="weapon.isBaseWeapon == false">{{text.getText().editLabel}}</span>
+    </button>
+    <button *ngIf="weapon.isBaseWeapon == false" mat-menu-item (click)="onDeleteWeapon(weapon.id)">{{text.getText().deleteLabel}}</button>
+  </ng-template>
+</mat-menu>
