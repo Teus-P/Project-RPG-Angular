@@ -7,6 +7,7 @@ import {TranslateService} from "../translate-service/translate.service"
 import {tap} from "rxjs/operators";
 import {BaseService} from "../base.service";
 import {TextResourceKeys} from "../../model/types";
+import {ArmorGroup} from "../../model/armor/armor-group.model";
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +23,9 @@ export class ArmorService {
   armorQualitiesList: Model[] = []
   armorTypesList: Model[] = []
 
+  armorsGroupsChanged = new Subject<ArmorGroup[]>()
+  armorsGroups: ArmorGroup[] = []
+
   constructor(private http: HttpClient,
               private translateService: TranslateService,
               private baseService: BaseService) {
@@ -32,11 +36,13 @@ export class ArmorService {
       tap(data => {
         if (data) {
           this.translateService.prepareArmorsList(data);
+          this.groupArmors(data)
           this.armorsList = data;
         } else {
           this.armorsList = [];
         }
         this.armorsListChanged.next(this.armorsList.slice());
+        this.armorsGroupsChanged.next(this.armorsGroups.slice());
       })
     ).toPromise();
   }
@@ -50,6 +56,25 @@ export class ArmorService {
     return this.http.put('http://localhost:8080/armor', armor)
   }
 
+  private groupArmors(armors: Armor[]) {
+    this.armorsGroups = []
+    armors.forEach(armor => {
+      let armorGroup = this.armorsGroups.find(armorGroup => armorGroup.name === armor.armorCategory.nameTranslation)
+      if (armorGroup != undefined) {
+        armorGroup.armors.push(armor);
+      } else {
+        this.armorsGroups.push(new ArmorGroup(armor.armorCategory.nameTranslation, [armor]))
+      }
+    })
+
+    this.armorsGroups.forEach(armorGroup => {
+      armorGroup.armors.sort(
+        (a, b) => (a.nameTranslation > b.nameTranslation) ? 1 : ((b.nameTranslation > a.nameTranslation) ? -1 : 0)
+      );
+    })
+
+    this.armorsGroups.sort((a, b) => a.name.localeCompare(b.name))
+  }
 
   async fetchArmorCategories() {
     return this.baseService.fetchMethod('armorCategory', <TextResourceKeys>'armorCategory',

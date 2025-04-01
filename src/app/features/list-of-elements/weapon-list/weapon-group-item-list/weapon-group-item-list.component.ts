@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {WeaponGroup} from "../../../../core/model/weapon/weapons-group.model";
+import {WeaponGroup} from "../../../../core/model/weapon/weapon-group.model";
 import {TextResourceService} from "../../../../core/services/text-resource-service/text-resource.service";
 import {ActivatedRoute, Params} from "@angular/router";
 import {WeaponService} from "../../../../core/services/weapon-service/weapon.service";

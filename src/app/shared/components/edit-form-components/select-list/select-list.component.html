@@ -8,9 +8,12 @@
           <input type="text"
                  matInput
                  formControlName="model"
-                 [matAutocomplete]="auto"
-                 (selectionchange)="checkIfTraitHasValue(formArray)">
-          <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                 required
+                 (focusout)="onFocusOut(i, formArray)"
+                 [matAutocomplete]="auto">
+          <mat-autocomplete #auto="matAutocomplete"
+                            (optionSelected)="validateSelection(i, formArray)"
+                            [displayWith]="displayFn">
             <mat-option *ngFor="let option of filteredList[i] | async" [value]="option">
               {{ option.nameTranslation }}
             </mat-option>

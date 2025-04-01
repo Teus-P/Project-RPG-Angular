@@ -4,7 +4,7 @@ import {Subject} from "rxjs"
 import {Weapon} from "../../model/weapon/weapon.model"
 import {Model} from "../../model/model"
 import {TranslateService} from "../translate-service/translate.service"
-import {WeaponGroup} from "../../model/weapon/weapons-group.model"
+import {WeaponGroup} from "../../model/weapon/weapon-group.model"
 import {BaseService} from "../base.service";
 import {TextResourceKeys} from "../../model/types";
 

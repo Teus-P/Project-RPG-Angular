@@ -39,10 +39,12 @@
     </app-select-list>
     <div fxLayout="row" class="details-row">
       <div fxFlex="100">
-        <button mat-raised-button color="primary" type="button"
-                (click)="onSubmit()">{{text.getText().saveLabel}}</button>
+        <button mat-raised-button color="primary" type="button" [disabled]="!editCharacterForm.valid"
+                (click)="onSubmit()">{{ text.getText().saveLabel }}
+        </button>
         <button mat-raised-button color="warn" type="button"
-                (click)="onCancel()">{{text.getText().returnLabel}}</button>
+                (click)="onCancel()">{{ text.getText().returnLabel }}
+        </button>
       </div>
     </div>
   </form>

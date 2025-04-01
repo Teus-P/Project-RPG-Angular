@@ -1,17 +1,27 @@
 <div fxLayout="row" class="details-row" [formGroup]="editCharacterForm">
   <div fxFlex="100" formArrayName="spells">
-    <h4>{{text.getText().spellsLabel}}</h4>
+    <h4>{{ text.getText().spellsLabel }}</h4>
     <div fxLayout="row" fxLayoutGap="20" *ngFor="let spellControl of spells; let i = index" [formGroupName]="i">
       <div fxFlex="40">
-        <mat-form-field appearance="fill" class="example-full-width">
-          <mat-label>{{text.getText().nameLabel}}</mat-label>
-          <mat-select [formControl]="spellControl" [compareWith]="compareModels">
-            <mat-optgroup *ngFor="let group of spellGroups" [label]="group.name">
-              <mat-option *ngFor="let spell of group.spells" [value]="spell">
-                {{spell.nameTranslation}}
-              </mat-option>
-            </mat-optgroup>
-          </mat-select>
+        <mat-form-field>
+          <mat-label>{{ text.getText().nameLabel }}</mat-label>
+          <input type="text"
+                 matInput
+                 required
+                 (focusout)="onFocusOut(i)"
+                 [formControl]="spellControl"
+                 [matAutocomplete]="autoGroup">
+          <mat-autocomplete #autoGroup="matAutocomplete"
+                            [displayWith]="displayFn"
+                            (optionSelected)="validateSelection(i)">
+            @for (group of filteredList[i] | async; track group.name) {
+              <mat-optgroup [label]="group.name">
+                @for (spell of group.spells; track spell.id) {
+                  <mat-option [value]="spell">{{ spell.nameTranslation }}</mat-option>
+                }
+              </mat-optgroup>
+            }
+          </mat-autocomplete>
         </mat-form-field>
       </div>
       <div fxFlex="10">
@@ -21,7 +31,8 @@
     <div fxLayout="row">
       <div fxFlex="100">
         <button mat-raised-button color="primary" type="button"
-                (click)="onAddSpell()">{{text.getText().addSpellLabel}}</button>
+                (click)="onAddSpell()">{{ text.getText().addSpellLabel }}
+        </button>
       </div>
     </div>
   </div>

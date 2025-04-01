@@ -1,6 +1,6 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
 import {TextResourceService} from "../../../../../core/services/text-resource-service/text-resource.service";
-import {WeaponGroup} from "../../../../../core/model/weapon/weapons-group.model";
+import {WeaponGroup} from "../../../../../core/model/weapon/weapon-group.model";
 import {MatTableDataSource} from "@angular/material/table";
 import {Model} from "../../../../../core/model/model";
 import {

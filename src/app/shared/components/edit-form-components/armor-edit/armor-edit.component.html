@@ -3,34 +3,37 @@
     <h4>{{ text.getText().armorLabel }}</h4>
     <div fxLayout="row" fxLayoutGap="20" *ngFor="let armorControl of armors; let i = index" [formGroupName]="i">
       <div fxFlex="30">
-        <mat-form-field appearance="fill" class="example-full-width">
+        <mat-form-field>
           <mat-label>{{ text.getText().nameLabel }}</mat-label>
-          <mat-select formControlName="armor" [compareWith]="compareModels">
-            <mat-option disabled="disabled">
-              ---- {{ armorsList[0].armorCategory.nameTranslation }} ----
-            </mat-option>
-            <ng-container *ngFor="let armor of armorsList; let i = index">
-              <mat-option *ngIf="i > 0 && armor.armorCategory.name !== armorsList[i-1].armorCategory.name"
-                          disabled="disabled" (onSelectionChange)="onChangeArmor()">
-                ---- {{ armor.armorCategory.nameTranslation }} ----
-              </mat-option>
-              <mat-option [value]=armor>
-                {{ armor.nameTranslation }}
-              </mat-option>
-            </ng-container>
-          </mat-select>
+          <input type="text"
+                 matInput
+                 formControlName="armor"
+                 required
+                 (focusout)="onFocusOut(i)"
+                 [matAutocomplete]="autoGroup">
+          <mat-autocomplete #autoGroup="matAutocomplete"
+                            (optionSelected)="validateSelection(i)"
+                            [displayWith]="displayFn">
+            @for (group of filteredList[i] | async; track group.name) {
+              <mat-optgroup [label]="group.name">
+                @for (armor of group.armors; track armor.id) {
+                  <mat-option [value]="armor">{{ armor.nameTranslation }}</mat-option>
+                }
+              </mat-optgroup>
+            }
+          </mat-autocomplete>
         </mat-form-field>
       </div>
-      <div fxFlex="15" *ngIf="isMagicalArmor(i)">
+      <div fxFlex="15" *ngIf="isMagicalArmor(i, armorControl)">
         <mat-form-field class="example-full-width" appearance="fill">
-          <mat-label>{{text.getText().armorPointsLabel}}</mat-label>
-          <input matInput type="number" formControlName="armorPoints">
+          <mat-label>{{ text.getText().armorPointsLabel }}</mat-label>
+          <input matInput type="number" formControlName="armorPoints" required>
         </mat-form-field>
       </div>
-      <div fxFlex="15" *ngIf="isMagicalArmor(i)">
+      <div fxFlex="15" *ngIf="isMagicalArmor(i, armorControl)">
         <mat-form-field class="example-full-width" appearance="fill">
-          <mat-label>{{text.getText().durationLabel}}</mat-label>
-          <input matInput type="number" formControlName="duration">
+          <mat-label>{{ text.getText().durationLabel }}</mat-label>
+          <input matInput type="number" formControlName="duration" required>
         </mat-form-field>
       </div>
       <div fxFlex="20">
