@@ -2,7 +2,7 @@
     <button mat-raised-button color="primary" (click)="onAddCharacter()">{{text.getText().addCharacterLabel}}</button>
 </div>
 <hr>
-<mat-tab-group>
+<mat-tab-group [dynamicHeight]="true">
   <mat-tab *ngFor="let type of characterGroupsTypes" label="{{type.name}}">
     <div fxLayout="row">
       <div fxFlex="100">

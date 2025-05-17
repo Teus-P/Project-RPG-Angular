@@ -1,0 +1,12 @@
+.tab {
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  -ms-overflow-style: none;  /* IE 10+ */
+  scrollbar-width: none;
+}
+
+.tab::-webkit-scrollbar {
+  display: none;
+}

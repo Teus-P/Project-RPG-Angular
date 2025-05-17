@@ -81,6 +81,7 @@ import { ListFilterComponent } from './shared/components/list-filter/list-filter
 import { WeaponGroupTableComponent } from './features/list-of-elements/weapon-list/weapon-group-item-list/weapon-group-table/weapon-group-table.component';
 import { EditArmorPointsWindowComponent } from './shared/components/dialog-window/edit-armor-points-window/edit-armor-points-window.component';
 import {NgOptimizedImage} from "@angular/common";
+import {SkirmishBattlefieldComponent} from "./features/skirmish/skirmish-battlefield/skirmish-battlefield.component";
 
 @NgModule({ declarations: [
         AppComponent,
@@ -149,7 +150,7 @@ import {NgOptimizedImage} from "@angular/common";
         MaterialModule,
         FlexLayoutModule,
         MatTabsModule,
-        NgOptimizedImage], providers: [
+        NgOptimizedImage, SkirmishBattlefieldComponent], providers: [
         { provide: MAT_BOTTOM_SHEET_DEFAULT_OPTIONS, useValue: { hasBackdrop: true } },
         provideHttpClient(withInterceptorsFromDi()),
     ] })
