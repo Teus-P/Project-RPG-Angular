@@ -7,10 +7,10 @@ import {Subscription} from "rxjs";
 import {CharacterService} from "../../../core/services/character-service/character.service";
 
 @Component({
-    selector: 'app-skirmish-character-details',
-    templateUrl: './skirmish-character-details.component.html',
-    styleUrls: ['./skirmish-character-details.component.css'],
-    standalone: false
+  selector: 'app-skirmish-character-details',
+  templateUrl: './skirmish-character-details.component.html',
+  styleUrls: ['./skirmish-character-details.component.css'],
+  standalone: false
 })
 export class SkirmishCharacterDetailsComponent implements OnInit {
 
@@ -18,6 +18,7 @@ export class SkirmishCharacterDetailsComponent implements OnInit {
   text = TextResourceService
   skirmishCharacterSubscription!: Subscription
   protected id!: number
+  protected characterName!: string;
 
   constructor(public skirmishCharacterService: SkirmishCharacterService,
               public characterService: CharacterService,
@@ -29,13 +30,19 @@ export class SkirmishCharacterDetailsComponent implements OnInit {
     this.route.params.subscribe((params: Params) => {
         this.id = +params['id']
         this.skirmishCharacter = this.skirmishCharacterService.getSkirmishCharacter(this.id)
+
+        if (!this.skirmishCharacter.sequenceNumber || this.skirmishCharacter.sequenceNumber === 1) {
+          this.characterName = this.skirmishCharacter.character.name
+        } else {
+          this.characterName = this.skirmishCharacter.character.name + ' ' + this.skirmishCharacter.sequenceNumber;
+        }
       }
     )
 
     this.skirmishCharacterSubscription = this.skirmishCharacterService.skirmishCharactersChanged.subscribe(
       (skirmishCharacters: SkirmishCharacter[]) => {
         let updatedCharacter = skirmishCharacters.find(skirmishCharacter => skirmishCharacter.id == this.skirmishCharacter.id)
-        if(updatedCharacter instanceof SkirmishCharacter) {
+        if (updatedCharacter instanceof SkirmishCharacter) {
           this.skirmishCharacter = updatedCharacter
         }
       }

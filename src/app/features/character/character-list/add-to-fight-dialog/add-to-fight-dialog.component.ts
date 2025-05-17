@@ -45,7 +45,7 @@ export class AddToFightDialogComponent implements OnInit {
   skirmishGroups: SkirmishGroup[] = [];
   selectedItem?: SkirmishGroup;
   newGroup = new SkirmishGroup();
-  mode: 'select' | 'add' = 'select';
+  mode: 'select' | 'add' = 'add';
   randomColor: {r: number, g: number, b: number, a: number};
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: {groupName: string, isAddingGroup: boolean},
@@ -62,6 +62,12 @@ export class AddToFightDialogComponent implements OnInit {
     this.skirmishGroups = this.skirmishService.skirmishGroupsList;
     if(this.data.isAddingGroup) {
       this.number = 0;
+    }
+
+    let skirmishGroup = this.skirmishGroups.find(group => group.name === this.newGroup.name);
+    if(skirmishGroup != undefined) {
+      this.mode = 'select';
+      this.selectedItem = skirmishGroup;
     }
   }
 

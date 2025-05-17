@@ -15,8 +15,8 @@
     [(value)]="mode"
     class="full-width"
   >
-    <mat-button-toggle value="select">{{text.getText().selectFromListLabel}}</mat-button-toggle>
     <mat-button-toggle value="add">{{text.getText().addSkirmishGroup}}</mat-button-toggle>
+    <mat-button-toggle value="select">{{text.getText().selectFromListLabel}}</mat-button-toggle>
   </mat-button-toggle-group>
 
   <div *ngIf="mode === 'select'">
