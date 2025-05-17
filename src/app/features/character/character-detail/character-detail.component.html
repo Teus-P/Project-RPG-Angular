@@ -1,7 +1,21 @@
-<app-details-name [name]="character.name"></app-details-name>
-<app-character-buttons [character]="character"></app-character-buttons>
-<app-details-descriptions [character]="character"></app-details-descriptions>
-<app-details-character [character]="character">
-  <app-details-body-localizations [character]="character" [skirmishCharacter]="undefined" [isSkirmishMode]="false">
+<app-details-name
+  [name]="character.name">
+</app-details-name>
+
+<app-character-buttons
+  [character]="character">
+</app-character-buttons>
+
+<app-details-descriptions
+  [character]="character">
+</app-details-descriptions>
+
+<app-details-character
+  [character]="character"
+  [isSkirmishMode]="false">
+  <app-details-body-localizations
+    [character]="character"
+    [skirmishCharacter]="undefined"
+    [isSkirmishMode]="false">
   </app-details-body-localizations>
 </app-details-character>

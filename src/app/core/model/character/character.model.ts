@@ -9,6 +9,7 @@ import {Talent} from "../talent/talent.model";
 import {Trait} from "../trait/trait.model";
 import {Model} from "../model";
 import {CharacterArmor} from "../armor/character-armor.model";
+import {Skill} from "../skill/skill.model";
 
 export class Character {
   id!: number
@@ -18,7 +19,7 @@ export class Character {
   group!: string
   status!: string
   characteristics!: CharacterCharacteristic[]
-  skills!: ValueModel<Model>[]
+  skills!: ValueModel<Skill>[]
   talents!: ValueModel<Talent>[]
   traits!: ValueModel<Trait>[]
   isRightHanded!: boolean
@@ -36,7 +37,7 @@ export class Character {
     this.groupType = <string>groupType
     this.group = <string>group
     this.characteristics = <CharacterCharacteristic[]>characteristics
-    this.skills = <ValueModel<Model>[]>skills
+    this.skills = <ValueModel<Skill>[]>skills
     this.talents = <ValueModel<Talent>[]>talents
     this.traits = <ValueModel<Trait>[]>traits
     this.isRightHanded = <boolean>rightHanded
@@ -116,10 +117,22 @@ export class Character {
     return <CharacterCharacteristic>this.characteristics.find(x => x.characteristic.name == 'WOUNDS')
   }
 
+  getSkillsList(onlySkirmishSkills: boolean): ValueModel<Skill>[] {
+    if (onlySkirmishSkills)
+      return this.skills.filter(skill => skill.model.isSkirmishSkill);
+    return this.skills;
+  }
+
+  getTalentsList(onlySkirmishTalents: boolean): ValueModel<Talent>[] {
+    if (onlySkirmishTalents)
+      return this.talents.filter(talent => talent.model.isSkirmishTalent);
+    return this.talents;
+  }
+
   static fromJSON(object: Object): Character {
     let character = Object.assign(new Character(), object)
     character.characteristics = CharacterCharacteristic.arrayFromJSON(character['characteristics'])
-    character.skills = ValueModel.arrayFromJSON<Model>(character["skills"], Model)
+    character.skills = ValueModel.arrayFromJSON<Skill>(character["skills"], Skill)
     character.talents = ValueModel.arrayFromJSON<Talent>(character["talents"], Talent)
     character.traits = ValueModel.arrayFromJSON<Trait>(character["traits"], Trait)
     character.weapons = CharacterWeapon.arrayFromJSON(character['weapons'])

@@ -35,12 +35,13 @@ import {Trait} from "../../../core/model/trait/trait.model";
 import {Model} from "../../../core/model/model";
 import {CharacterArmor} from "../../../core/model/armor/character-armor.model";
 import {ArmorBodyLocalization} from "../../../core/model/body-localization/armor-body-localization.model";
+import {Skill} from "../../../core/model/skill/skill.model";
 
 @Component({
-    selector: 'app-character-edit',
-    templateUrl: './character-edit.component.html',
-    styleUrls: ['./character-edit.component.css'],
-    standalone: false
+  selector: 'app-character-edit',
+  templateUrl: './character-edit.component.html',
+  styleUrls: ['./character-edit.component.css'],
+  standalone: false
 })
 export class CharacterEditComponent implements OnInit {
 
@@ -265,7 +266,7 @@ export class CharacterEditComponent implements OnInit {
     SpellsEditComponent.prepareSpellsList(formArrays.spells, character.spells)
   }
 
-  private prepareSkillsList(skills: FormArray, skillsList: ValueModel<Model>[]) {
+  private prepareSkillsList(skills: FormArray, skillsList: ValueModel<Skill>[]) {
     for (let characterSkill of skillsList) {
       skills.push(
         this.formBuilder.group({

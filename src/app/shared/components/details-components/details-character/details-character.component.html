@@ -35,46 +35,64 @@
     <ng-container *ngIf="character.skills.length > 0">
       <div fxFlex="30">
         <h4>{{ text.getText().skillsLabel }}</h4>
-        <table mat-table [dataSource]="character.skills" class="mat-elevation-z8">
-          <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef>{{ text.getText().nameLabel }}</th>
-            <td mat-cell *matCellDef="let element">
-              {{ element.model.nameTranslation }}
-            </td>
-          </ng-container>
-          <ng-container matColumnDef="level">
-            <th mat-header-cell *matHeaderCellDef>{{ text.getText().levelLabel }}</th>
-            <td mat-cell *matCellDef="let element">
-              {{ element.value }}
-            </td>
-          </ng-container>
-          <tr mat-header-row *matHeaderRowDef="baseColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: baseColumns;"></tr>
-        </table>
+        <section>
+          <mat-checkbox
+            [checked]="skillsCheckbox"
+            (change)="skillsCheckboxUpdate($event.checked)">
+            {{ text.getText().skirmishCheckBoxLabel }}
+          </mat-checkbox>
+        </section>
+        <ng-container *ngIf="skillsList.length > 0">
+          <table mat-table [dataSource]="skillsList" class="mat-elevation-z8">
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef>{{ text.getText().nameLabel }}</th>
+              <td mat-cell *matCellDef="let element">
+                {{ element.model.nameTranslation }}
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="level">
+              <th mat-header-cell *matHeaderCellDef>{{ text.getText().levelLabel }}</th>
+              <td mat-cell *matCellDef="let element">
+                {{ element.value }}
+              </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="baseColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: baseColumns;"></tr>
+          </table>
+        </ng-container>
       </div>
     </ng-container>
     <ng-container *ngIf="character.talents.length > 0">
       <div fxFlex="30">
         <h4>{{ text.getText().talentsLabel }}</h4>
-        <table mat-table [dataSource]="character.talents" class="mat-elevation-z8">
-          <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef>{{ text.getText().nameLabel }}</th>
-            <td mat-cell *matCellDef="let element">
+        <section>
+          <mat-checkbox
+            [checked]="talentsCheckbox"
+            (change)="talentsCheckboxUpdate($event.checked)">
+            {{ text.getText().skirmishCheckBoxLabel }}
+          </mat-checkbox>
+        </section>
+        <ng-container *ngIf="talentsList.length > 0">
+          <table mat-table [dataSource]="talentsList" class="mat-elevation-z8">
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef>{{ text.getText().nameLabel }}</th>
+              <td mat-cell *matCellDef="let element">
               <span class="description-span"
                     (click)="openBottomSheet(element.model)">
                 {{ element.model.nameTranslation }}
               </span>
-            </td>
-          </ng-container>
-          <ng-container matColumnDef="level">
-            <th mat-header-cell *matHeaderCellDef>{{ text.getText().levelLabel }}</th>
-            <td mat-cell *matCellDef="let element">
-              {{ element.value }}
-            </td>
-          </ng-container>
-          <tr mat-header-row *matHeaderRowDef="baseColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: baseColumns;"></tr>
-        </table>
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="level">
+              <th mat-header-cell *matHeaderCellDef>{{ text.getText().levelLabel }}</th>
+              <td mat-cell *matCellDef="let element">
+                {{ element.value }}
+              </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="baseColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: baseColumns;"></tr>
+          </table>
+        </ng-container>
       </div>
     </ng-container>
     <ng-container *ngIf="character.traits.length > 0">
@@ -228,7 +246,7 @@
           <th mat-header-cell *matHeaderCellDef>{{ text.getText().nameLabel }}</th>
           <td mat-cell *matCellDef="let element">
             <span *ngIf="element.armor.armorType.name === 'MAGICAL'; else elseTemplate">
-              {{ element.armor.nameTranslation }} - {{text.getText().roundsLabel}}: {{ element.duration }}
+              {{ element.armor.nameTranslation }} - {{ text.getText().roundsLabel }}: {{ element.duration }}
             </span>
             <ng-template #elseTemplate>
               <span>{{ element.armor.nameTranslation }}</span>

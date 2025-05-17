@@ -14,6 +14,7 @@ import {Condition} from "../../model/condition/condition.model";
 import {ValueModel} from "../../model/value-model";
 import {CharacterArmor} from "../../model/armor/character-armor.model";
 import {TextResourceKeys} from "../../model/types";
+import {Skill} from "../../model/skill/skill.model";
 
 @Injectable({
   providedIn: 'root'
@@ -34,7 +35,7 @@ export class TranslateService {
     this.prepareCharacterConditions(character.conditions);
   }
 
-  private prepareCharacterSkills(skills: ValueModel<Model>[]) {
+  private prepareCharacterSkills(skills: ValueModel<Skill>[]) {
     for (let skill of skills) {
       skill.model.nameTranslation = TextResourceService.getTranslation("skills", skill.model.name).nameTranslation
     }
@@ -118,7 +119,7 @@ export class TranslateService {
     for (let armor of armors) {
       this.prepareTranslation(armor.armor);
       armor.armorBodyLocalizations.forEach(armorBodyLocalization => {
-        armorBodyLocalization.bodyLocalization.nameTranslation = TextResourceService.getTranslation("bodyLocalizations",armorBodyLocalization.bodyLocalization.name).nameTranslation;
+        armorBodyLocalization.bodyLocalization.nameTranslation = TextResourceService.getTranslation("bodyLocalizations", armorBodyLocalization.bodyLocalization.name).nameTranslation;
       })
     }
     armors.sort((a, b) => (a.armor.armorCategory.nameTranslation > b.armor.armorCategory.nameTranslation) ? 1 : ((b.armor.armorCategory.nameTranslation > a.armor.armorCategory.nameTranslation) ? -1 : 0));
@@ -139,11 +140,11 @@ export class TranslateService {
     Object.keys(item).forEach((key) => {
       const value = (item as any)[key];
 
-      if(value && this.isModel(value)) {
+      if (value && this.isModel(value)) {
         this.setTranslations(<TextResourceKeys>key, value)
       }
 
-      if(Array.isArray(value) && value.length > 0 && this.isModel(value[0])) {
+      if (Array.isArray(value) && value.length > 0 && this.isModel(value[0])) {
         value.forEach((model: Model) => {
           this.setTranslations(<TextResourceKeys>key, model)
         })

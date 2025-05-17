@@ -1,4 +1,4 @@
-import {Component, Input, ViewChild} from '@angular/core';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {Router} from "@angular/router";
 import {MatBottomSheet} from "@angular/material/bottom-sheet";
 import {MatDialog} from "@angular/material/dialog";
@@ -14,6 +14,9 @@ import {
 } from "../../dialog-window/edit-armor-points-window/edit-armor-points-window.component";
 import {CharacterArmor} from "../../../../core/model/armor/character-armor.model";
 import {CharacterService} from "../../../../core/services/character-service/character.service";
+import {ValueModel} from "../../../../core/model/value-model";
+import {Talent} from "../../../../core/model/talent/talent.model";
+import {Skill} from "../../../../core/model/skill/skill.model";
 
 export interface Group {
   name: string;
@@ -21,13 +24,14 @@ export interface Group {
 }
 
 @Component({
-    selector: 'app-details-character',
-    templateUrl: './details-character.component.html',
-    styleUrls: ['./details-character.component.css'],
-    standalone: false
+  selector: 'app-details-character',
+  templateUrl: './details-character.component.html',
+  styleUrls: ['./details-character.component.css'],
+  standalone: false
 })
-export class DetailsCharacterComponent {
+export class DetailsCharacterComponent implements OnInit {
   @Input() character!: Character
+  @Input() isSkirmishMode!: boolean
   text = TextResourceService
   characteristicsColumns: string[] = this.fillCharacteristicsColumn()
   notesColumns: string[] = ['note']
@@ -36,6 +40,12 @@ export class DetailsCharacterComponent {
   weaponColumns: string[] = ['name', 'category', 'reach', 'damage', 'advantagesAndDisadvantages']
   armorsColumns: string[] = ['name', 'category', 'localization', 'armorPoints', 'penalties', 'qualities']
 
+  talentsCheckbox: boolean = this.isSkirmishMode;
+  talentsList: ValueModel<Talent>[] = [];
+
+  skillsCheckbox: boolean = this.isSkirmishMode;
+  skillsList: ValueModel<Skill>[] = [];
+
   @ViewChild(MatMenuTrigger) contextMenu!: MatMenuTrigger
   contextMenuPosition = {x: '0px', y: '0px'}
 
@@ -43,6 +53,14 @@ export class DetailsCharacterComponent {
               protected router: Router,
               protected bottomSheet: MatBottomSheet,
               protected dialog: MatDialog) {
+  }
+
+  ngOnInit(): void {
+    this.talentsCheckbox = this.isSkirmishMode;
+    this.talentsList = this.character.getTalentsList(this.isSkirmishMode);
+
+    this.skillsCheckbox = this.isSkirmishMode;
+    this.skillsList = this.character.getSkillsList(this.isSkirmishMode);
   }
 
   private fillCharacteristicsColumn() {
@@ -121,5 +139,13 @@ export class DetailsCharacterComponent {
         }
       }
     })
+  }
+
+  talentsCheckboxUpdate(checked: boolean) {
+    this.talentsList = this.character.getTalentsList(checked);
+  }
+
+  skillsCheckboxUpdate(checked: boolean) {
+    this.skillsList = this.character.getSkillsList(checked);
   }
 }
