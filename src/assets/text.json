@@ -114,8 +114,9 @@
   "selectionOptionsLabel": "Opcje wyboru",
   "shieldLabel": "Tarcza",
   "skillsLabel": "Umiejętności",
-  "skirmishLabel": "Potyczka",
   "skirmishCheckBoxLabel": "Bitewne",
+  "skirmishLabel": "Potyczka",
+  "specialisationNameLabel": "Nazwa specjalizacji",
   "spellsLabel": "Zaklęcia",
   "statusLabel": "Status",
   "strengthBonusLabel": "BS",
@@ -188,34 +189,6 @@
   ],
   "skills": [
     {
-      "name": "ART_CARTOGRAPHY",
-      "nameTranslation": "Sztuka (Kartografia)"
-    },
-    {
-      "name": "ART_ENGRAVING",
-      "nameTranslation": "Sztuka (Grawerstwo)"
-    },
-    {
-      "name": "ART_MOSAICS",
-      "nameTranslation": "Sztuka (Układanie Mozaiki)"
-    },
-    {
-      "name": "ART_PAINTING",
-      "nameTranslation": "Sztuka (Malarstwo)"
-    },
-    {
-      "name": "ART_SCULPTURE",
-      "nameTranslation": "Sztuka (Rzeźbiarstwo)"
-    },
-    {
-      "name": "ART_TATTOO",
-      "nameTranslation": "Sztuka (Tatuowanie)"
-    },
-    {
-      "name": "ART_WEAVING",
-      "nameTranslation": "Sztuka (Tkactwo)"
-    },
-    {
       "name": "ATHLETICS",
       "nameTranslation": "Atletyka"
     },
@@ -254,22 +227,6 @@
     {
       "name": "ENDURANCE",
       "nameTranslation": "Odporność"
-    },
-    {
-      "name": "ENTERTAIN_ACTING",
-      "nameTranslation": "Występy (Aktorstwo)"
-    },
-    {
-      "name": "ENTERTAIN_COMEDY",
-      "nameTranslation": "Występy (Komedianctwo)"
-    },
-    {
-      "name": "ENTERTAIN_SINGING",
-      "nameTranslation": "Występy (Śpiewanie)"
-    },
-    {
-      "name": "ENTERTAIN_STORYTELLING",
-      "nameTranslation": "Występy (Gawędziarstwo)"
     },
     {
       "name": "GAMBLE",
@@ -448,124 +405,12 @@
       "nameTranslation": "Leczenie"
     },
     {
-      "name": "LANGUAGE_BATTLE_TONGUE",
-      "nameTranslation": "Język (Język Bitewny)"
-    },
-    {
-      "name": "LANGUAGE_BRETONNIAN",
-      "nameTranslation": "Język (Bretoński)"
-    },
-    {
-      "name": "LANGUAGE_CLASSICAL",
-      "nameTranslation": "Język (Klasyczny)"
-    },
-    {
-      "name": "LANGUAGE_GUILDER",
-      "nameTranslation": "Język (Gildii)"
-    },
-    {
-      "name": "LANGUAGE_KHAZALID",
-      "nameTranslation": "Język (Khazalid)"
-    },
-    {
       "name": "LANGUAGE_MAGICK",
       "nameTranslation": "Język (Magiczny)"
     },
     {
-      "name": "LANGUAGE_THIEF",
-      "nameTranslation": "Język (Złodziei)"
-    },
-    {
-      "name": "LANGUAGE_TILEAN",
-      "nameTranslation": "Język (Tileański)"
-    },
-    {
-      "name": "LORE_ENGINEERING",
-      "nameTranslation": "Wiedza (Inżynieria)"
-    },
-    {
-      "name": "LORE_GEOLOGY",
-      "nameTranslation": "Wiedza (Geologia)"
-    },
-    {
-      "name": "LORE_HERALDRY",
-      "nameTranslation": "Wiedza (Heraldyka)"
-    },
-    {
-      "name": "LORE_HISTORY",
-      "nameTranslation": "Wiedza (Historia)"
-    },
-    {
-      "name": "LORE_LAW",
-      "nameTranslation": "Wiedza (Prawo)"
-    },
-    {
-      "name": "LORE_MAGICK",
-      "nameTranslation": "Wiedza (Magia)"
-    },
-    {
-      "name": "LORE_METALLURGY",
-      "nameTranslation": "Wiedza (Metalurgia)"
-    },
-    {
-      "name": "LORE_SCIENCE",
-      "nameTranslation": "Wiedza (Nauka)"
-    },
-    {
-      "name": "LORE_THEOLOGY",
-      "nameTranslation": "Wiedza (Teologia)"
-    },
-    {
-      "name": "PERFORM_ACROBATICS",
-      "nameTranslation": "Kuglarstwo (Akrobatyka)"
-    },
-    {
-      "name": "PERFORM_CLOWNING",
-      "nameTranslation": "Kuglarstwo (Komedianctwo)"
-    },
-    {
-      "name": "PERFORM_DANCING",
-      "nameTranslation": "Kuglarstwo (Taniec)"
-    },
-    {
-      "name": "PERFORM_FIREBREATHING",
-      "nameTranslation": "Kuglarstwo (Połykanie Ognia)"
-    },
-    {
-      "name": "PERFORM_JUGGLING",
-      "nameTranslation": "Kuglarstwo (Żonglowanie)"
-    },
-    {
-      "name": "PERFORM_MIMING",
-      "nameTranslation": "Kuglarstwo (Mimika)"
-    },
-    {
-      "name": "PERFORM_ROPE_WALKING",
-      "nameTranslation": "Kuglarstwo (Chodzenie po Linie)"
-    },
-    {
       "name": "PICK_LOCK",
       "nameTranslation": "Otwieranie Zamków"
-    },
-    {
-      "name": "PLAY_BAGPIPE",
-      "nameTranslation": "Muzyka (Dudy)"
-    },
-    {
-      "name": "PLAY_LUTE",
-      "nameTranslation": "Muzyka (Lutnia)"
-    },
-    {
-      "name": "PLAY_HARP",
-      "nameTranslation": "Muzyka (Harfa)"
-    },
-    {
-      "name": "PLAY_HORN",
-      "nameTranslation": "Muzyka (Obój)"
-    },
-    {
-      "name": "PLAY_VIOLIN",
-      "nameTranslation": "Muzyka (Skrzypce)"
     },
     {
       "name": "PRAY",
@@ -628,30 +473,6 @@
       "nameTranslation": "Żeglarstwo (Wilcze Statki)"
     },
     {
-      "name": "SECRET_SIGNS_GREY_ORDER",
-      "nameTranslation": "Sekretne Znaki (Kolegium Cienia)"
-    },
-    {
-      "name": "SECRET_SIGNS_GUILD",
-      "nameTranslation": "Sekretne Znaki (Gildii)"
-    },
-    {
-      "name": "SECRET_SIGNS_RANGER",
-      "nameTranslation": "Sekretne Znaki (Łowców)"
-    },
-    {
-      "name": "SECRET_SIGNS_SCOUT",
-      "nameTranslation": "Sekretne Znaki (Zwiadowców)"
-    },
-    {
-      "name": "SECRET_SIGNS_THIEF",
-      "nameTranslation": "Sekretne Znaki (Złodziei)"
-    },
-    {
-      "name": "SECRET_SIGNS_VAGABOND",
-      "nameTranslation": "Sekretne Znaki (Włóczęgów)"
-    },
-    {
       "name": "SET_TRAP",
       "nameTranslation": "Zastawianie Pułapek"
     },
@@ -668,36 +489,40 @@
       "nameTranslation": "Tropienie"
     },
     {
-      "name": "TRADE_APOTHECARY",
-      "nameTranslation": "Rzemiosło (Aptekarstwo)"
+      "name": "TRADE",
+      "nameTranslation": "Rzemiosło"
     },
     {
-      "name": "TRADE_CALLIGRAPHER",
-      "nameTranslation": "Rzemiosło (Kaligrafia)"
+      "name": "ART",
+      "nameTranslation": "Sztuka"
     },
     {
-      "name": "TRADE_CHANDLER",
-      "nameTranslation": "Rzemiosło (Świecarstwo)"
+      "name": "LORE",
+      "nameTranslation": "Wiedza"
     },
     {
-      "name": "TRADE_CARPENTER",
-      "nameTranslation": "Rzemiosło (Cieśla)"
+      "name": "LANGUAGE",
+      "nameTranslation": "Język"
     },
     {
-      "name": "TRADE_COOK",
-      "nameTranslation": "Rzemiosło (Gotowanie)"
+      "name": "ENTERTAIN",
+      "nameTranslation": "Występy"
     },
     {
-      "name": "TRADE_EMBALMER",
-      "nameTranslation": "Rzemiosło (Balsamowanie)"
+      "name": "PERFORM",
+      "nameTranslation": "Kuglarstwo"
     },
     {
-      "name": "TRADE_SMITH",
-      "nameTranslation": "Rzemiosło (Kowalstwo)"
+      "name": "PLAY",
+      "nameTranslation": "Muzyka"
     },
     {
-      "name": "TRADE_TANNER",
-      "nameTranslation": "Rzemiosło (Garbarstwo)"
+      "name": "SECRET_SIGNS",
+      "nameTranslation": "Sekretne Znaki"
+    },
+    {
+      "name": "STEALTH",
+      "nameTranslation": "Skradanie"
     }
   ],
   "talents": [
@@ -1072,33 +897,8 @@
       "description": "Maksimum: Bonus ze Zwinności\n\nTesty: Broń Zasięgowa, gdy wykorzystujesz Talent Błyskawiczny Strzał\n\nJeśli posiadasz naładowaną broń dystansową, możesz z niej wystrzelić poza Kolejnością Inicjatywy, zanim zareaguje którykolwiek z uczestników walki. Rzut na trafienie wykonaj z uwzględnieniem wszystkich modyfikatorów. Użycie tego Talentu wymaga poświęcenia zarówno Akcji, jak i Ruchu z nadchodzącej Tury i kiedy nadejdzie twoja kolej, będą one traktowane jako wykorzystane. Jeśli ten Talent chcą wykorzystać dwie lub więcej postaci, pierwsza strzela ta, która wykupiła go więcej razy. Jeśli i na tym polu mamy remis, obydwie postacie strzelają równocześnie i wynik ich ataków powinien być rozliczony jednocześnie."
     },
     {
-      "name": "FEARLESS_BEASTMEN",
-      "nameTranslation": "Nieustraszony (Zwierzoludzie)",
-      "description": "Maksimum: Bonus z Siły Woli\n\nTesty: Opanowanie przeciwko wrogiemu Zastraszaniu oraz Testom Strachu i Grozy\n\nJesteś tak odważny lub szalony, że strach przed pewnymi istotami jest dla ciebie wspomnieniem. Za pomocą jednego Przeciętnego (+20) Testu Opanowania możesz sprawić, że nie dotyczą cię efekty Zastraszania, Strachu i Grozy, powodowane przez określoną grupę wrogów. Oto typowe przykłady takich wrogów: Banici, Czarownice, Strażnicy, Wampiry, Zielonoskórzy, Zwierzoludzie."
-    },
-    {
-      "name": "FEARLESS_GREENSKINS",
-      "nameTranslation": "Nieustraszony (Zielonoskórzy)",
-      "description": "Maksimum: Bonus z Siły Woli\n\nTesty: Opanowanie przeciwko wrogiemu Zastraszaniu oraz Testom Strachu i Grozy\n\nJesteś tak odważny lub szalony, że strach przed pewnymi istotami jest dla ciebie wspomnieniem. Za pomocą jednego Przeciętnego (+20) Testu Opanowania możesz sprawić, że nie dotyczą cię efekty Zastraszania, Strachu i Grozy, powodowane przez określoną grupę wrogów. Oto typowe przykłady takich wrogów: Banici, Czarownice, Strażnicy, Wampiry, Zielonoskórzy, Zwierzoludzie."
-    },
-    {
-      "name": "FEARLESS_OUTLAWS",
-      "nameTranslation": "Nieustraszony (Bandyci)",
-      "description": "Maksimum: Bonus z Siły Woli\n\nTesty: Opanowanie przeciwko wrogiemu Zastraszaniu oraz Testom Strachu i Grozy\n\nJesteś tak odważny lub szalony, że strach przed pewnymi istotami jest dla ciebie wspomnieniem. Za pomocą jednego Przeciętnego (+20) Testu Opanowania możesz sprawić, że nie dotyczą cię efekty Zastraszania, Strachu i Grozy, powodowane przez określoną grupę wrogów. Oto typowe przykłady takich wrogów: Banici, Czarownice, Strażnicy, Wampiry, Zielonoskórzy, Zwierzoludzie."
-    },
-    {
-      "name": "FEARLESS_VAMPIRES",
-      "nameTranslation": "Nieustraszony (Wampiry)",
-      "description": "Maksimum: Bonus z Siły Woli\n\nTesty: Opanowanie przeciwko wrogiemu Zastraszaniu oraz Testom Strachu i Grozy\n\nJesteś tak odważny lub szalony, że strach przed pewnymi istotami jest dla ciebie wspomnieniem. Za pomocą jednego Przeciętnego (+20) Testu Opanowania możesz sprawić, że nie dotyczą cię efekty Zastraszania, Strachu i Grozy, powodowane przez określoną grupę wrogów. Oto typowe przykłady takich wrogów: Banici, Czarownice, Strażnicy, Wampiry, Zielonoskórzy, Zwierzoludzie."
-    },
-    {
-      "name": "FEARLESS_WATCHMEN",
-      "nameTranslation": "Nieustraszony (Strażnicy)",
-      "description": "Maksimum: Bonus z Siły Woli\n\nTesty: Opanowanie przeciwko wrogiemu Zastraszaniu oraz Testom Strachu i Grozy\n\nJesteś tak odważny lub szalony, że strach przed pewnymi istotami jest dla ciebie wspomnieniem. Za pomocą jednego Przeciętnego (+20) Testu Opanowania możesz sprawić, że nie dotyczą cię efekty Zastraszania, Strachu i Grozy, powodowane przez określoną grupę wrogów. Oto typowe przykłady takich wrogów: Banici, Czarownice, Strażnicy, Wampiry, Zielonoskórzy, Zwierzoludzie."
-    },
-    {
-      "name": "FEARLESS_WITCHES",
-      "nameTranslation": "Nieustraszony (Wiedźmy)",
+      "name": "FEARLESS",
+      "nameTranslation": "Nieustraszony",
       "description": "Maksimum: Bonus z Siły Woli\n\nTesty: Opanowanie przeciwko wrogiemu Zastraszaniu oraz Testom Strachu i Grozy\n\nJesteś tak odważny lub szalony, że strach przed pewnymi istotami jest dla ciebie wspomnieniem. Za pomocą jednego Przeciętnego (+20) Testu Opanowania możesz sprawić, że nie dotyczą cię efekty Zastraszania, Strachu i Grozy, powodowane przez określoną grupę wrogów. Oto typowe przykłady takich wrogów: Banici, Czarownice, Strażnicy, Wampiry, Zielonoskórzy, Zwierzoludzie."
     },
     {
@@ -1162,38 +962,8 @@
       "description": "Maksimum: Bonus z Wytrzymałości\n\nNa stałe zwiększasz swoją Żywotność o Bonus z Wytrzymałości. Jeśli ten się zwiększy, wraz z nim wzrośnie również twoja Żywotność wynikająca z tego Talentu."
     },
     {
-      "name": "HATRED_BEASTMEN",
-      "nameTranslation": "Nienawiść (Zwierzoludzie)",
-      "description": "Maksimum: Bonus z Siły Woli\n\nTesty: Siła Woli (Opieranie się Grupie)\n\nCoś w Starym Świecie powoduje twoją nienawiść, jak to opisano na stronie 190. Każde wykupienie tego Talentu to jej nowy obiekt, a przykładowe grupy to: Banici, Czarownice, Ożywieńcy, Potwory, Sigmaryci, Zielonoskórzy, Zwierzoludzie."
-    },
-    {
-      "name": "HATRED_GRENSKINS",
-      "nameTranslation": "Nienawiść (Zielonoskórzy)",
-      "description": "Maksimum: Bonus z Siły Woli\n\nTesty: Siła Woli (Opieranie się Grupie)\n\nCoś w Starym Świecie powoduje twoją nienawiść, jak to opisano na stronie 190. Każde wykupienie tego Talentu to jej nowy obiekt, a przykładowe grupy to: Banici, Czarownice, Ożywieńcy, Potwory, Sigmaryci, Zielonoskórzy, Zwierzoludzie."
-    },
-    {
-      "name": "HATRED_MONSTERS",
-      "nameTranslation": "Nienawiść (Potwory)",
-      "description": "Maksimum: Bonus z Siły Woli\n\nTesty: Siła Woli (Opieranie się Grupie)\n\nCoś w Starym Świecie powoduje twoją nienawiść, jak to opisano na stronie 190. Każde wykupienie tego Talentu to jej nowy obiekt, a przykładowe grupy to: Banici, Czarownice, Ożywieńcy, Potwory, Sigmaryci, Zielonoskórzy, Zwierzoludzie."
-    },
-    {
-      "name": "HATRED_OUTLAWS",
-      "nameTranslation": "Nienawiść (Bandyci)",
-      "description": "Maksimum: Bonus z Siły Woli\n\nTesty: Siła Woli (Opieranie się Grupie)\n\nCoś w Starym Świecie powoduje twoją nienawiść, jak to opisano na stronie 190. Każde wykupienie tego Talentu to jej nowy obiekt, a przykładowe grupy to: Banici, Czarownice, Ożywieńcy, Potwory, Sigmaryci, Zielonoskórzy, Zwierzoludzie."
-    },
-    {
-      "name": "HATRED_SIGMARITES",
-      "nameTranslation": "Nienawiść (Sigmaryci)",
-      "description": "Maksimum: Bonus z Siły Woli\n\nTesty: Siła Woli (Opieranie się Grupie)\n\nCoś w Starym Świecie powoduje twoją nienawiść, jak to opisano na stronie 190. Każde wykupienie tego Talentu to jej nowy obiekt, a przykładowe grupy to: Banici, Czarownice, Ożywieńcy, Potwory, Sigmaryci, Zielonoskórzy, Zwierzoludzie."
-    },
-    {
-      "name": "HATRED_UNDEAD",
-      "nameTranslation": "Nienawiść (Ożywieńcy)",
-      "description": "Maksimum: Bonus z Siły Woli\n\nTesty: Siła Woli (Opieranie się Grupie)\n\nCoś w Starym Świecie powoduje twoją nienawiść, jak to opisano na stronie 190. Każde wykupienie tego Talentu to jej nowy obiekt, a przykładowe grupy to: Banici, Czarownice, Ożywieńcy, Potwory, Sigmaryci, Zielonoskórzy, Zwierzoludzie."
-    },
-    {
-      "name": "HATRED_WITCHES",
-      "nameTranslation": "Nienawiść (Wiedźmy)",
+      "name": "HATRED",
+      "nameTranslation": "Nienawiść",
       "description": "Maksimum: Bonus z Siły Woli\n\nTesty: Siła Woli (Opieranie się Grupie)\n\nCoś w Starym Świecie powoduje twoją nienawiść, jak to opisano na stronie 190. Każde wykupienie tego Talentu to jej nowy obiekt, a przykładowe grupy to: Banici, Czarownice, Ożywieńcy, Potwory, Sigmaryci, Zielonoskórzy, Zwierzoludzie."
     },
     {
@@ -1622,33 +1392,8 @@
       "description": "aksimum: Bonus z Siły Woli\n\nTesty: Opanowanie, by przełamać Stan Panika\n\nNieważne, jak fatalne jest twoje położenie, ty się po prostu nie poddajesz. Na koniec swojej Tury i na koniec całej Rundy możesz wykonać Test Opanowania, by otrząsnąć się ze Stanu Panika (patrz strona 168)."
     },
     {
-      "name": "STRIDER_COASTAL",
-      "nameTranslation": "Doświadczony Wędrowiec (Wybrzeża)",
-      "description": "Maksimum: Bonus ze Zwinności\n\nTesty: Atletyki podczas podróży w terenie\n\nMasz doświadczenie w wędrówce przez dzicz i potrafisz dobrze wybierać drogę. Nie działają na ciebie negatywne modyfikatory wynikające z wpływu wybranego terenu. Oto lista przykładów: Lasy, Pustynie, Moczary, Teren Kamienisty, Tundra, Wybrzeża."
-    },
-    {
-      "name": "STRIDER_DESERTS",
-      "nameTranslation": "Doświadczony Wędrowiec (Pustynie)",
-      "description": "Maksimum: Bonus ze Zwinności\n\nTesty: Atletyki podczas podróży w terenie\n\nMasz doświadczenie w wędrówce przez dzicz i potrafisz dobrze wybierać drogę. Nie działają na ciebie negatywne modyfikatory wynikające z wpływu wybranego terenu. Oto lista przykładów: Lasy, Pustynie, Moczary, Teren Kamienisty, Tundra, Wybrzeża."
-    },
-    {
-      "name": "STRIDER_MARSHES",
-      "nameTranslation": "Doświadczony Wędrowiec (Moczary)",
-      "description": "Maksimum: Bonus ze Zwinności\n\nTesty: Atletyki podczas podróży w terenie\n\nMasz doświadczenie w wędrówce przez dzicz i potrafisz dobrze wybierać drogę. Nie działają na ciebie negatywne modyfikatory wynikające z wpływu wybranego terenu. Oto lista przykładów: Lasy, Pustynie, Moczary, Teren Kamienisty, Tundra, Wybrzeża."
-    },
-    {
-      "name": "STRIDER_ROCKY",
-      "nameTranslation": "Doświadczony Wędrowiec (Teren Kamienisty)",
-      "description": "Maksimum: Bonus ze Zwinności\n\nTesty: Atletyki podczas podróży w terenie\n\nMasz doświadczenie w wędrówce przez dzicz i potrafisz dobrze wybierać drogę. Nie działają na ciebie negatywne modyfikatory wynikające z wpływu wybranego terenu. Oto lista przykładów: Lasy, Pustynie, Moczary, Teren Kamienisty, Tundra, Wybrzeża."
-    },
-    {
-      "name": "STRIDER_TUNDRA",
-      "nameTranslation": "Doświadczony Wędrowiec (Tundra)",
-      "description": "Maksimum: Bonus ze Zwinności\n\nTesty: Atletyki podczas podróży w terenie\n\nMasz doświadczenie w wędrówce przez dzicz i potrafisz dobrze wybierać drogę. Nie działają na ciebie negatywne modyfikatory wynikające z wpływu wybranego terenu. Oto lista przykładów: Lasy, Pustynie, Moczary, Teren Kamienisty, Tundra, Wybrzeża."
-    },
-    {
-      "name": "STRIDER_WOODLANDS",
-      "nameTranslation": "Doświadczony Wędrowiec (Lasy)",
+      "name": "STRIDER",
+      "nameTranslation": "Doświadczony Wędrowiec",
       "description": "Maksimum: Bonus ze Zwinności\n\nTesty: Atletyki podczas podróży w terenie\n\nMasz doświadczenie w wędrówce przez dzicz i potrafisz dobrze wybierać drogę. Nie działają na ciebie negatywne modyfikatory wynikające z wpływu wybranego terenu. Oto lista przykładów: Lasy, Pustynie, Moczary, Teren Kamienisty, Tundra, Wybrzeża."
     },
     {

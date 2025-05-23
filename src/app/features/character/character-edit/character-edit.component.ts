@@ -155,7 +155,7 @@ export class CharacterEditComponent implements OnInit {
     const group = this.editCharacterForm.value.group
     const status = this.editCharacterForm.value.status
     const characteristics = <CharacterCharacteristic[]>this.editCharacterForm.value.characteristics
-    const skills = <ValueModel<Model>[]>this.editCharacterForm.value.skills
+    const skills = <ValueModel<Skill>[]>this.editCharacterForm.value.skills
     const talents = <ValueModel<Talent>[]>this.editCharacterForm.value.talents
     const traits = <ValueModel<Trait>[]>this.editCharacterForm.value.traits
     const isRightHanded = this.editCharacterForm.value.isRightHanded
@@ -273,6 +273,7 @@ export class CharacterEditComponent implements OnInit {
           'id': [characterSkill.id],
           'model': [characterSkill.model],
           'value': [characterSkill.value],
+          'specialisation': [characterSkill.specialisation],
         })
       );
     }
@@ -285,6 +286,7 @@ export class CharacterEditComponent implements OnInit {
           'id': [characterTalent.id],
           'model': [characterTalent.model],
           'value': [characterTalent.value],
+          'specialisation': [characterTalent.specialisation],
         })
       );
     }

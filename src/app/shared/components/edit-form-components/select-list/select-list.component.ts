@@ -83,6 +83,10 @@ export class SelectListComponent implements OnInit {
     }
   }
 
+  checkIfHasSpecialisation(formArray: AbstractControl) {
+    return formArray.value.model?.hasSpecialisation ?? false;
+  }
+
   onAddFormArray() {
     (this.editCharacterForm.get(this.formArrayName) as FormArray).push(this.createFormArray());
   }
@@ -102,6 +106,10 @@ export class SelectListComponent implements OnInit {
 
     if (this.formArrayName === 'injuries') {
       newFormGroup.addControl('bodyLocalization', this.formBuilder.control(null));
+    }
+
+    if (this.formArrayName === 'skills' || this.formArrayName === 'talents') {
+      newFormGroup.addControl('specialisation', this.formBuilder.control(null));
     }
 
     return newFormGroup;

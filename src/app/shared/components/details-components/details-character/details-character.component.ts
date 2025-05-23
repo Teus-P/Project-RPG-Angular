@@ -14,9 +14,6 @@ import {
 } from "../../dialog-window/edit-armor-points-window/edit-armor-points-window.component";
 import {CharacterArmor} from "../../../../core/model/armor/character-armor.model";
 import {CharacterService} from "../../../../core/services/character-service/character.service";
-import {ValueModel} from "../../../../core/model/value-model";
-import {Talent} from "../../../../core/model/talent/talent.model";
-import {Skill} from "../../../../core/model/skill/skill.model";
 
 export interface Group {
   name: string;
@@ -41,10 +38,7 @@ export class DetailsCharacterComponent implements OnInit {
   armorsColumns: string[] = ['name', 'category', 'localization', 'armorPoints', 'penalties', 'qualities']
 
   talentsCheckbox: boolean = this.isSkirmishMode;
-  talentsList: ValueModel<Talent>[] = [];
-
   skillsCheckbox: boolean = this.isSkirmishMode;
-  skillsList: ValueModel<Skill>[] = [];
 
   @ViewChild(MatMenuTrigger) contextMenu!: MatMenuTrigger
   contextMenuPosition = {x: '0px', y: '0px'}
@@ -57,10 +51,7 @@ export class DetailsCharacterComponent implements OnInit {
 
   ngOnInit(): void {
     this.talentsCheckbox = this.isSkirmishMode;
-    this.talentsList = this.character.getTalentsList(this.isSkirmishMode);
-
     this.skillsCheckbox = this.isSkirmishMode;
-    this.skillsList = this.character.getSkillsList(this.isSkirmishMode);
   }
 
   private fillCharacteristicsColumn() {
@@ -142,10 +133,10 @@ export class DetailsCharacterComponent implements OnInit {
   }
 
   talentsCheckboxUpdate(checked: boolean) {
-    this.talentsList = this.character.getTalentsList(checked);
+    this.talentsCheckbox = checked;
   }
 
   skillsCheckboxUpdate(checked: boolean) {
-    this.skillsList = this.character.getSkillsList(checked);
+    this.skillsCheckbox = checked;
   }
 }

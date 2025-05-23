@@ -7,7 +7,6 @@ import {Note} from "../note/note.model";
 import {ValueModel} from "../value-model";
 import {Talent} from "../talent/talent.model";
 import {Trait} from "../trait/trait.model";
-import {Model} from "../model";
 import {CharacterArmor} from "../armor/character-armor.model";
 import {Skill} from "../skill/skill.model";
 
@@ -31,7 +30,7 @@ export class Character {
   spells!: Spell[]
   type!: string
 
-  constructor(name?: string, description?: string, groupType?: string, group?: string, status?: string, characteristics?: CharacterCharacteristic[], skills?: ValueModel<Model>[], talents?: ValueModel<Talent>[], traits?: ValueModel<Trait>[], rightHanded?: boolean, weapons?: CharacterWeapon[], armor?: CharacterArmor[], conditions?: CharacterCondition[], notes?: Note[], spells?: Spell[], bodyLocalizations?: CharacterBodyLocalization[]) {
+  constructor(name?: string, description?: string, groupType?: string, group?: string, status?: string, characteristics?: CharacterCharacteristic[], skills?: ValueModel<Skill>[], talents?: ValueModel<Talent>[], traits?: ValueModel<Trait>[], rightHanded?: boolean, weapons?: CharacterWeapon[], armor?: CharacterArmor[], conditions?: CharacterCondition[], notes?: Note[], spells?: Spell[], bodyLocalizations?: CharacterBodyLocalization[]) {
     this.name = <string>name
     this.description = <string>description
     this.groupType = <string>groupType

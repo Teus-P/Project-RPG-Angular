@@ -31,6 +31,15 @@
           </mat-select>
         </mat-form-field>
       </div>
+
+      <div fxFlex="20"
+           *ngIf="(formArrayName==='skills' || formArrayName==='talents') && checkIfHasSpecialisation(formArray)">
+        <mat-form-field appearance="fill" class="example-full-width">
+          <mat-label>{{ text.getText().specialisationNameLabel }}</mat-label>
+          <input matInput type="text" formControlName="specialisation">
+        </mat-form-field>
+      </div>
+
       <div fxFlex="10">
         <mat-form-field class="example-full-width" appearance="fill">
           <mat-label>{{ text.getText().valueLabel }}</mat-label>

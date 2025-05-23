@@ -3,11 +3,13 @@ import {Model} from "../model";
 export class Talent extends Model {
   public maxLevel: string;
   public isSkirmishTalent: boolean;
+  public hasSpecialisation: boolean;
 
-  constructor(name?: string, nameTranslation?: string, maxLevel?: string, isSkirmishTalent?: boolean) {
+  constructor(name?: string, nameTranslation?: string, maxLevel?: string, isSkirmishTalent?: boolean, hasSpecialisation?: boolean) {
     super(name, nameTranslation);
     this.maxLevel = <string>maxLevel;
     this.isSkirmishTalent = <boolean>isSkirmishTalent;
+    this.hasSpecialisation = <boolean>hasSpecialisation;
   }
 
   static fromJSON(object: Object): Talent {

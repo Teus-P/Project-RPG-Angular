@@ -3,12 +3,14 @@ export class Model {
   public name: string;
   public nameTranslation: string;
   public description: string
+  public hasSpecialisation: boolean;
 
-  constructor(name?: string, nameTranslation?: string, id?: number, description?: string) {
+  constructor(name?: string, nameTranslation?: string, id?: number, description?: string, hasSpecialisation?: boolean) {
     this.id = <number>id;
     this.name = <string>name;
     this.nameTranslation = <string>nameTranslation;
     this.description = <string>description;
+    this.hasSpecialisation = <boolean>hasSpecialisation;
   }
 
   static fromJSON(object: Object): Model {

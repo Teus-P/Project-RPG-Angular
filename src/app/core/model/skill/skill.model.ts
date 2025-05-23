@@ -2,10 +2,12 @@ import {Model} from "../model";
 
 export class Skill extends Model {
   public isSkirmishSkill: boolean;
+  public hasSpecialisation: boolean;
 
-  constructor(name?: string, nameTranslation?: string, isSkirmishSkill?: boolean) {
+  constructor(name?: string, nameTranslation?: string, isSkirmishSkill?: boolean, hasSpecialisation?: boolean) {
     super(name, nameTranslation);
     this.isSkirmishSkill = <boolean>isSkirmishSkill;
+    this.hasSpecialisation = <boolean>hasSpecialisation;
   }
 
   static fromJSON(object: Object): Skill {
