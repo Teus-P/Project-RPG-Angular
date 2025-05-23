@@ -132,6 +132,15 @@ export class DetailsCharacterComponent implements OnInit {
     })
   }
 
+  calculateMeleeWeaponDamage(weaponDamage: number) {
+    let characterStrength = +this.character.strength.value.toString()[0];
+    let strikeMightyBlow = this.character.talents.find(talent => talent.model.name === 'STRIKE_MIGHTY_BLOW');
+    if (strikeMightyBlow) {
+      characterStrength += +strikeMightyBlow.value;
+    }
+    return characterStrength + weaponDamage;
+  }
+
   talentsCheckboxUpdate(checked: boolean) {
     this.talentsCheckbox = checked;
   }
