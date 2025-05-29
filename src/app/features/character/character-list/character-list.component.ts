@@ -69,4 +69,17 @@ export class CharacterListComponent implements OnInit {
       queryParamsHandling: 'merge'
     })
   }
+
+  //Thanks to trackBy, the loop checks only the elements that have been modified
+  trackByGroupType(index: number, type: { name: string }) {
+    return type.name;
+  }
+
+  trackByGroupName(index: number, group: { name: string }) {
+    return group.name;
+  }
+
+  trackByCharacterId(index: number, character: Character) {
+    return character.id
+  }
 }
