@@ -1,0 +1,15 @@
+<br>
+<div class="battlefield" #battlefield >
+  <div *ngFor="let token of tokens"
+       class="token"
+       [ngClass]="token.isDead ? 'dead-character' : ''"
+       [ngStyle]="{
+       'top.px': token.y,
+       'left.px': token.x,
+       'background-color': 'rgb(' + token.colorR + ',' + token.colorG + ',' + token.colorB + ')'
+       }"
+       [title]="token.name"
+       (mousedown)="onDragStart($event, token)">
+    {{ token.shortName }}
+  </div>
+</div>

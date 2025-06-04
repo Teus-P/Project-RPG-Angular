@@ -2,12 +2,12 @@
     <button mat-raised-button color="primary" (click)="onAddCharacter()">{{text.getText().addCharacterLabel}}</button>
 </div>
 <hr>
-<mat-tab-group>
-  <mat-tab *ngFor="let type of characterGroupsTypes" label="{{type.name}}">
+<mat-tab-group [dynamicHeight]="true">
+  <mat-tab *ngFor="let type of characterGroupsTypes; trackBy: trackByGroupType" label="{{type.name}}">
     <div fxLayout="row">
       <div fxFlex="100">
         <mat-accordion>
-          <mat-expansion-panel hideToggle *ngFor="let characterGroup of type.groups">
+          <mat-expansion-panel hideToggle *ngFor="let characterGroup of type.groups; trackBy: trackByGroupName">
             <mat-expansion-panel-header>
               <mat-panel-title>
                 <h6>{{characterGroup.name}}</h6>
@@ -28,7 +28,7 @@
             <mat-divider></mat-divider>
             <mat-nav-list>
               <app-character-item
-                *ngFor="let character of characterGroup.characters"
+                *ngFor="let character of characterGroup.characters; trackBy: trackByCharacterId"
                 [character]="character"
                 [index]="character.id">
               </app-character-item>

@@ -36,16 +36,29 @@ export class CharacterService {
   }
 
   async storeCharacter(character: Character) {
-    await this.putCharacter(character).then(
-      async () => {
-        await this.fetchCharacters().then()
+    await this.putCharacter(character).then(data => {
+        if (data != null) {
+          let newCharacter = Character.fromJSON(data)
+          this.translateService.prepareCharacter(newCharacter)
+          this.charactersList.find(character => character.id == newCharacter.id)
+          const index = this.charactersList.findIndex(character => character.id == newCharacter.id)
+
+          if (index !== -1) {
+            this.charactersList[index] = newCharacter
+          } else {
+            this.charactersList.push(newCharacter)
+          }
+
+          localStorage.setItem('characters', JSON.stringify(this.charactersList))
+          this.charactersChanged.next(this.charactersList)
+        }
       }
     )
   }
 
   private putCharacter(character: Character) {
     return this.http
-      .put('http://localhost:8080/character', character)
+      .put<Character>('http://localhost:8080/character', character)
       .toPromise()
   }
 

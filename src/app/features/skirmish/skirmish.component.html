@@ -2,7 +2,14 @@
   <div fxFlex="35">
     <app-skirmish-characters-list></app-skirmish-characters-list>
   </div>
-  <div fxFlex="65">
-    <router-outlet></router-outlet>
+  <div fxFlex="65" class="tab">
+    <mat-tab-group [dynamicHeight]="true">
+      <mat-tab label="Character">
+        <router-outlet></router-outlet>
+      </mat-tab>
+      <mat-tab label="Map">
+        <app-skirmish-battlefield></app-skirmish-battlefield>
+      </mat-tab>
+    </mat-tab-group>
   </div>
 </div>
