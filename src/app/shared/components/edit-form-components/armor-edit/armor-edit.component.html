@@ -10,7 +10,8 @@
                  formControlName="armor"
                  required
                  (focusout)="onFocusOut(i)"
-                 [matAutocomplete]="autoGroup">
+                 [matAutocomplete]="autoGroup"
+          >
           <mat-autocomplete #autoGroup="matAutocomplete"
                             (optionSelected)="validateSelection(i)"
                             [displayWith]="displayFn">

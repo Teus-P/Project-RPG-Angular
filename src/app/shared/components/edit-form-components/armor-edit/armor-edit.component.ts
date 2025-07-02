@@ -73,10 +73,12 @@ export class ArmorEditComponent implements OnInit {
     if (typeof control.value.armor == 'string') {
       const result = this._filterGroup(control.value.armor.toLowerCase());
       if (result.length == 1 && result[0].armors.length == 1) {
-        control.patchValue({armor: result[0].armors[0]});
+        control.patchValue({armor: result[0].armors[0], id: 0});
       } else {
         control.patchValue({armor: ''});
       }
+    } else  {
+      control.patchValue({id: 0});
     }
   }
 
