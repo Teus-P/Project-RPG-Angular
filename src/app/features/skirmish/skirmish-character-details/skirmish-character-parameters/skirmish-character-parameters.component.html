@@ -6,14 +6,27 @@
         <ng-container matColumnDef="isAlive">
           <th mat-header-cell *matHeaderCellDef>{{text.getText().isAliveLabel}}</th>
           <td mat-cell *matCellDef="let element">
-            <span *ngIf="element.isDead">Nie</span>
-            <span *ngIf="!element.isDead">Tak</span>
+<!--            <span *ngIf="element.isDead">Nie</span>-->
+<!--            <span *ngIf="!element.isDead">Tak</span>-->
+            <mat-button-toggle-group
+              [value]="element.isDead"
+              (change)="onToggleAlive($event.value)"
+              appearance="legacy">
+              <mat-button-toggle [value]="false">{{text.getText().yesLabel}}</mat-button-toggle>
+              <mat-button-toggle [value]="true">{{text.getText().noLabel}}</mat-button-toggle>
+            </mat-button-toggle-group>
           </td>
         </ng-container>
         <ng-container matColumnDef="currentWounds">
           <th mat-header-cell *matHeaderCellDef>{{text.getText().woundsLabel}}</th>
           <td mat-cell *matCellDef="let element">
             {{element.currentWounds}}/{{element.character.wounds.value}}
+            <button mat-mini-fab color="basic" type="button" style="margin-left: 20px" (click)="addWoundPoint()">
+              +
+            </button>
+            <button mat-mini-fab color="basic" type="button" (click)="removeWoundPoint()">
+              -
+            </button>
           </td>
         </ng-container>
         <ng-container matColumnDef="initiative">

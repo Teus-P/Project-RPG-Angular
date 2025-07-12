@@ -25,6 +25,22 @@ export class SkirmishService {
     return this.http.post('http://localhost:8080/receiveDamage', receivedDamage).toPromise().then()
   }
 
+  async addWoundPoint(skirmishCharacterId: number) {
+    await this.postAddWoundPoint(skirmishCharacterId)
+  }
+
+  private async postAddWoundPoint(skirmishCharacterId: number) {
+    return this.http.post('http://localhost:8080/addWoundPoint', skirmishCharacterId).toPromise().then()
+  }
+
+  async removeWoundPoint(skirmishCharacterId: number) {
+    await this.postRemoveWoundPoint(skirmishCharacterId)
+  }
+
+  private async postRemoveWoundPoint(skirmishCharacterId: number) {
+    return this.http.post('http://localhost:8080/removeWoundPoint', skirmishCharacterId).toPromise().then()
+  }
+
   async addAdvantagePoint(skirmishCharacterId: number) {
     await this.postAddAdvantagePoint(skirmishCharacterId)
   }
@@ -84,7 +100,7 @@ export class SkirmishService {
   }
 
   async addSkirmishGroup(skirmishGroup: SkirmishGroup) {
-    const newGroup= await this.http.post<SkirmishGroup>('http://localhost:8080/skirmishGroups', skirmishGroup).toPromise()
+    const newGroup = await this.http.post<SkirmishGroup>('http://localhost:8080/skirmishGroups', skirmishGroup).toPromise()
     await this.fetchSkirmishGroups().then()
     return newGroup
   }
@@ -95,5 +111,10 @@ export class SkirmishService {
         await this.fetchSkirmishGroups().then()
       }
     )
+  }
+
+  async changeIsDeadValue(id: number, value: any) {
+    const body = {id, value}
+    return this.http.post('http://localhost:8080/changeIsDeadValue', body).toPromise().then()
   }
 }
