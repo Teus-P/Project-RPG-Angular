@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core'
 import {HttpClient} from "@angular/common/http"
 import {ReceivedDamage} from "../../model/receive-damage/receive-damage.model"
-import {CharacterBodyLocalization} from "../../model/body-localization/character-body-localization.model"
 import {AddConditions} from "../../model/condition/add-conditions.model"
 import {SkirmishGroup} from "../../model/skirmish/skirmish-group.model";
 import {Subject} from "rxjs";
@@ -65,22 +64,6 @@ export class SkirmishService {
   async removeGroupAdvantagePoint(groupId: number) {
     await this.http.post('http://localhost:8080/removeGroupAdvantagePoint', groupId).toPromise()
     await this.fetchSkirmishGroups()
-  }
-
-  async addAdditionalArmorPoint(bodyLocalization: CharacterBodyLocalization) {
-    await this.postAddAdditionalArmorPoint(bodyLocalization)
-  }
-
-  private async postAddAdditionalArmorPoint(bodyLocalization: CharacterBodyLocalization) {
-    return this.http.post('http://localhost:8080/addAdditionalArmorPoint', bodyLocalization).toPromise().then()
-  }
-
-  async removeAdditionalArmorPoint(bodyLocalization: CharacterBodyLocalization) {
-    await this.postRemoveAdditionalArmorPoint(bodyLocalization)
-  }
-
-  private async postRemoveAdditionalArmorPoint(bodyLocalization: CharacterBodyLocalization) {
-    return this.http.post('http://localhost:8080/removeAdditionalArmorPoint', bodyLocalization).toPromise().then()
   }
 
   async addConditions(addConditions: AddConditions) {

@@ -10,15 +10,6 @@
         <th mat-header-cell *matHeaderCellDef>{{ text.getText().armorPointsLabel }}</th>
         <td mat-cell *matCellDef="let element">
           {{ element.armorPoints }}
-          <ng-container *ngIf="isSkirmishMode && skirmishCharacter != undefined">
-            <button mat-mini-fab color="basic" type="button" style="margin-left: 20px"
-                    (click)="addAdditionalArmorPoint(element)">
-              +
-            </button>
-            <button mat-mini-fab color="basic" type="button" (click)="removeAdditionalArmorPoint(element)">
-              -
-            </button>
-          </ng-container>
         </td>
       </ng-container>
       <ng-container matColumnDef="injuries">
