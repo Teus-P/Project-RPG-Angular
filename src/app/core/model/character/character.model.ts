@@ -60,6 +60,7 @@ export class Character {
     this.talents.forEach(value => value.id = 0)
     this.traits.forEach(value => value.id = 0)
     this.weapons.forEach(value => value.id = 0)
+    this.armors.forEach(value => value.id = 0)
     this.conditions.forEach(value => value.id = 0)
     this.notes.forEach(value => value.id = 0)
   }
