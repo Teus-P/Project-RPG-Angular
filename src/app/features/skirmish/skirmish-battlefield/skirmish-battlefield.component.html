@@ -1,15 +1,36 @@
 <br>
-<div class="battlefield" #battlefield >
+<div class="battlefield" #battlefield>
   <div *ngFor="let token of tokens"
        class="token"
-       [ngClass]="token.isDead ? 'dead-character' : ''"
+       [ngClass]="{
+       'dead-character': token.isDead,
+       'dragging': draggedToken === token,
+       'clicked': clickedToken === token
+       }"
        [ngStyle]="{
        'top.px': token.y,
        'left.px': token.x,
-       'background-color': 'rgb(' + token.colorR + ',' + token.colorG + ',' + token.colorB + ')'
+       'background-color': 'rgb(' + token.colorR + ',' + token.colorG + ',' + token.colorB + ')',
        }"
        [title]="token.name"
-       (mousedown)="onDragStart($event, token)">
+       (mousedown)="onDragStart($event, token)"
+       (click)="onTokenClick($event, token)"
+  >
     {{ token.shortName }}
   </div>
+
+
+  <svg *ngFor="let token of tokens" class="engaged">
+    <line
+      *ngIf="token.meleeTargetName"
+      [attr.x1]="token.x + 25 + getEngagedLineOffset(token, true)"
+      [attr.y1]="token.y + 25 + getEngagedLineOffset(token, false)"
+      [attr.x2]="getTargetToken(token)!.x + 25 + getEngagedLineOffset(token, true)"
+      [attr.y2]="getTargetToken(token)!.y + 25 + getEngagedLineOffset(token, false)"
+      [attr.stroke]="'rgb(' + token.colorR + ',' + token.colorG + ',' + token.colorB + ')'"
+      stroke-width="2"
+      stroke-dasharray="4"
+    />
+  </svg>
+
 </div>

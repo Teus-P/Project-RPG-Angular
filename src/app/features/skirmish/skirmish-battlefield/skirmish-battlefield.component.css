@@ -17,10 +17,74 @@
   border-radius: 50%;
   cursor: grab;
   user-select: none;
+  z-index: 1;
+}
+
+.token:hover {
+  animation: pulse 0.6s infinite ease-in-out;
+}
+
+.token.clicked {
+  animation: pulse 0.6s infinite ease-in-out;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 rgba(0, 0, 0, 0.5);
+  }
+  50% {
+    transform: scale(1.1);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 rgba(0, 0, 0, 0.5);
+  }
+}
+
+.token.dragging {
+  animation: float 0.4s ease-in-out infinite alternate;
+  transform: scale(1.05);
+  opacity: 0.9;
+  cursor: grabbing;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  z-index: 999;
+}
+
+@keyframes float {
+  from {
+    transform: translateY(0px) scale(1.05);
+  }
+  to {
+    transform: translateY(-5px) scale(1.05);
+  }
 }
 
 .dead-character {
-  filter: blur(1px);
-  -ms-filter: blur(1px);
-  -webkit-filter: blur(1px);
+  position: absolute;
+  filter: grayscale(80%) blur(1px);
+  z-index: 0;
+}
+
+.dead-character::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: red;
+  transform: rotate(-45deg);
+  transform-origin: center;
+  pointer-events: none;
+}
+
+.engaged {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
 }

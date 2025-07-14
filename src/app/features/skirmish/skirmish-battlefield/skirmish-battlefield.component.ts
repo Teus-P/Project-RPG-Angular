@@ -1,5 +1,5 @@
 import {Component, ElementRef, HostListener, OnInit, ViewChild} from '@angular/core';
-import {NgClass, NgForOf, NgStyle} from "@angular/common";
+import {NgClass, NgForOf, NgIf, NgStyle} from "@angular/common";
 import {Subscription} from "rxjs";
 import {SkirmishCharacterService} from "../../../core/services/skirmish-character-service/skirmish-character.service";
 import {SkirmishCharacter} from "../../../core/model/skirmish/skirmish-character.model";
@@ -13,6 +13,7 @@ interface Token {
   colorR: number;
   colorG: number;
   colorB: number;
+  meleeTargetName?: string;
 }
 
 @Component({
@@ -20,7 +21,8 @@ interface Token {
   imports: [
     NgForOf,
     NgStyle,
-    NgClass
+    NgClass,
+    NgIf
   ],
   templateUrl: './skirmish-battlefield.component.html',
   styleUrl: './skirmish-battlefield.component.css'
@@ -30,6 +32,7 @@ export class SkirmishBattlefieldComponent implements OnInit {
   tokens: Token[] = [];
 
   draggedToken: any = null;
+  clickedToken: any = null;
   offsetX = 0;
   offsetY = 0;
 
@@ -55,10 +58,13 @@ export class SkirmishBattlefieldComponent implements OnInit {
         const tokensNames = new Set(this.tokens.map(token => token.name));
         const charactersNames = new Set(skirmishCharacters.map(skirmishCharacter => skirmishCharacter.sequenceNumber == 1 ? skirmishCharacter.character.name : skirmishCharacter.character.name + ' ' + skirmishCharacter.sequenceNumber));
 
-        for(const character of skirmishCharacters) {
+        for (const character of skirmishCharacters) {
           let name = character.sequenceNumber == 1 ? character.character.name : character.character.name + ' ' + character.sequenceNumber;
-          if(!tokensNames.has(name)) {
+          if (!tokensNames.has(name)) {
             this.skirmishCharactersToTokens(character)
+          } else {
+            let token = this.tokens.find(token => token.name === name)!;
+            token.isDead = character.isDead;
           }
         }
 
@@ -116,5 +122,36 @@ export class SkirmishBattlefieldComponent implements OnInit {
     const rect = (event.target as HTMLElement).getBoundingClientRect();
     this.offsetX = event.clientX - rect.left;
     this.offsetY = event.clientY - rect.top;
+  }
+
+  onTokenClick(event: MouseEvent, clickedToken: Token) {
+    if (event.shiftKey && this.clickedToken == null && !clickedToken.isDead) {
+      this.clickedToken = clickedToken;
+    } else if (event.shiftKey && this.clickedToken != null && !clickedToken.isDead) {
+      this.clickedToken.meleeTargetName = clickedToken.name
+      this.clickedToken = null
+    } else if ((event.shiftKey && this.clickedToken === clickedToken)) {
+      this.clickedToken = null
+      clickedToken.meleeTargetName = ''
+    }
+  }
+
+  getTargetToken(token: Token): Token | undefined {
+    return this.tokens.find(t => t.name === token.meleeTargetName);
+  }
+
+  getEngagedLineOffset(token: Token, isX: boolean): number {
+    const target = this.getTargetToken(token);
+    if (!target) return 0;
+
+    const isMutual = target.meleeTargetName === token.name;
+    const tokenNameLower = token.name.toLowerCase();
+    const targetNameLower = target.name.toLowerCase();
+
+    if (isMutual && tokenNameLower < targetNameLower) {
+      return isX ? 10 : -10;
+    }
+
+    return 0;
   }
 }
