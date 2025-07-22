@@ -209,15 +209,7 @@
         <ng-container matColumnDef="damage">
           <th mat-header-cell *matHeaderCellDef>{{ text.getText().damageLabel }}</th>
           <td mat-cell *matCellDef="let element">
-            @if (element.weapon.isUsingStrength) {
-              +{{ calculateMeleeWeaponDamage(element.weapon.damage)}}
-            } @else {
-              @if (element.weapon.damage >= 0) {
-                +{{ element.weapon.damage }}
-              } @else {
-                {{ element.weapon.damage }}
-              }
-            }
+            +{{calculateWeaponDamage(element.weapon)}}
           </td>
         </ng-container>
         <ng-container matColumnDef="advantagesAndDisadvantages">

@@ -14,6 +14,7 @@ import {
 } from "../../dialog-window/edit-armor-points-window/edit-armor-points-window.component";
 import {CharacterArmor} from "../../../../core/model/armor/character-armor.model";
 import {CharacterService} from "../../../../core/services/character-service/character.service";
+import {Weapon} from "../../../../core/model/weapon/weapon.model";
 
 export interface Group {
   name: string;
@@ -132,13 +133,38 @@ export class DetailsCharacterComponent implements OnInit {
     })
   }
 
-  calculateMeleeWeaponDamage(weaponDamage: number) {
+  calculateWeaponDamage(weapon: Weapon): number {
+    switch (weapon.weaponType?.name) {
+      case 'MELEE':
+        return this.calculateMeleeWeaponDamage(weapon.damage);
+      case 'RANGED':
+        return this.calculateRangedWeaponDamage(weapon);
+      case 'AMMUNITION':
+        return weapon.damage;
+      default:
+        return 0;
+    }
+  }
+
+  private calculateMeleeWeaponDamage(weaponDamage: number) {
     let characterStrength = +this.character.strength.value.toString()[0];
     let strikeMightyBlow = this.character.talents.find(talent => talent.model.name === 'STRIKE_MIGHTY_BLOW');
     if (strikeMightyBlow) {
       characterStrength += +strikeMightyBlow.value;
     }
     return characterStrength + weaponDamage;
+  }
+
+  private calculateRangedWeaponDamage(weapon: Weapon) {
+    let damage = 0;
+    if (weapon.isUsingStrength) {
+      damage += +this.character.strength.value.toString()[0];
+    }
+    let accurateShot = this.character.talents.find(talent => talent.model.name === 'ACCURATE_SHOT');
+    if (accurateShot) {
+      damage += +accurateShot.value;
+    }
+    return damage + weapon.damage;
   }
 
   talentsCheckboxUpdate(checked: boolean) {
