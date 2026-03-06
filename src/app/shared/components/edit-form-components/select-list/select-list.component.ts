@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, ContentChild, Input, OnInit, TemplateRef} from '@angular/core';
 import {
   AbstractControl,
   FormArray,
@@ -25,9 +25,11 @@ export class SelectListComponent implements OnInit {
   @Input() list!: Model[]
   @Input() titleLabel!: string;
   @Input() addButtonLabel!: string;
-  @Input() additionalData?: any[];
+  @Input() additionalControl?: string;
   text = TextResourceService;
   filteredList: Observable<Model[]>[] = []
+
+  @ContentChild(TemplateRef) extraFields!: TemplateRef<any>;
 
   constructor(private formBuilder: FormBuilder,
               private untypedFormBuilder: UntypedFormBuilder) {
@@ -83,10 +85,6 @@ export class SelectListComponent implements OnInit {
     }
   }
 
-  checkIfHasSpecialisation(formArray: AbstractControl) {
-    return formArray.value.model?.hasSpecialisation ?? false;
-  }
-
   onAddFormArray() {
     (this.editCharacterForm.get(this.formArrayName) as FormArray).push(this.createFormArray());
   }
@@ -104,12 +102,8 @@ export class SelectListComponent implements OnInit {
     newFormGroup.addControl('model', control)
     newFormGroup.addControl('value', this.formBuilder.control(1));
 
-    if (this.formArrayName === 'injuries') {
-      newFormGroup.addControl('bodyLocalization', this.formBuilder.control(null));
-    }
-
-    if (this.formArrayName === 'skills' || this.formArrayName === 'talents') {
-      newFormGroup.addControl('specialisation', this.formBuilder.control(null));
+    if (this.additionalControl !== '' && typeof this.additionalControl === 'string') {
+      newFormGroup.addControl(this.additionalControl, this.formBuilder.control(null));
     }
 
     return newFormGroup;

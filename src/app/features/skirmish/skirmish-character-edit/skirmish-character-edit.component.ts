@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
-import {FormBuilder, UntypedFormBuilder} from "@angular/forms";
+import {AbstractControl, FormBuilder, UntypedFormBuilder} from "@angular/forms";
 import {SkirmishCharacterService} from "../../../core/services/skirmish-character-service/skirmish-character.service";
 import {SkirmishCharacter} from "../../../core/model/skirmish/skirmish-character.model";
 import {CharacterFormArraysWrapper} from "../../../core/model/character/character-form-arrays-wrapper.model";
@@ -14,6 +14,7 @@ import {SkillService} from "../../../core/services/skill-service/skill.service";
 import {TalentService} from "../../../core/services/talent-service/talent.service";
 import {TraitService} from "../../../core/services/trait-service/trait.service";
 import {InjuryService} from "../../../core/services/injuries-service/injury.service";
+import {TextResourceService} from "../../../core/services/text-resource-service/text-resource.service";
 
 @Component({
     selector: 'app-skirmish-character-edit',

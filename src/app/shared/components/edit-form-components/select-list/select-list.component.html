@@ -1,6 +1,7 @@
 <div fxLayout="row" class="details-row" [formGroup]="editCharacterForm">
   <div fxFlex="100" formArrayName="{{formArrayName}}">
     <h4>{{ titleLabel }}</h4>
+
     <div fxLayout="row" fxLayoutGap="20" *ngFor="let formArray of formArrays; let i = index" [formGroupName]="i">
       <div fxFlex="40">
         <mat-form-field appearance="fill" class="example-full-width">
@@ -20,25 +21,10 @@
           </mat-autocomplete>
         </mat-form-field>
       </div>
-      <div fxFlex="20" *ngIf="formArrayName==='injuries'">
-        <mat-form-field appearance="fill" class="example-full-width">
-          <mat-label>{{ text.getText().localizationNameLabel }}</mat-label>
-          <mat-select formControlName="bodyLocalization">
-            <mat-option *ngFor="let bodyLocalization of additionalData"
-                        [value]="bodyLocalization.bodyLocalization">
-              {{ bodyLocalization.bodyLocalization.nameTranslation }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
 
-      <div fxFlex="20"
-           *ngIf="(formArrayName==='skills' || formArrayName==='talents') && checkIfHasSpecialisation(formArray)">
-        <mat-form-field appearance="fill" class="example-full-width">
-          <mat-label>{{ text.getText().specialisationNameLabel }}</mat-label>
-          <input matInput type="text" formControlName="specialisation">
-        </mat-form-field>
-      </div>
+      <ng-container
+        *ngTemplateOutlet="extraFields, context: {$implicit: formArray, index: i}">
+      </ng-container>
 
       <div fxFlex="10">
         <mat-form-field class="example-full-width" appearance="fill">
