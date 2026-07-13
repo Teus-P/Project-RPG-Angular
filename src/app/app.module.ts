@@ -82,6 +82,9 @@ import { WeaponGroupTableComponent } from './features/list-of-elements/weapon-li
 import { EditArmorPointsWindowComponent } from './shared/components/dialog-window/edit-armor-points-window/edit-armor-points-window.component';
 import {NgOptimizedImage} from "@angular/common";
 import {SkirmishBattlefieldComponent} from "./features/skirmish/skirmish-battlefield/skirmish-battlefield.component";
+import {
+  DetailsConditionsComponent
+} from "./shared/components/details-components/details-conditions/details-conditions.component";
 
 @NgModule({ declarations: [
         AppComponent,
@@ -142,15 +145,15 @@ import {SkirmishBattlefieldComponent} from "./features/skirmish/skirmish-battlef
         EditArmorPointsWindowComponent,
     ],
     bootstrap: [AppComponent], imports: [BrowserModule,
-        FormsModule,
-        RouterModule,
-        AppRoutingModule,
-        ReactiveFormsModule,
-        BrowserAnimationsModule,
-        MaterialModule,
-        FlexLayoutModule,
-        MatTabsModule,
-        NgOptimizedImage, SkirmishBattlefieldComponent], providers: [
+    FormsModule,
+    RouterModule,
+    AppRoutingModule,
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    MaterialModule,
+    FlexLayoutModule,
+    MatTabsModule,
+    NgOptimizedImage, SkirmishBattlefieldComponent, DetailsConditionsComponent], providers: [
         { provide: MAT_BOTTOM_SHEET_DEFAULT_OPTIONS, useValue: { hasBackdrop: true } },
         provideHttpClient(withInterceptorsFromDi()),
     ] })
