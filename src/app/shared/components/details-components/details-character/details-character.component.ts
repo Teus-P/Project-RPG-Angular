@@ -127,6 +127,9 @@ export class DetailsCharacterComponent implements OnInit {
         if (index !== -1) {
           this.character.armors[index] = armor;
           await this.characterService.storeCharacter(this.character);
+          if (this.character.id == null) {
+            throw new Error("Character is without an id.");
+          }
           this.character = await this.characterService.reloadCharacter(this.character.id)
         }
       }

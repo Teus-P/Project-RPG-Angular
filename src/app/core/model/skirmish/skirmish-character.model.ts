@@ -2,7 +2,7 @@ import {Character} from "../character/character.model"
 import {SkirmishGroup} from "./skirmish-group.model";
 
 export class SkirmishCharacter {
-  id!: number
+  id: number | null = null
   character!: Character
   currentWounds!: number
   skirmishInitiative!: number
@@ -13,7 +13,7 @@ export class SkirmishCharacter {
 
   constructor(character?: Character, id?: number) {
     if (character != undefined) {
-      this.id = <number>id ?? 0
+      this.id = id ?? null
       this.character = <Character>character
       this.currentWounds = <number>character.wounds.value
       this.skirmishInitiative = <number>character.initiative.value

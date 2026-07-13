@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, numberAttribute} from '@angular/core';
 import {TextResourceService} from "../../../../core/services/text-resource-service/text-resource.service";
 import {CharacterService} from "../../../../core/services/character-service/character.service";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -13,7 +13,7 @@ import {SkirmishCharacterService} from "../../../../core/services/skirmish-chara
 })
 export class SharedButtonsComponent {
   text = TextResourceService
-  @Input() id!: number
+  @Input({transform: numberAttribute}) id!: number
   @Input() isSkirmishMode!: boolean
 
   constructor(public characterService: CharacterService,

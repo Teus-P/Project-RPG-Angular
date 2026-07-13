@@ -1,6 +1,6 @@
 import {Component, HostListener, OnInit} from '@angular/core'
 import {ActivatedRoute, Params, Router} from "@angular/router"
-import {AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, UntypedFormBuilder} from "@angular/forms"
+import {FormArray, FormBuilder, FormControl, FormGroup, UntypedFormBuilder} from "@angular/forms"
 import {CharacterService} from "../../../core/services/character-service/character.service"
 import {Character} from "../../../core/model/character/character.model"
 import {CharacterFormArraysWrapper} from "../../../core/model/character/character-form-arrays-wrapper.model"
@@ -323,10 +323,6 @@ export class CharacterEditComponent implements OnInit {
         )
       }
     }
-  }
-
-  checkIfHasSpecialisation(formArray: AbstractControl) {
-    return formArray.value.model?.hasSpecialisation ?? false;
   }
 
   getCharacter() {

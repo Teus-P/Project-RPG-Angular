@@ -74,7 +74,7 @@ export class SkirmishCharacterService {
 
   private createSkirmishCharacter(character: Character, skirmishGroup: SkirmishGroup, sequenceNumber: number) {
     let clonedCharacter = character.clone()
-    clonedCharacter.id = 0
+    clonedCharacter.id = null
     let newSkirmishCharacter: SkirmishCharacter = new SkirmishCharacter(clonedCharacter)
     let numberOfSameCharacters = this.skirmishCharactersList.filter(skirmishCharacter => skirmishCharacter.character.name.includes(newSkirmishCharacter.character.name)).length
 
@@ -103,6 +103,11 @@ export class SkirmishCharacterService {
   }
 
   async updateSkirmishCharacter(skirmishCharacter: SkirmishCharacter) {
+
+    if (skirmishCharacter.id == null) {
+      throw new Error("Cannot update a character without an id.");
+    }
+
     this.skirmishCharactersList[this.getCharacterIndexById(skirmishCharacter.id)] = skirmishCharacter
     this.skirmishCharactersChanged.next(this.skirmishCharactersList.slice())
     await this.putSkirmishCharacter(skirmishCharacter).then(

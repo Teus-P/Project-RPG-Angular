@@ -29,26 +29,41 @@ export class SkirmishCharacterParametersComponent {
   }
 
   async addWoundPoint() {
+    if (this.skirmishCharacter.id == null) {
+      throw new Error("Cannot update a character without an id.");
+    }
     await this.skirmishService.addWoundPoint(this.skirmishCharacter.id)
     this.skirmishCharacter = await this.skirmishCharacterService.reloadSkirmishCharacter(this.skirmishCharacter.id)
   }
 
   async removeWoundPoint() {
+    if (this.skirmishCharacter.id == null) {
+      throw new Error("Cannot update a character without an id.");
+    }
     await this.skirmishService.removeWoundPoint(this.skirmishCharacter.id)
     this.skirmishCharacter = await this.skirmishCharacterService.reloadSkirmishCharacter(this.skirmishCharacter.id)
   }
 
   async addAdvantagePoint() {
+    if (this.skirmishCharacter.id == null) {
+      throw new Error("Cannot update a character without an id.");
+    }
     await this.skirmishService.addAdvantagePoint(this.skirmishCharacter.id)
     this.skirmishCharacter = await this.skirmishCharacterService.reloadSkirmishCharacter(this.skirmishCharacter.id)
   }
 
   async removeAdvantagePoint() {
+    if (this.skirmishCharacter.id == null) {
+      throw new Error("Cannot update a character without an id.");
+    }
     await this.skirmishService.removeAdvantagePoint(this.skirmishCharacter.id)
     this.skirmishCharacter = await this.skirmishCharacterService.reloadSkirmishCharacter(this.skirmishCharacter.id)
   }
 
   async onToggleAlive(value: any) {
+    if (this.skirmishCharacter.id == null) {
+      throw new Error("Cannot update a character without an id.");
+    }
     await this.skirmishService.changeIsDeadValue(this.skirmishCharacter.id, value)
     this.skirmishCharacter = await this.skirmishCharacterService.reloadSkirmishCharacter(this.skirmishCharacter.id)
   }

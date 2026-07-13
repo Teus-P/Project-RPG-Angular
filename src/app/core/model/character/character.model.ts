@@ -11,7 +11,7 @@ import {CharacterArmor} from "../armor/character-armor.model";
 import {Skill} from "../skill/skill.model";
 
 export class Character {
-  id!: number
+  id: number | null = null
   name!: string
   description!: string
   groupType!: string

@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, numberAttribute, OnInit} from '@angular/core';
 import {Character} from "../../../../core/model/character/character.model";
 
 @Component({
@@ -9,7 +9,7 @@ import {Character} from "../../../../core/model/character/character.model";
 })
 export class CharacterItemComponent implements OnInit {
   @Input() character!: Character;
-  @Input() index!: number;
+  @Input({transform: numberAttribute}) index!: number;
 
   constructor() { }
 

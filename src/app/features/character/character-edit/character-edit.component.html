@@ -1,48 +1,23 @@
 <div>
   <form [formGroup]="editCharacterForm" (ngSubmit)="onSubmit()">
     <app-description-edit [editCharacterForm]="editCharacterForm"></app-description-edit>
-
     <app-conditions-edit [editCharacterForm]="editCharacterForm"></app-conditions-edit>
-
     <app-characteristics-edit [editCharacterForm]="editCharacterForm"></app-characteristics-edit>
-
     <app-notes-edit [editCharacterForm]="editCharacterForm"></app-notes-edit>
-
     <app-select-list
       [editCharacterForm]="editCharacterForm"
       [formArrayName]="'skills'"
       [list]="skillService.skillList"
       [titleLabel]="text.getText().skillsLabel"
-      [addButtonLabel]="text.getText().addSkillLabel"
-      [additionalControl]="'specialisation'">
-      <ng-template let-formArray let-i="index">
-        <div fxFlex="20" *ngIf="checkIfHasSpecialisation(formArray)" [formGroup]="formArray">
-          <mat-form-field appearance="fill" class="example-full-width">
-            <mat-label>{{ text.getText().specialisationNameLabel }}</mat-label>
-            <input matInput type="text" formControlName="specialisation">
-          </mat-form-field>
-        </div>
-      </ng-template>
+      [addButtonLabel]="text.getText().addSkillLabel">
     </app-select-list>
-
     <app-select-list
       [editCharacterForm]="editCharacterForm"
       [formArrayName]="'talents'"
       [list]="talentService.talentList"
       [titleLabel]="text.getText().talentsLabel"
-      [addButtonLabel]="text.getText().addTalentLabel"
-      [additionalControl]="'specialisation'">
-      <ng-template let-formArray let-i="index">
-        <div fxFlex="20"
-             *ngIf="checkIfHasSpecialisation(formArray)" [formGroup]="formArray">
-          <mat-form-field appearance="fill" class="example-full-width">
-            <mat-label>{{ text.getText().specialisationNameLabel }}</mat-label>
-            <input matInput type="text" formControlName="specialisation">
-          </mat-form-field>
-        </div>
-      </ng-template>
+      [addButtonLabel]="text.getText().addTalentLabel">
     </app-select-list>
-
     <app-select-list
       [editCharacterForm]="editCharacterForm"
       [formArrayName]="'traits'"
@@ -50,35 +25,18 @@
       [titleLabel]="text.getText().traitsLabel"
       [addButtonLabel]="text.getText().addTraitLabel">
     </app-select-list>
-
     <app-spells-edit [editCharacterForm]="editCharacterForm"></app-spells-edit>
-
     <app-weapons-edit [editCharacterForm]="editCharacterForm"></app-weapons-edit>
-
     <app-armor-edit [editCharacterForm]="editCharacterForm"></app-armor-edit>
-
     <app-select-list
       [editCharacterForm]="editCharacterForm"
       [formArrayName]="'injuries'"
       [list]="injuryService.injuriesList"
       [titleLabel]="text.getText().injuriesLabel"
       [addButtonLabel]="text.getText().addInjuryLabel"
-      [additionalControl]="'bodyLocalization'">
-      <ng-template let-formArray let-i="index">
-        <div fxFlex="20" [formGroup]="formArray">
-          <mat-form-field appearance="fill" class="example-full-width">
-            <mat-label>{{ text.getText().localizationNameLabel }}</mat-label>
-            <mat-select formControlName="bodyLocalization">
-              <mat-option *ngFor="let bodyLocalization of characterBodyLocalizations"
-                          [value]="bodyLocalization.bodyLocalization">
-                {{ bodyLocalization.bodyLocalization.nameTranslation }}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-      </ng-template>
+      [additionalData]="characterBodyLocalizations"
+    >
     </app-select-list>
-
     <div fxLayout="row" class="details-row">
       <div fxFlex="100">
         <button mat-raised-button color="primary" type="button" [disabled]="!editCharacterForm.valid"

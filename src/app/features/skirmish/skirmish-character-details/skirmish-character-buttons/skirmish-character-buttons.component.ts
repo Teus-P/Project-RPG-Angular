@@ -32,6 +32,9 @@ export class SkirmishCharacterButtonsComponent {
 
     dialogRef.afterClosed().subscribe(async receivedDamage => {
       if (receivedDamage != undefined) {
+        if (this.skirmishCharacter.id == null) {
+          throw new Error("Character is without an id.");
+        }
         await this.skirmishService.receiveDamage(receivedDamage)
         this.skirmishCharacter = await this.skirmishCharacterService.reloadSkirmishCharacter(this.skirmishCharacter.id)
       }
@@ -45,6 +48,9 @@ export class SkirmishCharacterButtonsComponent {
     })
 
     dialogRef.afterClosed().subscribe(async addConditions => {
+      if (this.skirmishCharacter.id == null) {
+        throw new Error("Character is without an id.");
+      }
       if (addConditions != undefined) {
         await this.skirmishService.addConditions(addConditions)
         this.skirmishCharacter = await this.skirmishCharacterService.reloadSkirmishCharacter(this.skirmishCharacter.id)

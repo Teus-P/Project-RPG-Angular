@@ -37,6 +37,9 @@ export class AddConditionDialogComponent implements OnInit {
       'conditions': this.formBuilder.array([])
     })
     this.skirmishCharacters.forEach(character => {
+      if (character.id == null) {
+        throw new Error("Character is without an id.");
+      }
       if (character.id === this.skirmishCharacter.id) {
         this.conditionsForm.addControl(character.id.toString(), new FormControl(true))
       } else {
@@ -84,9 +87,10 @@ export class AddConditionDialogComponent implements OnInit {
     return <FormControl[]>(<FormArray>this.conditionsForm.get('conditions')).controls
   }
 
-  getSelectedCharacters() {
-    return this.skirmishCharacters.filter(
-      character => this.conditionsForm.get(character.id.toString())?.value === true
-    ).map(character => character.id);
+  getSelectedCharacters(): number[] {
+    return this.skirmishCharacters
+      .filter((character): character is SkirmishCharacter & { id: number } => character.id != null)
+      .filter(character => this.conditionsForm.get(character.id.toString())?.value === true)
+      .map(character => character.id);
   }
 }

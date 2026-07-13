@@ -22,6 +22,9 @@ export class ReceiveDamageDialog implements OnInit {
   }
 
   ngOnInit(): void {
+    if (this.skirmishCharacter.id == null) {
+      throw new Error("Character is without an id.");
+    }
     this.receivedDamage = new ReceivedDamage(
       this.skirmishCharacter.id,
       false,
