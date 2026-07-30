@@ -28,15 +28,6 @@
     <app-spells-edit [editCharacterForm]="editCharacterForm"></app-spells-edit>
     <app-weapons-edit [editCharacterForm]="editCharacterForm"></app-weapons-edit>
     <app-armor-edit [editCharacterForm]="editCharacterForm"></app-armor-edit>
-    <app-select-list
-      [editCharacterForm]="editCharacterForm"
-      [formArrayName]="'injuries'"
-      [list]="injuryService.injuriesList"
-      [titleLabel]="text.getText().injuriesLabel"
-      [addButtonLabel]="text.getText().addInjuryLabel"
-      [additionalData]="characterBodyLocalizations"
-    >
-    </app-select-list>
     <div fxLayout="row" class="details-row">
       <div fxFlex="100">
         <button mat-raised-button color="primary" type="button" [disabled]="!editCharacterForm.valid"
