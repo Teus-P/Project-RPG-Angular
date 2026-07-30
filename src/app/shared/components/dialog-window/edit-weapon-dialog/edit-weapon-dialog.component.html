@@ -62,7 +62,7 @@
     <div fxLayout="row">
       <mat-form-field appearance="fill">
         <mat-label>{{text.getText().weaponRangeLabel}}</mat-label>
-        <input matInput type="number" formControlName="weaponRange">
+        <input matInput type="number" formControlName="weaponRange" required>
       </mat-form-field>
     </div>
 
@@ -93,7 +93,7 @@
     <div fxLayout="row">
       <mat-form-field appearance="fill" class="example-full-width">
         <mat-label>{{text.getText().availabilityLabel}}</mat-label>
-        <mat-select formControlName="availability">
+        <mat-select formControlName="availability" [compareWith]="compareModels">
           <mat-option *ngFor="let availability of availabilityService.availabilityList" [value]="availability">
             {{availability.nameTranslation}}
           </mat-option>

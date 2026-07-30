@@ -1,5 +1,5 @@
 export class Model {
-  public id?: number;
+  public id: number | null = null;
   public name: string;
   public nameTranslation: string;
   public description: string

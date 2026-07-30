@@ -7,17 +7,18 @@ import {
   FormGroup,
   UntypedFormArray,
   UntypedFormControl,
-  UntypedFormGroup
+  UntypedFormGroup,
+  Validators
 } from "@angular/forms";
 import {Model} from "../../../../core/model/model";
 import {ConditionService} from "../../../../core/services/condition-service/condition.service";
 import {CharacterCondition} from "../../../../core/model/condition/character-condition.model";
 
 @Component({
-    selector: 'app-conditions-edit',
-    templateUrl: './conditions-edit.component.html',
-    styleUrls: ['./conditions-edit.component.css'],
-    standalone: false
+  selector: 'app-conditions-edit',
+  templateUrl: './conditions-edit.component.html',
+  styleUrls: ['./conditions-edit.component.css'],
+  standalone: false
 })
 export class ConditionsEditComponent {
   @Input() editCharacterForm!: FormGroup
@@ -44,7 +45,10 @@ export class ConditionsEditComponent {
 
     for (let characterCondition of conditionsList) {
 
-      let counter = formBuilder.control(characterCondition.counter)
+      let counter = formBuilder.control(
+        characterCondition.counter,
+        [Validators.min(0), Validators.required]
+      )
       if (!characterCondition.condition.hasCounter) {
         counter.disable()
       }
@@ -65,7 +69,7 @@ export class ConditionsEditComponent {
       this.formBuilder.group({
         'condition': [null],
         'value': [1],
-        'counter': [{value: null, disabled: true}]
+        'counter': [{value: null, disabled: true}, [Validators.min(0), Validators.required]]
       })
     )
   }

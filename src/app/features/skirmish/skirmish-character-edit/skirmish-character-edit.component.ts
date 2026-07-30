@@ -91,6 +91,10 @@ export class SkirmishCharacterEditComponent extends CharacterEditComponent imple
   }
 
   onSubmit() {
+    if(this.editCharacterForm.invalid) {
+      this.editCharacterForm.markAllAsTouched();
+      return;
+    }
     let character = this.createSkirmishCharacter();
     if (this.editMode) {
       character.id = this.id;

@@ -129,12 +129,16 @@ export class CharacterEditComponent implements OnInit {
   }
 
   onSubmit() {
+    if(this.editCharacterForm.invalid) {
+      this.editCharacterForm.markAllAsTouched();
+      return;
+    }
     let character = this.createCharacter()
     if (this.editMode) {
       character.id = this.id
     }
     if (this.copyMode) {
-      character.id = 0
+      character.id = null
       character.clearIds()
     }
     character.type = 'BASE'

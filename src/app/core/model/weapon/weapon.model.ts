@@ -2,7 +2,7 @@ import {Model} from "../model";
 import {WeaponQualityValue} from "./weapon-quality-value.model";
 
 export class Weapon extends Model {
-  public id: number;
+  public id: number | null = null;
   public weaponType: Model;
   public weaponGroup: Model;
   public weaponReach: Model;

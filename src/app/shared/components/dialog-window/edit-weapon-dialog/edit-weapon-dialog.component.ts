@@ -39,7 +39,7 @@ export class EditWeaponDialog implements OnInit {
       'weaponType': [this.modifiedWeapon.weaponType ?? this.weaponService.weaponTypesList[0]],
       'weaponGroup': [this.modifiedWeapon.weaponGroup ?? this.weaponService.weaponGroupsList[0]],
       'weaponReach': [this.modifiedWeapon.weaponReach ?? this.weaponService.weaponReachesList[0]],
-      'weaponRange': [this.modifiedWeapon.weaponRange ?? null],
+      'weaponRange': [this.modifiedWeapon.weaponRange ?? 0, Validators.required],
       'isUsingStrength': [this.modifiedWeapon.isUsingStrength ?? null],
       'isUsingStrengthInRange': [this.modifiedWeapon.isUsingStrengthInRange ?? null],
       'damage': [this.modifiedWeapon.damage ?? null, Validators.required],
@@ -92,7 +92,7 @@ export class EditWeaponDialog implements OnInit {
       if (this.weapon.isBaseWeapon || this.form.value.name != this.weapon.name || this.form.value.nameTranslation != this.weapon.nameTranslation) {
         this.modifyWeapon(this.modifiedWeapon);
         weapon = this.modifiedWeapon;
-        weapon.id = 0;
+        weapon.id = null;
       } else {
         this.modifyWeapon(this.weapon);
         weapon = this.weapon;

@@ -7,7 +7,15 @@ import {
 import {TextResourceService} from "../../../../../../core/services/text-resource-service/text-resource.service";
 import {ConditionService} from "../../../../../../core/services/condition-service/condition.service";
 import {Model} from "../../../../../../core/model/model";
-import {AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, UntypedFormGroup} from "@angular/forms";
+import {
+  AbstractControl,
+  FormArray,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  UntypedFormGroup,
+  Validators
+} from "@angular/forms";
 import {CharacterCondition} from "../../../../../../core/model/condition/character-condition.model";
 import {AddConditions} from "../../../../../../core/model/condition/add-conditions.model";
 
@@ -61,6 +69,10 @@ export class AddConditionDialogComponent implements OnInit {
   }
 
   saveAndCloseDialog() {
+    if(this.conditionsForm.invalid) {
+      this.conditionsForm.markAllAsTouched();
+      return;
+    }
     const addConditions = new AddConditions(
       <CharacterCondition[]>this.conditionsForm.value.conditions,
       this.getSelectedCharacters()
@@ -74,7 +86,7 @@ export class AddConditionDialogComponent implements OnInit {
       this.formBuilder.group({
         'condition': [null],
         'value': [1],
-        'counter': [{value: null, disabled: true}]
+        'counter': [{value: null, disabled: true}, [Validators.min(0), Validators.required]]
       })
     )
   }

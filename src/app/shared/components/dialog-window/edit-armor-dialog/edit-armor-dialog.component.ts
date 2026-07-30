@@ -39,7 +39,7 @@ export class EditArmorDialog implements OnInit {
       'name': [this.modifiedArmor.name ?? null, Validators.required],
       'nameTranslation': [this.modifiedArmor.nameTranslation ?? null, Validators.required],
       'armorCategory': [this.modifiedArmor.armorCategory ?? this.armorService.armorCategoriesList[0]],
-      'armorPoints': [this.modifiedArmor.encumbrance ?? null],
+      'armorPoints': [this.modifiedArmor.armorPoints ?? null],
       'bodyLocalizations': this.prepareBodyLocalizationsList(this.modifiedArmor.bodyLocalizations ?? []),
       'armorPenalties': this.prepareArmorPenaltiesList(this.modifiedArmor.armorPenalties ?? []),
       'armorQualities': this.prepareArmorQualitiesList(this.modifiedArmor.armorQualities ?? []),
@@ -106,7 +106,7 @@ export class EditArmorDialog implements OnInit {
       if (this.form.value.name != this.armor.name || this.form.value.nameTranslation != this.armor.nameTranslation) {
         this.modifyArmor(this.modifiedArmor);
         armor = this.modifiedArmor;
-        armor.id = 0;
+        armor.id = null;
       } else {
         this.modifyArmor(this.armor);
         armor = this.armor;
@@ -120,6 +120,7 @@ export class EditArmorDialog implements OnInit {
     armor.name = this.form.value.name;
     armor.nameTranslation = this.form.value.nameTranslation;
     armor.armorCategory = this.form.value.armorCategory;
+    armor.armorPoints = this.form.value.armorPoints;
     armor.bodyLocalizations = <BodyLocalization[]>this.form.value.bodyLocalizations;
     armor.armorPenalties = <Model[]>this.form.value.armorPenalties;
     armor.armorQualities = <Model[]>this.form.value.armorQualities;

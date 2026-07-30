@@ -2,7 +2,7 @@ import {Model} from "../model"
 import {BodyLocalization} from "../body-localization/body-localization.model";
 
 export class Armor extends Model {
-  public id!: number;
+  public id: number | null = null;
   public armorCategory: Model
   public armorType: Model
   public bodyLocalizations: BodyLocalization[]

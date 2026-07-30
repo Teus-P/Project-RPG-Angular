@@ -46,7 +46,7 @@ export class RoundService {
             Object.assign(skirmishCharacter, test.skirmishCharacter);
             test.skirmishCharacter = skirmishCharacter;
 
-            this.translationService.prepareCondition(test.conditionType);
+            this.translationService.prepareCondition(test.condition);
           }
           await this.testRolls(endTurnCheck);
         }

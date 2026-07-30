@@ -3,7 +3,7 @@
   <div *ngFor="let test of data.endTurnCheck.tests">
     <hr>
     <p>{{text.getText().rollForLabel}} {{test.skirmishCharacter.character.name}}
-      - {{test.conditionType.nameTranslation}}</p>
+      - {{test.condition.nameTranslation}}</p>
     <mat-form-field appearance="fill">
       <mat-label>{{text.getText().rollLabel}}</mat-label>
       <input matInput type="number" [(ngModel)]="test.result" [disabled]="!test.isFeasible">
@@ -14,7 +14,7 @@
       <input matInput type="number" [(ngModel)]="test.modifier" [disabled]="!test.isFeasible">
     </mat-form-field>
 
-    <ng-container *ngIf="test.conditionType.name === 'BROKEN'">
+    <ng-container *ngIf="test.condition.name === 'BROKEN'">
       <p>{{text.getText().isFeasibleLabel}}</p>
       <mat-slide-toggle
         color="primary"
