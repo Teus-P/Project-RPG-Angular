@@ -22,17 +22,57 @@ span {
   margin-top: 0;
 }
 
-.dead-character {
-  filter: blur(1px);
-  -ms-filter: blur(1px);
-  -webkit-filter: blur(1px);
+.dead-character .tile-left,
+.dead-character .tile-right {
+  filter: blur(1px) grayscale(0.8);
+  opacity: 0.7;
 }
 
 .icon-container {
   display: flex;
-  margin-bottom: 5px;
+  align-items: center;
   position: relative;
 }
+
+.conditions-block {
+  margin-top: 8px;
+}
+
+.conditions-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 6px;
+  min-width: 0;
+}
+
+.tile-right,
+.tile-right [fxFlex] {
+  min-width: 0;
+}
+
+.health-segments {
+  display: flex;
+  margin-top: 8px;
+}
+
+.health-segment {
+  flex: 1 1 0;
+  min-width: 0;
+  height: 8px;
+  background: var(--rpg-nav);
+  border: 1px solid var(--rpg-line-strong);
+  box-sizing: border-box;
+}
+
+.health-segments.dense .health-segment {
+  border: 0;
+}
+
+.health-segment.filled {
+  border-color: rgba(0, 0, 0, 0.35);
+  transition: background-color 0.3s ease;
+}
+
 
 .mdc-list-item {
   padding-left: 0;
@@ -44,8 +84,9 @@ span {
 }
 
 .skirmish-character-tile {
-  background-color: rgba(43, 75, 77, 0.42);
-  border-radius: 5px;
+  background-color: var(--rpg-panel);
+  border: 1px solid var(--rpg-line);
+  border-radius: 0;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   height: 100%;
   margin-top: 5px;
@@ -55,18 +96,13 @@ span {
   width: 100%;
 }
 
-.tile-background {
-  bottom: 0;
-  height: 100%;
-  left: 0;
-  position: absolute;
-  right: 0;
-  z-index: 0;
+.tile-color {
+  z-index: 2;
+  filter: var(--rpg-heraldic-filter);
+  border-right: 1px solid var(--rpg-gold-dim);
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.25);
 }
 
-.tile-color {
-  z-index: 2
-}
 
 .tile-left {
   border-right: 1px solid rgba(0, 0, 0, 0.1);
@@ -92,4 +128,11 @@ span {
 
 .overlap-icon:first-child {
   margin-left: 0;
+}
+
+h6.list-group-item-heading {
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  margin-bottom: 2px;
+  white-space: nowrap;
 }

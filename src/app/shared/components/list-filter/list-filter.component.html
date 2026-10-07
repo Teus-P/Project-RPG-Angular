@@ -1,5 +1,5 @@
 <div fxLayout="row" fxLayoutAlign="end center">
-  <div fxFlex="10">
+  <div fxFlex="none" class="filter-box">
     <mat-form-field>
       <mat-label>{{text.getText().filterLabel}}</mat-label>
       <input matInput (keyup)="applyFilter($event)">

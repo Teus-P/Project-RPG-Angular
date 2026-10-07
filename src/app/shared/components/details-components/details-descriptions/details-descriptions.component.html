@@ -5,22 +5,18 @@
   </div>
 </div>
 
-<div fxLayout="row" class="details-row">
-  <div fxFlex="100">
+<div class="details-row meta-row">
+  <div>
     <h4>{{text.getText().groupTypeLabel}}</h4>
     {{character.groupType}}
   </div>
-</div>
 
-<div fxLayout="row" class="details-row">
-  <div fxFlex="100">
+  <div>
     <h4>{{text.getText().groupLabel}}</h4>
     {{character.group}}
   </div>
-</div>
 
-<div fxLayout="row" class="details-row" *ngIf="character.status">
-  <div fxFlex="100">
+  <div *ngIf="character.status">
     <h4>{{text.getText().statusLabel}}</h4>
     {{character.status}}
   </div>

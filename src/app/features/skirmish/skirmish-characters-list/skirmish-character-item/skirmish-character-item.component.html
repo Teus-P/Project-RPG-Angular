@@ -15,7 +15,6 @@
       ></div>
 
       <div fxFlex="98">
-        <div class="tile-background" [ngStyle]="getHealthBarStyle()"></div>
         <div fxFlex="60" class="tile-left">
           <h6 class="list-group-item-heading"
               *ngIf="!skirmishCharacter.sequenceNumber || skirmishCharacter.sequenceNumber == 1">
@@ -32,19 +31,41 @@
             <h6 class="list-group-item-heading">{{ text.getText().notesLabel }}</h6>
             <p class="list-group-item-text">+</p>
           </div>
+          <div class="health-segments"
+               *ngIf="!skirmishCharacter.isDead"
+               [class.dense]="isDense()"
+               [style.gap.px]="getSegmentGap()">
+            <span class="health-segment"
+                  *ngFor="let filled of getHealthSegments()"
+                  [class.filled]="filled"
+                  [style.background-color]="filled ? getHealthSegmentColor() : null"></span>
+          </div>
+          <div class="conditions-block"
+               *ngIf="!skirmishCharacter.isDead && skirmishCharacter.character.conditions.length > 0">
+            <h6 class="list-group-item-heading">{{ text.getText().conditionsLabel }}</h6>
+            <div class="conditions-row">
+              <div class="icon-container" *ngFor="let characterCondition of skirmishCharacter.character.conditions">
+                <img [ngSrc]="'../../../../../assets/icons/' + characterCondition.condition.name + '.png'"
+                     [title]="characterCondition.condition.nameTranslation + ' ' + characterCondition.value"
+                     alt="Ablaze" height="25" width="25" class="overlap-icon"/>
+                <p *ngIf="characterCondition.value > 1" class="condition-number">&nbsp;
+                  x{{ characterCondition.value }}</p>
+              </div>
+            </div>
+          </div>
         </div>
 
         <div fxFlex="40" class="tile-right">
           <div fxLayout="row" style="margin-top: 10px" *ngIf="!skirmishCharacter.isDead">
 
             <div fxFlex="50">
-              <h6 class="list-group-item-heading">{{ text.getText().initiativeLabel }}</h6>
-              <p class="list-group-item-text">{{ skirmishCharacter.skirmishInitiative }}</p>
-            </div>
-            <div fxFlex="50">
               <h6 class="list-group-item-heading">{{ text.getText().woundsLabel }}</h6>
               <p class="list-group-item-text">{{ skirmishCharacter.currentWounds }}
                 / {{ skirmishCharacter.character.wounds.value }}</p>
+            </div>
+            <div fxFlex="50">
+              <h6 class="list-group-item-heading">{{ text.getText().initiativeLabel }}</h6>
+              <p class="list-group-item-text">{{ skirmishCharacter.skirmishInitiative }}</p>
             </div>
 
           </div>
@@ -57,16 +78,6 @@
             <div fxFlex="50">
               <h6 class="list-group-item-heading">{{ text.getText().advantageLabel }}</h6>
               <p class="list-group-item-text">{{ skirmishCharacter.advantage }}</p>
-            </div>
-            <div fxFlex="50">
-              <h6 class="list-group-item-heading">{{ text.getText().conditionsLabel }}</h6>
-              <div class="icon-container" *ngFor="let characterCondition of skirmishCharacter.character.conditions">
-                <img [ngSrc]="'../../../../../assets/icons/' + characterCondition.condition.name + '.png'"
-                     [title]="characterCondition.condition.nameTranslation + ' ' + characterCondition.value"
-                     alt="Ablaze" height="25" width="25" class="overlap-icon"/>
-                <p *ngIf="characterCondition.value > 1" class="condition-number">&nbsp;
-                  x{{ characterCondition.value }}</p>
-              </div>
             </div>
           </div>
         </div>

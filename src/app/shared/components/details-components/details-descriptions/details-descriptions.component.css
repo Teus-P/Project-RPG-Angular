@@ -22,3 +22,9 @@ button {
   margin-top: 20px;
   margin-bottom: 10px;
 }
+
+.meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 56px;
+}

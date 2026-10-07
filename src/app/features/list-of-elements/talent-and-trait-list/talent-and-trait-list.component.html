@@ -2,6 +2,7 @@
   (filterValueChanged)="applyFilter($event)">
 </app-list-filter>
 
+<div class="parchment parchment-narrow">
 <app-item-list
   [title]="text.getText().talentsLabel"
   [qualityGroup]="talents"
@@ -13,3 +14,4 @@
   [qualityGroup]="traits"
   [filterValue]="filterValue">
 </app-item-list>
+</div>

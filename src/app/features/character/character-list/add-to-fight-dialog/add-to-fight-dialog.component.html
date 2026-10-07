@@ -3,10 +3,14 @@
 <div mat-dialog-content>
   <div *ngIf="!data.isAddingGroup">
     <p>{{ text.getText().characterNumber }}</p>
-    <mat-form-field appearance="fill">
-      <mat-label>{{ text.getText().valueLabel }}</mat-label>
-      <input matInput type="number" [(ngModel)]="number">
-    </mat-form-field>
+    <div class="number-row">
+      <mat-form-field appearance="fill">
+        <mat-label>{{ text.getText().valueLabel }}</mat-label>
+        <input matInput type="number" [(ngModel)]="number">
+      </mat-form-field>
+      <button type="button" class="stepper-button" (click)="changeNumber(-1)">-</button>
+      <button type="button" class="stepper-button" (click)="changeNumber(1)">+</button>
+    </div>
   </div>
 
   <p>{{ text.getText().chooseSkirmishGroupLabel }}</p>
@@ -38,6 +42,7 @@
       <label>{{text.getText().chooseColorLabel}}</label>
       <color-sketch
         [color]="randomColor"
+        [presetColors]="heraldicColors"
         (onChange)="handleColorChange($event)"
         [width]=300
       ></color-sketch>

@@ -22,3 +22,7 @@ button {
   margin-top: 20px;
   margin-bottom: 10px;
 }
+
+.mat-mdc-row {
+  height: 36px;
+}

@@ -29,11 +29,11 @@
 
 <ng-content></ng-content>
 
-<ng-container *ngIf="character.skills.length > 0 || character.talents.length > 0 || character.traits.length > 0">
+<ng-container *ngIf="character.skills.length > 0 || character.talents.length > 0 || character.traits.length > 0 || character.spells.length > 0">
 
-  <div fxLayout="row" fxLayoutGap="20" class="details-row">
+  <div class="details-row columns-row">
     <ng-container *ngIf="character.skills.length > 0">
-      <div fxFlex="30">
+      <div class="column">
         <h4>{{ text.getText().skillsLabel }}</h4>
         <section>
           <mat-checkbox
@@ -67,7 +67,7 @@
       </div>
     </ng-container>
     <ng-container *ngIf="character.talents.length > 0">
-      <div fxFlex="30">
+      <div class="column">
         <h4>{{ text.getText().talentsLabel }}</h4>
         <section>
           <mat-checkbox
@@ -104,7 +104,7 @@
       </div>
     </ng-container>
     <ng-container *ngIf="character.traits.length > 0">
-      <div fxFlex="30">
+      <div class="column">
         <h4>{{ text.getText().traitsLabel }}</h4>
         <table mat-table [dataSource]="character.traits" class="mat-elevation-z8">
           <ng-container matColumnDef="name">
@@ -127,15 +127,10 @@
         </table>
       </div>
     </ng-container>
-  </div>
-</ng-container>
-
-<ng-container *ngIf="character.spells.length > 0">
-  <div fxLayout="row" fxLayoutGap="20" class="details-row">
     <ng-container *ngIf="character.spells.length > 0">
-      <div fxFlex="30">
+      <div class="column">
         <h4>{{ text.getText().spellsLabel }}</h4>
-        <table mat-table [dataSource]="createListOfSpells(character.spells)" class="mat-elevation-z8">
+        <table mat-table [dataSource]="createListOfSpells(character.spells)" class="mat-elevation-z8 spells-table">
           <ng-container matColumnDef="spell">
             <th mat-header-cell *matHeaderCellDef>{{ text.getText().nameLabel }}</th>
             <td mat-cell *matCellDef="let element">
@@ -149,7 +144,7 @@
           <tr mat-row *matRowDef="let row; columns: spellColumns;"></tr>
 
           <ng-container matColumnDef="groupHeader">
-            <td colspan="999" mat-cell *matCellDef="let group"><strong>{{ group.name }}</strong></td>
+            <td colspan="999" mat-cell *matCellDef="let group" class="group-cell"><strong>{{ group.name }}</strong></td>
           </ng-container>
 
           <tr mat-row *matRowDef="let row; columns: ['groupHeader']; when: isGroup"></tr>

@@ -20,37 +20,51 @@ export class SkirmishCharacterItemComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  getHealthBarStyle(): { [key: string]: string } {
-    const maxHealth = this.skirmishCharacter.character.wounds.value;
-    const currentHealth = this.skirmishCharacter.currentWounds;
-    const isDead = this.skirmishCharacter.isDead
-
-    let healthPercentage = 0
-
-    if (!isDead) {
-      healthPercentage = Math.max(0, Math.min(100, (currentHealth / maxHealth) * 100));
-    }
-
-    const startColor = {r: 63, g: 81, b: 181};
-    const endColor = {r: 233, g: 30, b: 99};
-    const {r, g, b} = this.calculateHealthColor(endColor, startColor, healthPercentage);
-    const a = 1;
-
-    return {
-      'background-color': `rgba(${r}, ${g}, ${b}, ${a})`,
-      'width': `${healthPercentage}%`,
-      'transition': 'width 0.3s ease, background-color 0.3s ease',
-    };
+  getSegmentGap(): number {
+    const max = this.skirmishCharacter.character.wounds.value;
+    return Math.max(0, Math.min(2, 2 - (max - 20) * 0.03));
   }
 
-  private calculateHealthColor(endColor: { r: number; g: number; b: number }, startColor: {
-    r: number;
-    g: number;
-    b: number
-  }, healthPercentage: number) {
-    const r = Math.round(endColor.r + (startColor.r - endColor.r) * (healthPercentage / 100));
-    const g = Math.round(endColor.g + (startColor.g - endColor.g) * (healthPercentage / 100));
-    const b = Math.round(endColor.b + (startColor.b - endColor.b) * (healthPercentage / 100));
-    return {r, g, b};
+  isDense(): boolean {
+    return this.skirmishCharacter.character.wounds.value > 40;
+  }
+
+  getHealthSegments(): boolean[] {
+    const max = this.skirmishCharacter.character.wounds.value;
+    const current = Math.max(0, Math.min(max, this.skirmishCharacter.currentWounds));
+    return Array.from({length: Math.max(0, max)}, (_, i) => i < current);
+  }
+
+  getHealthSegmentColor(): string {
+    const {r, g, b} = this.getHealthColor(this.getHealthPercentage());
+    return `rgb(${r}, ${g}, ${b})`;
+  }
+
+  private getHealthPercentage(): number {
+    if (this.skirmishCharacter.isDead) {
+      return 0;
+    }
+    const maxHealth = this.skirmishCharacter.character.wounds.value;
+    const currentHealth = this.skirmishCharacter.currentWounds;
+    return Math.max(0, Math.min(100, (currentHealth / maxHealth) * 100));
+  }
+
+  private getHealthColor(healthPercentage: number) {
+    const critical = {r: 138, g: 47, b: 37};
+    const wounded = {r: 176, g: 138, b: 58};
+    const healthy = {r: 107, g: 124, b: 62};
+
+    if (healthPercentage >= 50) {
+      return this.mixColors(wounded, healthy, (healthPercentage - 50) / 50);
+    }
+    return this.mixColors(critical, wounded, healthPercentage / 50);
+  }
+
+  private mixColors(from: { r: number; g: number; b: number }, to: { r: number; g: number; b: number }, ratio: number) {
+    return {
+      r: Math.round(from.r + (to.r - from.r) * ratio),
+      g: Math.round(from.g + (to.g - from.g) * ratio),
+      b: Math.round(from.b + (to.b - from.b) * ratio),
+    };
   }
 }

@@ -2,3 +2,18 @@ p {
   white-space: pre-line !important;
   text-align: justify;
 }
+
+:host {
+  display: block;
+  max-height: 55vh;
+  overflow-y: auto;
+}
+
+h4 {
+  margin-top: 0;
+  font-size: 15px;
+}
+
+p {
+  margin-bottom: 0;
+}

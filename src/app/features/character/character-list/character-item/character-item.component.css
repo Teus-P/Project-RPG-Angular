@@ -10,7 +10,28 @@ a {
 }
 
 .mdc-list-item.mdc-list-item--with-one-line {
-  height: 100% !important;
+  height: auto !important;
+  min-height: 72px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+:host ::ng-deep .mdc-list-item__content,
+:host ::ng-deep .mat-mdc-list-item-unscoped-content {
+  overflow: visible;
+  white-space: normal;
+  text-overflow: clip;
+}
+
+h6 {
+  margin-top: 0 !important;
+  margin-bottom: 2px;
+  line-height: 1.3;
+}
+
+p {
+  margin-bottom: 0;
+  line-height: 1.3;
 }
 
 .active {

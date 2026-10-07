@@ -1,16 +1,11 @@
-@use '../../../../../node_modules/@angular/material/index' as mat;
-
-$pink: mat.m2-define-palette(mat.$m2-pink-palette);
-
-
 nav {
   margin-bottom: 10px;
 }
 
 a {
-  color: mat.m2-get-color-from-palette($pink, 400);
+  color: var(--rpg-gold);
 }
 
-.mat-tab-label-active{
+.mat-tab-label-active {
   opacity: 1 !important;
 }

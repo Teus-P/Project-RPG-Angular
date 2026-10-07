@@ -10,3 +10,11 @@
 .tab::-webkit-scrollbar {
   display: none;
 }
+
+.tab.sticky-map {
+  position: sticky;
+  top: 8px;
+  align-self: flex-start;
+  height: auto;
+  overflow: visible;
+}

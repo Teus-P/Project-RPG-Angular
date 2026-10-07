@@ -1,6 +1,7 @@
-<div fxLayout="row" fxLayoutGap="5">
+<div fxLayout="row" fxLayoutGap="5" style="margin-bottom: 16px">
   <button mat-raised-button color="primary" (click)="onAddArmor()">{{text.getText().addArmorLabel}}</button>
 </div>
+<div class="parchment">
 <div fxLayout="row">
   <div fxFlex="100" style="text-align: center">
     <h3>{{text.getText().armorsLabel}}</h3>
@@ -104,3 +105,4 @@
     <button *ngIf="armor.isBaseArmor == false" mat-menu-item (click)="onDeleteArmor(armor.id)">{{text.getText().deleteLabel}}</button>
   </ng-template>
 </mat-menu>
+</div>

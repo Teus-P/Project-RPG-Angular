@@ -1,22 +1,31 @@
 <br>
 <div class="battlefield" #battlefield>
+  <button type="button" class="labels-toggle" [class.active]="showLabels"
+          (mousedown)="$event.stopPropagation()" (click)="toggleLabels()">
+    {{ text.getText().labelsLabel }}
+  </button>
+
   <div *ngFor="let token of tokens"
-       class="token"
+       class="token-holder"
        [ngClass]="{
        'dead-character': token.isDead,
        'dragging': draggedToken === token,
-       'clicked': clickedToken === token
+       'clicked': clickedToken === token,
+       'label-shown': showLabels && getLabelPlacement(token) !== null
        }"
        [ngStyle]="{
        'top.px': token.y,
-       'left.px': token.x,
-       'background-color': 'rgb(' + token.colorR + ',' + token.colorG + ',' + token.colorB + ')',
+       'left.px': token.x
        }"
        [title]="token.name"
        (mousedown)="onDragStart($event, token)"
        (click)="onTokenClick($event, token)"
   >
-    {{ token.shortName }}
+    <div class="token"
+         [style.background-color]="'rgb(' + token.colorR + ',' + token.colorG + ',' + token.colorB + ')'">
+      {{ token.shortName }}
+    </div>
+    <span class="token-name" [class.above]="isLabelAbove(token)">{{ token.name }}</span>
   </div>
 
 

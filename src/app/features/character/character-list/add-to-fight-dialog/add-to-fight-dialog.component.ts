@@ -47,6 +47,16 @@ export class AddToFightDialogComponent implements OnInit {
   newGroup = new SkirmishGroup();
   mode: 'select' | 'add' = 'add';
   randomColor: {r: number, g: number, b: number, a: number};
+  heraldicColors = [
+    '#8a2f25',
+    '#2f4f7a',
+    '#5b6b34',
+    '#b08a3a',
+    '#5d3a6b',
+    '#2f6b66',
+    '#6b4a2b',
+    '#6b665c',
+  ];
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: {groupName: string, isAddingGroup: boolean},
               public dialogRef: MatDialogRef<AddToFightDialogComponent>,
@@ -92,6 +102,10 @@ export class AddToFightDialogComponent implements OnInit {
     return false;
   }
 
+  changeNumber(step: number): void {
+    this.number = Math.max(1, (Number(this.number) || 0) + step);
+  }
+
   handleColorChange(event: any): void {
     this.newGroup.colorR = event.color.rgb.r;
     this.newGroup.colorG = event.color.rgb.g;
@@ -99,9 +113,8 @@ export class AddToFightDialogComponent implements OnInit {
   }
 
   generateRandomColor() {
-    const r = Math.floor(Math.random() * 256);
-    const g = Math.floor(Math.random() * 256);
-    const b = Math.floor(Math.random() * 256);
-    return {r: r, g: g, b: b, a: 1};
+    const hex = this.heraldicColors[Math.floor(Math.random() * this.heraldicColors.length)];
+    const value = parseInt(hex.slice(1), 16);
+    return {r: (value >> 16) & 255, g: (value >> 8) & 255, b: value & 255, a: 1};
   }
 }

@@ -3,6 +3,7 @@ import {NgClass, NgForOf, NgIf, NgStyle} from "@angular/common";
 import {Subscription} from "rxjs";
 import {SkirmishCharacterService} from "../../../core/services/skirmish-character-service/skirmish-character.service";
 import {SkirmishCharacter} from "../../../core/model/skirmish/skirmish-character.model";
+import {TextResourceService} from "../../../core/services/text-resource-service/text-resource.service";
 
 interface Token {
   name: string;
@@ -14,6 +15,13 @@ interface Token {
   colorG: number;
   colorB: number;
   meleeTargetName?: string;
+}
+
+interface Rect {
+  x: number;
+  y: number;
+  w: number;
+  h: number;
 }
 
 @Component({
@@ -30,6 +38,11 @@ interface Token {
 export class SkirmishBattlefieldComponent implements OnInit {
   subscription!: Subscription;
   tokens: Token[] = [];
+
+  text = TextResourceService;
+  showLabels = localStorage.getItem('battleMapLabels') !== 'off';
+  private labelSignature = '';
+  private labelPlacements = new Map<string, 'below' | 'above' | null>();
 
   draggedToken: any = null;
   clickedToken: any = null;
@@ -119,7 +132,7 @@ export class SkirmishBattlefieldComponent implements OnInit {
 
   onDragStart(event: MouseEvent, token: any) {
     this.draggedToken = token;
-    const rect = (event.target as HTMLElement).getBoundingClientRect();
+    const rect = (event.currentTarget as HTMLElement).getBoundingClientRect();
     this.offsetX = event.clientX - rect.left;
     this.offsetY = event.clientY - rect.top;
   }
@@ -134,6 +147,67 @@ export class SkirmishBattlefieldComponent implements OnInit {
       this.clickedToken = null
       clickedToken.meleeTargetName = ''
     }
+  }
+
+  toggleLabels(): void {
+    this.showLabels = !this.showLabels;
+    localStorage.setItem('battleMapLabels', this.showLabels ? 'on' : 'off');
+  }
+
+  isLowToken(token: Token): boolean {
+    const height = this.battlefield?.nativeElement.clientHeight ?? 600;
+    return token.y + 50 + 22 > height;
+  }
+
+  getLabelPlacement(token: Token): 'below' | 'above' | null {
+    const element = this.battlefield?.nativeElement;
+    const width = element?.clientWidth ?? 900;
+    const height = element?.clientHeight ?? 600;
+    const signature = width + 'x' + height + '|' +
+      this.tokens.map(t => `${t.name}:${Math.round(t.x)}:${Math.round(t.y)}:${t.isDead}`).join('|');
+    if (signature !== this.labelSignature) {
+      this.labelSignature = signature;
+      this.layoutLabels(width, height);
+    }
+    return this.labelPlacements.get(token.name) ?? null;
+  }
+
+  isLabelAbove(token: Token): boolean {
+    const placement = this.getLabelPlacement(token);
+    return placement ? placement === 'above' : this.isLowToken(token);
+  }
+
+  private layoutLabels(width: number, height: number): void {
+    const discs: Rect[] = this.tokens.map(t => ({x: t.x - 2, y: t.y - 2, w: 54, h: 54}));
+    const placed: Rect[] = [];
+    const order = [...this.tokens].sort((a, b) => Number(a.isDead) - Number(b.isDead));
+    this.labelPlacements.clear();
+
+    for (const token of order) {
+      const labelWidth = Math.min(200, token.name.length * 6.4 + 16);
+      const labelHeight = 18;
+      const left = token.x + 25 - labelWidth / 2;
+      const candidates: ['below' | 'above', number][] = [
+        ['below', token.y + 53],
+        ['above', token.y - 3 - labelHeight]
+      ];
+
+      let chosen: 'below' | 'above' | null = null;
+      for (const [side, top] of candidates) {
+        const rect: Rect = {x: left, y: top, w: labelWidth, h: labelHeight};
+        const inside = rect.x >= 0 && rect.y >= 0 && rect.x + rect.w <= width && rect.y + rect.h <= height;
+        if (inside && !discs.some(d => this.overlaps(rect, d)) && !placed.some(p => this.overlaps(rect, p))) {
+          chosen = side;
+          placed.push(rect);
+          break;
+        }
+      }
+      this.labelPlacements.set(token.name, chosen);
+    }
+  }
+
+  private overlaps(a: Rect, b: Rect): boolean {
+    return a.x < b.x + b.w && a.x + a.w > b.x && a.y < b.y + b.h && a.y + a.h > b.y;
   }
 
   getTargetToken(token: Token): Token | undefined {

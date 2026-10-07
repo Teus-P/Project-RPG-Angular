@@ -23,7 +23,13 @@ export class DetailsBodyLocalizationsComponent implements OnInit {
   @Input() skirmishCharacter?: SkirmishCharacter
   text = TextResourceService
 
-  bodyLocalizationsColumns: string[] = ['name', 'armorPoints', 'injuries']
+  private readonly columnsWithInjuries: string[] = ['name', 'armorPoints', 'injuries']
+  private readonly columnsWithoutInjuries: string[] = ['name', 'armorPoints']
+
+  get bodyLocalizationsColumns(): string[] {
+    const hasInjuries = this.character.bodyLocalizations.some(localization => localization.injuries?.length > 0)
+    return hasInjuries ? this.columnsWithInjuries : this.columnsWithoutInjuries
+  }
 
   constructor(public skirmishCharacterService: SkirmishCharacterService,
               public characterService: CharacterService,

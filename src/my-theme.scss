@@ -1,25 +1,133 @@
+@use 'sass:map';
 @use '@angular/material' as mat;
 
 @include mat.elevation-classes();
 @include mat.app-background();
 
-//$my-primary: mat.m2-define-palette(mat.$m2-green-palette);
-//$my-primary: mat.m2-define-palette(mat.$m2-light-green-palette);
-//$my-primary: mat.m2-define-palette(mat.$m2-orange-palette);
-//$my-primary: mat.m2-define-palette(mat.$m2-deep-orange-palette);
-$my-primary: mat.m2-define-palette(mat.$m2-indigo-palette);
+$gold-palette: (
+  50: #faf3df,
+  100: #f1e2b6,
+  200: #e6cf8c,
+  300: #dbbb6a,
+  400: #d2ab5c,
+  500: #c9a255,
+  600: #b48f48,
+  700: #9a783a,
+  800: #80622e,
+  900: #5e4620,
+  contrast: (
+    50: #1b1712,
+    100: #1b1712,
+    200: #1b1712,
+    300: #1b1712,
+    400: #1b1712,
+    500: #1b1712,
+    600: #1b1712,
+    700: #f1e4c3,
+    800: #f1e4c3,
+    900: #f1e4c3,
+  )
+);
 
-$my-accent: mat.m2-define-palette(mat.$m2-blue-gray-palette);
-$my-warn: mat.m2-define-palette(mat.$m2-pink-palette);
+$bronze-palette: (
+  50: #f3eee2,
+  100: #e0d6bd,
+  200: #cbbd96,
+  300: #b6a370,
+  400: #a49058,
+  500: #927f48,
+  600: #826f40,
+  700: #6d5d36,
+  800: #584b2c,
+  900: #3e3420,
+  contrast: (
+    50: #1b1712,
+    100: #1b1712,
+    200: #1b1712,
+    300: #1b1712,
+    400: #1b1712,
+    500: #f1e4c3,
+    600: #f1e4c3,
+    700: #f1e4c3,
+    800: #f1e4c3,
+    900: #f1e4c3,
+  )
+);
 
-$my-theme: mat.m2-define-dark-theme((
+$blood-palette: (
+  50: #f6e4e0,
+  100: #e8bdb5,
+  200: #d9928a,
+  300: #c86e63,
+  400: #b95a4d,
+  500: #a8473a,
+  600: #983f33,
+  700: #84362c,
+  800: #702d24,
+  900: #521f19,
+  contrast: (
+    50: #1b1712,
+    100: #1b1712,
+    200: #1b1712,
+    300: #1b1712,
+    400: #f1e4c3,
+    500: #f1e4c3,
+    600: #f1e4c3,
+    700: #f1e4c3,
+    800: #f1e4c3,
+    900: #f1e4c3,
+  )
+);
+
+$my-primary: mat.m2-define-palette($gold-palette);
+$my-accent: mat.m2-define-palette($bronze-palette);
+$my-warn: mat.m2-define-palette($blood-palette);
+
+$my-typography: mat.m2-define-typography-config(
+  $font-family: '"EB Garamond", Georgia, serif',
+  $headline-5: mat.m2-define-typography-level(28px, 36px, 600, '"Cinzel", serif', 0.06em),
+  $headline-6: mat.m2-define-typography-level(22px, 30px, 600, '"Cinzel", serif', 0.06em),
+  $subtitle-1: mat.m2-define-typography-level(18px, 28px, 500, '"EB Garamond", serif', 0.02em),
+  $body-1: mat.m2-define-typography-level(17px, 24px, 400, '"EB Garamond", serif', 0.01em),
+  $body-2: mat.m2-define-typography-level(16px, 22px, 400, '"EB Garamond", serif', 0.01em),
+  $button: mat.m2-define-typography-level(13px, 20px, 600, '"Cinzel", serif', 0.12em)
+);
+
+$base-theme: mat.m2-define-dark-theme((
   color: (
     primary: $my-primary,
     accent: $my-accent,
     warn: $my-warn,
   ),
-  typography: mat.m2-define-typography-config(),
+  typography: $my-typography,
   density: 0
+));
+
+$my-theme: map.deep-merge($base-theme, (
+  color: (
+    background: (
+      background: #1b1712,
+      app-bar: #120f0b,
+      card: #2a231a,
+      dialog: #2a231a,
+      hover: rgba(201, 162, 85, 0.08),
+      raised-button: #2d261b,
+      focused-button: rgba(201, 162, 85, 0.14),
+      selected-button: #3d3426,
+      tooltip: #3d3426,
+      unselected-chip: #3d3426,
+    ),
+    foreground: (
+      base: #cfc3a8,
+      text: #cfc3a8,
+      divider: rgba(201, 162, 85, 0.22),
+      dividers: rgba(201, 162, 85, 0.22),
+      secondary-text: #9a8e74,
+      hint-text: #7d735d,
+      icon: #b8a77e,
+      icons: #b8a77e,
+    ),
+  ),
 ));
 
 @include mat.all-component-themes($my-theme);

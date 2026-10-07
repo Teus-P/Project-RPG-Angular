@@ -1,12 +1,19 @@
+.mat-button-responsive {
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  padding: 0 10px;
+}
+
 @media (max-width: 1600px) {
   .mat-button-responsive {
-    font-size: 13px;
+    font-size: 11px;
   }
 }
 
 .advantage-groups-table {
-  background-color: #303030;
+  background-color: transparent;
   box-shadow: none;
+  border: 0;
 }
 
 .mat-mdc-row .mat-mdc-cell {
@@ -17,4 +24,8 @@
 
 .mat-column-color {
   padding: 0;
+}
+
+.group-color {
+  filter: var(--rpg-heraldic-filter);
 }

@@ -11,3 +11,94 @@ mat-button-toggle-group {
 mat-button-toggle {
   flex: 1;
 }
+
+:host ::ng-deep color-sketch {
+  display: block;
+  margin-top: 8px;
+}
+
+:host ::ng-deep .sketch-picker {
+  margin: 0 auto;
+  background: var(--rpg-panel) !important;
+  border: 1px solid var(--rpg-line-strong);
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+:host ::ng-deep .sketch-picker .sketch-saturation,
+:host ::ng-deep .sketch-picker .color-saturation {
+  border-radius: 0 !important;
+}
+
+:host ::ng-deep .sketch-picker .sketch-fields-container {
+  border-bottom-color: var(--rpg-line) !important;
+}
+
+:host ::ng-deep .sketch-picker input {
+  background: rgba(201, 162, 85, 0.06);
+  color: var(--rpg-text-strong);
+  border: 0 !important;
+  border-bottom: 1px solid var(--rpg-gold-dim) !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  font-family: var(--rpg-font-body);
+}
+
+:host ::ng-deep .sketch-picker span {
+  color: var(--rpg-muted) !important;
+  font-family: var(--rpg-font-head);
+  letter-spacing: 0.1em;
+}
+
+:host ::ng-deep .sketch-picker .sketch-active,
+:host ::ng-deep .sketch-picker .swatch {
+  border-radius: 0 !important;
+}
+
+:host ::ng-deep .sketch-picker .sketch-swatches-container,
+:host ::ng-deep .sketch-picker .sketch-swatches,
+:host ::ng-deep .sketch-picker .sketch-fields-container {
+  border-color: var(--rpg-line) !important;
+}
+
+:host ::ng-deep .sketch-picker .sketch-alpha,
+:host ::ng-deep .sketch-picker .sketch-double ~ .sketch-single:last-child,
+:host ::ng-deep .sketch-picker .sketch-fields > color-editable-input:last-child {
+  display: none !important;
+}
+
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+.number-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.stepper-button {
+  width: 20px;
+  height: 20px;
+  margin-bottom: 22px;
+  padding: 0;
+  font-family: var(--rpg-font-head);
+  font-size: 18px;
+  line-height: 1;
+  color: var(--rpg-text-strong);
+  background: #2d261b;
+  border: 1px solid var(--rpg-gold-dim);
+  cursor: pointer;
+}
+
+.stepper-button:hover {
+  border-color: var(--rpg-gold);
+  color: var(--rpg-gold);
+}

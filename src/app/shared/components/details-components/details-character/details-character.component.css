@@ -22,3 +22,27 @@ button {
   margin-top: 20px;
   margin-bottom: 10px;
 }
+
+.columns-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 0 32px;
+  align-items: start;
+}
+
+.column {
+  min-width: 0;
+}
+
+.spells-table .mat-mdc-row {
+  height: 30px;
+}
+
+.spells-table .mat-mdc-cell {
+  border-bottom: 0;
+}
+
+.spells-table .group-cell {
+  padding-top: 10px;
+  border-bottom: 1px solid var(--rpg-line);
+}

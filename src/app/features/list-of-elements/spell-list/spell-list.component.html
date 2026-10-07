@@ -2,6 +2,7 @@
   (filterValueChanged)="applyFilter($event)">
 </app-list-filter>
 
+<div class="parchment parchment-narrow">
 <div fxLayout="row">
   <div fxFlex="100" style="text-align: center">
     <h3>{{text.getText().spellsLabel}}</h3>
@@ -15,4 +16,5 @@
     [qualityGroup]="spellGroup.spells"
     [filterValue]="filterValue">
   </app-item-list>
+</div>
 </div>

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {TextResourceService} from "../../core/services/text-resource-service/text-resource.service";
 
 @Component({
     selector: 'app-skirmish',
@@ -7,6 +8,9 @@ import { Component, OnInit } from '@angular/core';
     standalone: false
 })
 export class SkirmishComponent implements OnInit {
+
+  text = TextResourceService
+  isMapTabActive = false
 
   constructor() { }
 

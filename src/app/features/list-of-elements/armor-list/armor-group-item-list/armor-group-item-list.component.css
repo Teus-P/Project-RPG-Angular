@@ -3,7 +3,7 @@
 }
 
 .mat-column-name {
-  width: 15%;
+  width: 14%;
 }
 
 .mat-column-price {
@@ -23,11 +23,17 @@
 }
 
 .mat-column-localization {
-  width: 10%;
+  width: 12%;
+}
+
+.mat-column-localization li,
+.mat-column-penalties li,
+.mat-column-qualities li {
+  white-space: nowrap;
 }
 
 .mat-column-armorPoints {
-  width: 5%;
+  width: 7%;
 }
 
 .mat-column-penalties {
@@ -35,5 +41,5 @@
 }
 
 .mat-column-qualities {
-  width: 15%;
+  width: 19%;
 }
