@@ -1,6 +1,6 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, ViewChild, DestroyRef, inject} from '@angular/core';
+import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
 import {SkirmishCharacter} from "../../../core/model/skirmish/skirmish-character.model";
-import {Subscription} from "rxjs";
 import {SkirmishCharacterService} from "../../../core/services/skirmish-character-service/skirmish-character.service";
 import {Router} from "@angular/router";
 import {RoundService} from "../../../core/services/round-service/round.service";
@@ -18,8 +18,8 @@ import {SkirmishGroup} from "../../../core/model/skirmish/skirmish-group.model";
   standalone: false
 })
 export class SkirmishCharactersListComponent implements OnInit {
+  private destroyRef = inject(DestroyRef)
   skirmishCharacters!: SkirmishCharacter[];
-  subscription!: Subscription;
   roundNumber!: number;
   skirmishGroups: SkirmishGroup[] = [];
 
@@ -35,13 +35,13 @@ export class SkirmishCharactersListComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.subscription = this.skirmishCharacterService.skirmishCharactersChanged.subscribe(
+    this.skirmishCharacterService.skirmishCharactersChanged.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(
       (skirmishCharacters: SkirmishCharacter[]) => {
         this.skirmishCharacters = skirmishCharacters;
       }
     )
 
-    this.skirmishService.skirmishGroupsChanged.subscribe(
+    this.skirmishService.skirmishGroupsChanged.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(
       (skirmishGroups: SkirmishGroup[]) => {
         this.skirmishGroups = skirmishGroups;
       }

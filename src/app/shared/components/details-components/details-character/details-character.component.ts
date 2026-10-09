@@ -6,7 +6,7 @@ import {Character} from "../../../../core/model/character/character.model";
 import {TextResourceService} from "../../../../core/services/text-resource-service/text-resource.service";
 import {Model} from "../../../../core/model/model";
 import {BottomSheetDescription} from "../../bottom-sheet/bottom-sheet-description/bottom-sheet-description.component";
-import {Spell} from "../../../../core/model/spell/spell.model";
+import {SpellGroupRow} from "../../../pipes/spell-rows.pipe";
 import {MatMenuTrigger} from "@angular/material/menu";
 import {Armor} from "../../../../core/model/armor/armor.model";
 import {
@@ -15,11 +15,6 @@ import {
 import {CharacterArmor} from "../../../../core/model/armor/character-armor.model";
 import {CharacterService} from "../../../../core/services/character-service/character.service";
 import {Weapon} from "../../../../core/model/weapon/weapon.model";
-
-export interface Group {
-  name: string;
-  isGroup: boolean;
-}
 
 @Component({
   selector: 'app-details-character',
@@ -72,25 +67,7 @@ export class DetailsCharacterComponent implements OnInit {
     ]
   }
 
-  protected createListOfSpells(spells: Spell[]): (Spell | Group)[] {
-    spells.sort((a, b) => a.spellGroup.nameTranslation!.localeCompare(b.spellGroup.nameTranslation!));
-
-    const result: (Spell | Group)[] = [];
-    let currentGroupName = '';
-
-    for (const spell of spells) {
-      const groupName = spell.spellGroup.nameTranslation!;
-      if (groupName !== currentGroupName) {
-        result.push({isGroup: true, name: groupName});
-        currentGroupName = groupName;
-      }
-      result.push(spell);
-    }
-
-    return result;
-  }
-
-  isGroup(index: number, item: Group): boolean {
+  isGroup(index: number, item: SpellGroupRow): boolean {
     return item.isGroup;
   }
 

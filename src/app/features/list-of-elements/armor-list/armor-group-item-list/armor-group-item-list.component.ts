@@ -1,4 +1,5 @@
-import {Component, OnInit, ViewChild} from '@angular/core'
+import {Component, OnInit, ViewChild, DestroyRef, inject} from '@angular/core'
+import {takeUntilDestroyed} from "@angular/core/rxjs-interop"
 import {Armor} from "../../../../core/model/armor/armor.model"
 import {TextResourceService} from "../../../../core/services/text-resource-service/text-resource.service"
 import {ArmorService} from "../../../../core/services/armor-service/armor.service"
@@ -23,6 +24,7 @@ import {
     standalone: false
 })
 export class ArmorGroupItemList implements OnInit {
+  private destroyRef = inject(DestroyRef)
   armorGroups!: { name: string, armors: Armor[] }[]
   text = TextResourceService
   armorsColumns: string[] = ['name', 'price', 'enc', 'availability', 'category', 'localization', 'armorPoints', 'penalties', 'qualities']
@@ -36,7 +38,7 @@ export class ArmorGroupItemList implements OnInit {
   }
 
   ngOnInit(): void {
-    this.armorService.armorsListChanged.subscribe(
+    this.armorService.armorsListChanged.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(
       (armors: Armor[]) => {
         this.groupArmors(armors)
       }

@@ -1,6 +1,6 @@
-import {Component, ElementRef, HostListener, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, HostListener, OnInit, ViewChild, DestroyRef, inject} from '@angular/core';
+import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
 import {NgClass, NgForOf, NgIf, NgStyle} from "@angular/common";
-import {Subscription} from "rxjs";
 import {SkirmishCharacterService} from "../../../core/services/skirmish-character-service/skirmish-character.service";
 import {SkirmishCharacter} from "../../../core/model/skirmish/skirmish-character.model";
 import {TextResourceService} from "../../../core/services/text-resource-service/text-resource.service";
@@ -36,7 +36,7 @@ interface Rect {
   styleUrl: './skirmish-battlefield.component.css'
 })
 export class SkirmishBattlefieldComponent implements OnInit {
-  subscription!: Subscription;
+  private destroyRef = inject(DestroyRef)
   tokens: Token[] = [];
 
   text = TextResourceService;
@@ -66,7 +66,7 @@ export class SkirmishBattlefieldComponent implements OnInit {
       }
     }
 
-    this.subscription = this.skirmishCharacterService.skirmishCharactersChanged.subscribe(
+    this.skirmishCharacterService.skirmishCharactersChanged.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(
       (skirmishCharacters: SkirmishCharacter[]) => {
         const tokensNames = new Set(this.tokens.map(token => token.name));
         const charactersNames = new Set(skirmishCharacters.map(skirmishCharacter => skirmishCharacter.sequenceNumber == 1 ? skirmishCharacter.character.name : skirmishCharacter.character.name + ' ' + skirmishCharacter.sequenceNumber));

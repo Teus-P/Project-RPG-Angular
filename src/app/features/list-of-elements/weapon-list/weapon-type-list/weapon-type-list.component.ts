@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {Subscription} from "rxjs";
+import {Component, OnInit, DestroyRef, inject} from '@angular/core';
+import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
 import {WeaponService} from "../../../../core/services/weapon-service/weapon.service";
 import {WeaponGroup} from "../../../../core/model/weapon/weapon-group.model";
 import {TextResourceService} from "../../../../core/services/text-resource-service/text-resource.service";
@@ -14,7 +14,7 @@ import {MatDialog} from "@angular/material/dialog";
     standalone: false
 })
 export class WeaponTypeListComponent implements OnInit {
-  subscription!: Subscription
+  private destroyRef = inject(DestroyRef)
   weaponTypes: string[] = []
 
   text = TextResourceService
@@ -24,7 +24,7 @@ export class WeaponTypeListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.subscription = this.weaponService.weaponGroupsChanged.subscribe(
+    this.weaponService.weaponGroupsChanged.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(
       (weaponGroups: WeaponGroup[]) => {
         this.groupWeaponCategories(weaponGroups);
       }

@@ -1,8 +1,8 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, DestroyRef, inject} from '@angular/core';
+import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
 import {Character} from "../../../core/model/character/character.model";
 import {CharacterService} from "../../../core/services/character-service/character.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {Subscription} from "rxjs";
 import {TextResourceService} from "../../../core/services/text-resource-service/text-resource.service";
 import {SkirmishCharacterService} from "../../../core/services/skirmish-character-service/skirmish-character.service";
 import {MatDialog} from "@angular/material/dialog";
@@ -16,8 +16,8 @@ import {SkirmishService} from "../../../core/services/skirmish-service/skirmish.
   standalone: false
 })
 export class CharacterListComponent implements OnInit {
+  private destroyRef = inject(DestroyRef)
 
-  subscription!: Subscription;
   characterGroupsTypes: { name: string, groups: { name: string, characters: Character[] }[] }[] = [];
 
   text = TextResourceService;
@@ -31,7 +31,7 @@ export class CharacterListComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.subscription = this.characterService.charactersChanged.subscribe(
+    this.characterService.charactersChanged.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(
       () => {
         this.characterGroupsTypes = this.characterService.getCharacterGroupsTypes();
       }

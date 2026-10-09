@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<title>Project RPG — propozycje szaty graficznej</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; }
+:where(.grid, .flex) > * { min-width: 0; }
+:where(p,h1,h2,h3,h4,li,td,th,span,a,button,label){ overflow-wrap:anywhere; }
+body { margin:0; background:#15130f; color:#d9cfb8; font-family:'EB Garamond',Georgia,serif; font-size:18px; line-height:1.5; }
+.page { max-width:1180px; margin:0 auto; padding:48px 28px 80px; }
+h1.t { font-family:'Cinzel',serif; font-weight:600; letter-spacing:.08em; font-size:30px; margin:0 0 6px; color:#e8d9b0; }
+.lead { color:#a89d84; max-width:760px; margin:0 0 36px; }
+.sec { margin:0 0 56px; }
+.sec h2 { font-family:'Cinzel',serif; font-weight:600; letter-spacing:.06em; font-size:22px; color:#e8d9b0; margin:0 0 4px; }
+.sec .sub { color:#a89d84; margin:0 0 18px; max-width:820px; }
+.meta { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr)); gap:14px; margin:0 0 20px; }
+.meta div { background:#1d1a14; border:1px solid #3a3326; padding:12px 14px; font-size:16px; }
+.meta b { display:block; font-family:'Cinzel',serif; font-size:12px; letter-spacing:.14em; color:#b8975a; text-transform:uppercase; margin-bottom:4px; font-weight:600; }
+.swatches { display:flex; flex-wrap:wrap; gap:8px; margin:0 0 18px; }
+.sw { width:92px; font-size:12px; font-family:ui-monospace,monospace; color:#a89d84; }
+.sw i { display:block; height:34px; border:1px solid rgba(255,255,255,.12); margin-bottom:3px; }
+
+/* ===== mockup (themed via CSS variables) ===== */
+.mock { background:var(--bg); color:var(--text); border:1px solid var(--line); font-family:var(--body); font-size:17px; overflow:hidden; }
+.mock .nav { display:flex; flex-wrap:wrap; align-items:stretch; background:var(--nav); border-bottom:1px solid var(--line-strong); box-shadow:inset 0 -1px 0 var(--line); }
+.mock .brand { font-family:var(--head); font-weight:700; letter-spacing:.14em; color:var(--gold); padding:14px 20px; font-size:15px; text-transform:uppercase; border-right:1px solid var(--line); }
+.mock .nav a { font-family:var(--head); font-size:12px; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); padding:16px 14px; border-bottom:2px solid transparent; text-decoration:none; }
+.mock .nav a.on { color:var(--gold); border-bottom-color:var(--gold); background:var(--nav-on); }
+.mock .body { display:grid; grid-template-columns:minmax(0,260px) minmax(0,1fr); gap:22px; padding:22px; }
+@media (max-width:760px){ .mock .body { grid-template-columns:minmax(0,1fr);} }
+.mock h3 { font-family:var(--head); font-weight:600; letter-spacing:.1em; text-transform:uppercase; font-size:13px; color:var(--gold); margin:0 0 10px; }
+.mock .panel { background:var(--panel); border:1px solid var(--line); position:relative; padding:14px 16px; box-shadow:var(--shadow); }
+.mock .panel::before { content:""; position:absolute; inset:3px; border:1px solid var(--line-inner); pointer-events:none; }
+.mock .item { padding:9px 10px; border-bottom:1px solid var(--line); }
+.mock .item:last-child { border-bottom:0; }
+.mock .item b { font-weight:600; display:block; color:var(--text-strong); }
+.mock .item span { color:var(--muted); font-size:15px; font-style:italic; }
+.mock .item.sel { background:var(--sel); box-shadow:inset 3px 0 0 var(--gold); }
+.mock .rule { display:flex; align-items:center; gap:10px; margin:6px 0 14px; color:var(--gold); opacity:.8; }
+.mock .rule::before, .mock .rule::after { content:""; flex:1; height:1px; background:linear-gradient(90deg,transparent,var(--gold-dim),transparent); }
+.mock .rule i { width:6px; height:6px; background:currentColor; transform:rotate(45deg); }
+.mock .name { font-family:var(--head); font-size:24px; letter-spacing:.06em; margin:0; color:var(--text-strong); font-weight:600; }
+.mock .desc { color:var(--muted); font-style:italic; margin:2px 0 0; }
+.mock .stats { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:8px; margin:6px 0 16px; }
+.mock .stat { text-align:center; background:var(--stat); border:1px solid var(--line); padding:6px 2px 7px; }
+.mock .stat small { display:block; font-family:var(--head); font-size:10px; letter-spacing:.14em; color:var(--muted); }
+.mock .stat strong { font-family:var(--head); font-size:21px; color:var(--text-strong); font-weight:600; }
+.mock table { width:100%; border-collapse:collapse; font-size:16px; margin-bottom:16px; }
+.mock th { font-family:var(--head); font-weight:600; font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--gold); text-align:left; padding:6px 8px; border-bottom:1px solid var(--line-strong); }
+.mock td { padding:7px 8px; border-bottom:1px solid var(--line); }
+.mock .tag { font-size:13px; padding:1px 8px; border:1px solid var(--gold-dim); color:var(--gold); font-family:var(--head); letter-spacing:.08em; }
+.mock .tag.bad { border-color:var(--bad); color:var(--bad); }
+.mock .btns { display:flex; flex-wrap:wrap; gap:10px; align-items:center; }
+.mock .btn { font-family:var(--head); font-size:12px; letter-spacing:.14em; text-transform:uppercase; padding:9px 18px; border:1px solid var(--gold-dim); background:var(--btn); color:var(--text-strong); cursor:default; }
+.mock .btn.primary { background:var(--btn-primary); border-color:var(--gold); color:var(--btn-primary-text); font-weight:700; }
+.mock .btn.danger { border-color:var(--bad); color:var(--bad); background:transparent; }
+.mock .hp { height:8px; background:var(--stat); border:1px solid var(--line); margin:4px 0 14px; }
+.mock .hp i { display:block; height:100%; width:68%; background:var(--bad); }
+.mock .hplab { display:flex; justify-content:space-between; font-size:15px; color:var(--muted); }
+
+/* --- A: Dwór --- */
+.t-a { --bg:#1b1712; --nav:#120f0b; --nav-on:rgba(201,162,85,.07); --panel:#2a231a; --stat:#1f1a13; --sel:rgba(201,162,85,.10);
+  --text:#cfc3a8; --text-strong:#efe3c2; --muted:#9a8e74; --gold:#c9a255; --gold-dim:#7d6636;
+  --line:#3d3426; --line-strong:#5a4a30; --line-inner:rgba(201,162,85,.14); --bad:#a8473a;
+  --btn:#2d261b; --btn-primary:#c9a255; --btn-primary-text:#1b1712; --shadow:0 2px 10px rgba(0,0,0,.45);
+  --head:'Cinzel',serif; --body:'EB Garamond',serif;
+  background-image:radial-gradient(ellipse at 50% 0%, rgba(201,162,85,.06), transparent 60%); }
+/* --- B: Pergamin --- */
+.t-b { --bg:#d9c9a3; --nav:#3a2a1c; --nav-on:rgba(0,0,0,.25); --panel:#e8dbb9; --stat:#dccb9f; --sel:rgba(122,36,28,.10);
+  --text:#3b2d1d; --text-strong:#24190f; --muted:#6f5c42; --gold:#7a241c; --gold-dim:#a07a4a;
+  --line:#b9a276; --line-strong:#8a6f45; --line-inner:rgba(90,60,30,.18); --bad:#8a1f17;
+  --btn:#cdb88a; --btn-primary:#7a241c; --btn-primary-text:#f1e4c3; --shadow:0 1px 0 rgba(255,255,255,.4) inset,0 2px 6px rgba(60,40,15,.25);
+  --head:'Cinzel',serif; --body:'EB Garamond',serif;
+  background-image:radial-gradient(ellipse at 20% 10%, rgba(255,255,255,.28), transparent 55%),radial-gradient(ellipse at 90% 100%, rgba(90,60,20,.22), transparent 55%); }
+.t-b .nav a { color:#c9b48a; } .t-b .nav a.on { color:#f1e4c3; border-bottom-color:#c9a255; } .t-b .brand { color:#e8cf8f; border-right-color:rgba(255,255,255,.12); }
+/* --- C: Żelazo --- */
+.t-c { --bg:#16191c; --nav:#0e1012; --nav-on:rgba(143,164,176,.08); --panel:#1f2428; --stat:#171b1e; --sel:rgba(143,164,176,.10);
+  --text:#bcc4c9; --text-strong:#e6ebee; --muted:#818c93; --gold:#8fa4b0; --gold-dim:#4d5d67;
+  --line:#2b3238; --line-strong:#3d4850; --line-inner:rgba(143,164,176,.10); --bad:#b0483d;
+  --btn:#252b30; --btn-primary:#8fa4b0; --btn-primary-text:#101315; --shadow:0 2px 10px rgba(0,0,0,.5);
+  --head:'Cinzel',serif; --body:'EB Garamond',serif; }
+.t-c .panel::before { border-style:dashed; }
+
+
+/* --- A: karta jak kartka pergaminu (postrzępione krawędzie, zawinięte rogi) --- */
+.t-a .paper { background:none; border:0; box-shadow:none; isolation:isolate; padding:26px 28px;
+  --text:#3b2d1d; --text-strong:#24190f; --muted:#6f5c42; --gold:#7a241c; --gold-dim:#a07a4a;
+  --line:rgba(110,80,40,.35); --line-strong:rgba(110,80,40,.6); --stat:rgba(120,85,40,.14); --bad:#8a1f17;
+  --btn:rgba(120,85,40,.16); --btn-primary:#7a241c; --btn-primary-text:#f1e4c3; color:var(--text); }
+.t-a .paper::before { inset:0; border:0; z-index:-1; pointer-events:none;
+  background:
+    radial-gradient(ellipse at 18% 12%, rgba(255,250,225,.55), transparent 55%),
+    radial-gradient(ellipse at 85% 95%, rgba(120,70,20,.30), transparent 60%),
+    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='3' seed='4'/><feColorMatrix values='0 0 0 0 .35  0 0 0 0 .22  0 0 0 0 .08  0 0 0 .22 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"),
+    #dfcd9f;
+  box-shadow: inset 0 0 36px rgba(110,70,20,.55), inset 0 0 6px rgba(80,45,10,.6);
+  filter:url(#rough) drop-shadow(0 6px 10px rgba(0,0,0,.55)); }
+.t-a .paper::after { content:""; position:absolute; right:-2px; bottom:-2px; width:30px; height:30px; z-index:1; pointer-events:none;
+  background:linear-gradient(315deg, #14100b 0 50%, transparent 50%), linear-gradient(135deg,#b69a62,#ead9aa 55%,#cdb57d);
+  clip-path:polygon(100% 0,100% 100%,0 100%); filter:drop-shadow(-3px -2px 3px rgba(0,0,0,.45)); border-radius:0 0 0 0; }
+.t-a .paper .item.sel { background:rgba(122,36,28,.10); }
+.t-a .paper .rule { color:#7a241c; }
+.t-a .paper .tag { border-color:#9a7a45; }
+.t-a .paper .tag.bad { border-color:#8a1f17; }
+.t-a .paper .btn { border-color:#8a6f45; }
+.t-a .paper .btn.primary { border-color:#7a241c; }
+
+/* --- decision form --- */
+.choose { background:#1d1a14; border:1px solid #3a3326; padding:22px; }
+.choose label { display:block; padding:8px 0; cursor:pointer; }
+.choose textarea { width:100%; background:#15130f; color:#d9cfb8; border:1px solid #3a3326; padding:10px; font:inherit; min-height:80px; margin-top:8px; }
+.choose button { margin-top:12px; font-family:'Cinzel',serif; letter-spacing:.12em; text-transform:uppercase; font-size:13px; padding:10px 22px; background:#c9a255; color:#1b1712; border:0; cursor:pointer; font-weight:700; }
+.cmp { width:100%; border-collapse:collapse; font-size:16px; }
+.cmp th, .cmp td { border-bottom:1px solid #3a3326; padding:8px 10px; text-align:left; vertical-align:top; }
+.cmp th { font-family:'Cinzel',serif; font-size:12px; letter-spacing:.12em; color:#b8975a; text-transform:uppercase; }
+.rec { border-left:3px solid #c9a255; padding:4px 0 4px 14px; margin:0 0 18px; color:#d9cfb8; }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<filter id="rough" x="-3%" y="-3%" width="106%" height="106%">
+  <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="7" result="wave"/>
+  <feDisplacementMap in="SourceGraphic" in2="wave" scale="10" xChannelSelector="R" yChannelSelector="G" result="w"/>
+  <feTurbulence type="fractalNoise" baseFrequency="0.7" numOctaves="3" seed="2" result="fray"/>
+  <feDisplacementMap in="w" in2="fray" scale="5" xChannelSelector="G" yChannelSelector="R"/>
+</filter></defs></svg>
+<div class="page">
+
+<h1 class="t">Project RPG — nowa szata graficzna</h1>
+<p class="lead">Trzy kierunki inspirowane interfejsem <em>Manor Lords</em>: przygaszone, ziemiste kolory, cienkie ramki zamiast cieni i „materiałowych” kart, szeryfowa typografia, jeden złoty/rdzawy akcent. Każdy mockup pokazuje te same ekrany aplikacji: pasek nawigacji, listę postaci, kartę postaci i tabelę broni. Poniżej wybierzesz kierunek i napiszesz uwagi.</p>
+
+<div class="meta">
+  <div><b>Stan obecny</b>Angular Material (indigo, ciemny motyw M2) + Bootstrap, font Roboto, zakładki Material w nagłówku.</div>
+  <div><b>Typografia</b>Cinzel (nagłówki, etykiety, wersaliki) + EB Garamond (treść). Obsługują polskie znaki. Ładowane z Google Fonts.</div>
+  <div><b>Zakres wdrożenia</b>Nowy motyw w <code>my-theme.scss</code> + zmienne CSS w <code>styles.css</code>. Komponenty Material zostają, zmienia się tylko ich wygląd.</div>
+</div>
+
+<!-- ===== A ===== -->
+<section class="sec" id="opt-a">
+  <h2>A · Dwór <span style="color:#b8975a;font-size:15px">— najbliżej Manor Lords</span></h2>
+  <p class="sub">Ciemny orzech i przydymiony brąz, panele z podwójną cienką ramką, złoto antyczne (stonowane, nie błyszczące). Karta postaci to kartka pergaminu: postrzępione, zmatowione krawędzie, przyciemnione brzegi i zawinięty róg. Spokojny, elegancki, dobrze znosi długie sesje przy stole.</p>
+  <div class="swatches" id="sw-a"></div>
+  <div class="mock t-a" data-mock></div>
+</section>
+
+<!-- ===== B ===== -->
+<section class="sec" id="opt-b">
+  <h2>B · Pergamin</h2>
+  <p class="sub">Jasny motyw: postarzały papier, atrament i czerwień laku, ciemnobrązowy pasek nawigacji. Najbardziej „księgowy”, jak karta postaci z podręcznika. Wymaga zmiany z ciemnego motywu na jasny.</p>
+  <div class="swatches" id="sw-b"></div>
+  <div class="mock t-b" data-mock></div>
+</section>
+
+<!-- ===== C ===== -->
+<section class="sec" id="opt-c">
+  <h2>C · Żelazo</h2>
+  <p class="sub">Chłodny, mroczny wariant: łupek, stal i przygaszona czerwień. Bardziej ponury, w stylu „grimdark”, mniej ciepły niż Manor Lords.</p>
+  <div class="swatches" id="sw-c"></div>
+  <div class="mock t-c" data-mock></div>
+</section>
+
+<section class="sec">
+  <h2>Porównanie</h2>
+  <table class="cmp">
+    <tr><th></th><th>A · Dwór</th><th>B · Pergamin</th><th>C · Żelazo</th></tr>
+    <tr><td>Podobieństwo do Manor Lords</td><td>Wysokie</td><td>Średnie (ta sama paleta, ale jasna)</td><td>Niskie</td></tr>
+    <tr><td>Motyw</td><td>Ciemny (jak teraz)</td><td>Jasny</td><td>Ciemny</td></tr>
+    <tr><td>Czytelność tabel i danych</td><td>Dobra</td><td>Bardzo dobra</td><td>Dobra</td></tr>
+    <tr><td>Nakład pracy</td><td>Mały: zostaje ciemny motyw Material</td><td>Większy: przełączenie na motyw jasny i kontrola kontrastów</td><td>Mały</td></tr>
+  </table>
+</section>
+
+<section class="sec">
+  <h2>Twoja decyzja</h2>
+  <p class="rec"><b>Rekomendacja:</b> A · Dwór. Najwierniej oddaje klimat Manor Lords, a wdrożenie jest najtańsze, bo aplikacja już działa na ciemnym motywie.</p>
+  <form class="choose" data-lavish-question="theme" onsubmit="event.preventDefault(); const f=new FormData(event.currentTarget); const c=f.get('theme'); if(!c) return; const n=f.get('notes')||''; window.lavish.queuePrompt('Wdroż kierunek: '+c+(n?'. Uwagi: '+n:''), {tag:'choice', text:'Motyw: '+c, element:event.currentTarget, data:{question:'theme', answer:c, notes:n}});">
+    <label><input type="radio" name="theme" value="A · Dwór"> A · Dwór (ciemny, złoty akcent)</label>
+    <label><input type="radio" name="theme" value="B · Pergamin"> B · Pergamin (jasny, czerwień laku)</label>
+    <label><input type="radio" name="theme" value="C · Żelazo"> C · Żelazo (chłodny, stalowy)</label>
+    <label><input type="radio" name="theme" value="Mieszanka"> Mieszanka / własny kierunek (opisz niżej)</label>
+    <textarea name="notes" placeholder="Uwagi: kolory, czcionki, zakres zmian, rzeczy do zachowania…"></textarea>
+    <button type="submit">Dodaj odpowiedź</button>
+  </form>
+</section>
+
+</div>
+
+<script>
+const TPL = `
+<div class="nav">
+  <span class="brand">Project RPG</span>
+  <a>Postacie</a><a class="on">Potyczka</a><a>Bronie</a><a>Pancerze</a><a>Cechy</a><a>Talenty</a><a>Stany</a><a>Zaklęcia</a>
+</div>
+<div class="body">
+  <div>
+    <h3>Postacie</h3>
+    <div class="panel" style="padding:6px 8px">
+      <div class="item sel"><b>Aldric z Dornmoor</b><span>Zbrojny rycerz</span></div>
+      <div class="item"><b>Matylda Kowalczyk</b><span>Zielarka z Ostrowa</span></div>
+      <div class="item"><b>Brat Tomasz</b><span>Kapłan Sigmara</span></div>
+      <div class="item"><b>Gerhard Kruk</b><span>Łowca nagród</span></div>
+    </div>
+  </div>
+  <div>
+    <div class="panel">
+      <p class="name">Aldric z Dornmoor</p>
+      <p class="desc">Zbrojny rycerz, 34 lata, weteran wojen granicznych</p>
+      <div class="rule"><i></i></div>
+      <div class="hplab"><span>Żywotność</span><span>14 / 21</span></div>
+      <div class="hp"><i></i></div>
+      <div class="stats">
+        <div class="stat"><small>WW</small><strong>46</strong></div>
+        <div class="stat"><small>US</small><strong>31</strong></div>
+        <div class="stat"><small>S</small><strong>42</strong></div>
+        <div class="stat"><small>Wt</small><strong>44</strong></div>
+        <div class="stat"><small>I</small><strong>38</strong></div>
+      </div>
+      <h3>Broń</h3>
+      <table>
+        <tr><th>Nazwa</th><th>Obr.</th><th>Zasięg</th><th>Cechy</th></tr>
+        <tr><td>Miecz długi</td><td>+SB+4</td><td>Średni</td><td><span class="tag">Atak</span></td></tr>
+        <tr><td>Kusza</td><td>+9</td><td>60</td><td><span class="tag">Przebijająca</span> <span class="tag bad">Wolna</span></td></tr>
+      </table>
+      <div class="btns">
+        <span class="btn primary">Do potyczki</span>
+        <span class="btn">Edytuj</span>
+        <span class="btn danger">Usuń</span>
+      </div>
+    </div>
+  </div>
+</div>`;
+document.querySelectorAll('[data-mock]').forEach(el => el.innerHTML = TPL);
+document.querySelector('.t-a .body > div:nth-child(2) .panel').classList.add('paper');
+const PAL = {
+  a:[['tło','#1b1712'],['panel','#2a231a'],['ramka','#3d3426'],['tekst','#cfc3a8'],['złoto','#c9a255'],['krew','#a8473a']],
+  b:[['tło','#d9c9a3'],['panel','#e8dbb9'],['ramka','#b9a276'],['atrament','#3b2d1d'],['lak','#7a241c'],['nawigacja','#3a2a1c']],
+  c:[['tło','#16191c'],['panel','#1f2428'],['ramka','#2b3238'],['tekst','#bcc4c9'],['stal','#8fa4b0'],['krew','#b0483d']]
+};
+for (const k in PAL) document.getElementById('sw-'+k).innerHTML = PAL[k].map(([n,c])=>`<div class="sw"><i style="background:${c}"></i>${n}<br>${c}</div>`).join('');
+</script>
+</body>
+</html>

@@ -1,9 +1,9 @@
-import {Component, HostListener, OnInit} from '@angular/core'
+import {Component, HostListener, OnInit, DestroyRef, inject} from '@angular/core'
+import {takeUntilDestroyed} from "@angular/core/rxjs-interop"
 import {SkirmishCharacterService} from "../../../core/services/skirmish-character-service/skirmish-character.service"
 import {ActivatedRoute, Params, Router} from "@angular/router"
 import {SkirmishCharacter} from "../../../core/model/skirmish/skirmish-character.model"
 import {TextResourceService} from "../../../core/services/text-resource-service/text-resource.service";
-import {Subscription} from "rxjs";
 import {CharacterService} from "../../../core/services/character-service/character.service";
 
 @Component({
@@ -13,10 +13,10 @@ import {CharacterService} from "../../../core/services/character-service/charact
   standalone: false
 })
 export class SkirmishCharacterDetailsComponent implements OnInit {
+  private destroyRef = inject(DestroyRef)
 
   skirmishCharacter!: SkirmishCharacter
   text = TextResourceService
-  skirmishCharacterSubscription!: Subscription
   protected id!: number
   protected characterName!: string;
 
@@ -39,7 +39,7 @@ export class SkirmishCharacterDetailsComponent implements OnInit {
       }
     )
 
-    this.skirmishCharacterSubscription = this.skirmishCharacterService.skirmishCharactersChanged.subscribe(
+    this.skirmishCharacterService.skirmishCharactersChanged.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(
       (skirmishCharacters: SkirmishCharacter[]) => {
         let updatedCharacter = skirmishCharacters.find(skirmishCharacter => skirmishCharacter.id == this.skirmishCharacter.id)
         if (updatedCharacter instanceof SkirmishCharacter) {
@@ -48,7 +48,7 @@ export class SkirmishCharacterDetailsComponent implements OnInit {
       }
     )
 
-    this.characterService.charactersChanged.subscribe(
+    this.characterService.charactersChanged.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(
       async () => {
         this.skirmishCharacter = await this.skirmishCharacterService.reloadSkirmishCharacter(this.id);
       }

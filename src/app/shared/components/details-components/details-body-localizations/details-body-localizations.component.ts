@@ -1,4 +1,5 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, DestroyRef, inject} from '@angular/core';
+import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
 import {TextResourceService} from "../../../../core/services/text-resource-service/text-resource.service";
 import {Character} from "../../../../core/model/character/character.model";
 import {SkirmishCharacter} from "../../../../core/model/skirmish/skirmish-character.model";
@@ -17,6 +18,7 @@ import {CharacterService} from "../../../../core/services/character-service/char
   standalone: false
 })
 export class DetailsBodyLocalizationsComponent implements OnInit {
+  private destroyRef = inject(DestroyRef)
 
   @Input() isSkirmishMode!: boolean
   @Input() character!: Character
@@ -41,7 +43,7 @@ export class DetailsBodyLocalizationsComponent implements OnInit {
       this.character = this.skirmishCharacter.character
     }
 
-    this.characterService.charactersChanged.subscribe(
+    this.characterService.charactersChanged.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(
       (characters: Character[]) => {
         const foundCharacter = characters.find(item => item.id === this.character.id);
         this.character = foundCharacter ? foundCharacter : this.character;

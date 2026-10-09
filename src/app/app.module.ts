@@ -43,6 +43,9 @@ import {ArmorListComponent} from './features/list-of-elements/armor-list/armor-l
 import {ArmorGroupItemList} from './features/list-of-elements/armor-list/armor-group-item-list/armor-group-item-list.component';
 import {InitiativeDialog} from './features/skirmish/skirmish-characters-list/dialog-window/initiative-dialog/initiative-dialog.component';
 import {FlexLayoutModule} from "@angular/flex-layout";
+import {SpellRowsPipe} from './shared/pipes/spell-rows.pipe';
+import {SkillsListPipe} from './shared/pipes/skills-list.pipe';
+import {TalentsListPipe} from './shared/pipes/talents-list.pipe';
 import {LoaderComponent} from './shared/components/loader/loader.component';
 import {ConfirmationDialogComponent} from './shared/components/dialog-window/confirmation-dialog/confirmation-dialog.component';
 import {AddConditionDialogComponent} from './features/skirmish/skirmish-character-details/skirmish-character-buttons/dialog-window/add-condition-dialog/add-condition-dialog.component';
@@ -145,6 +148,9 @@ import {
         EditArmorPointsWindowComponent,
     ],
     bootstrap: [AppComponent], imports: [BrowserModule,
+    SpellRowsPipe,
+    SkillsListPipe,
+    TalentsListPipe,
     FormsModule,
     RouterModule,
     AppRoutingModule,
