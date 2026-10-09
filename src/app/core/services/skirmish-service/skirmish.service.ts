@@ -1,9 +1,10 @@
+import {environment} from "../../../../environments/environment"
 import {Injectable} from '@angular/core'
 import {HttpClient} from "@angular/common/http"
 import {ReceivedDamage} from "../../model/receive-damage/receive-damage.model"
 import {AddConditions} from "../../model/condition/add-conditions.model"
 import {SkirmishGroup} from "../../model/skirmish/skirmish-group.model";
-import {Subject} from "rxjs";
+import {Subject, firstValueFrom} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +22,7 @@ export class SkirmishService {
   }
 
   postReceiveDamage(receivedDamage: ReceivedDamage) {
-    return this.http.post('http://localhost:8080/receiveDamage', receivedDamage).toPromise().then()
+    return firstValueFrom(this.http.post(`${environment.apiUrl}/receiveDamage`, receivedDamage))
   }
 
   async addWoundPoint(skirmishCharacterId: number) {
@@ -29,7 +30,7 @@ export class SkirmishService {
   }
 
   private async postAddWoundPoint(skirmishCharacterId: number) {
-    return this.http.post('http://localhost:8080/addWoundPoint', skirmishCharacterId).toPromise().then()
+    return firstValueFrom(this.http.post(`${environment.apiUrl}/addWoundPoint`, skirmishCharacterId))
   }
 
   async removeWoundPoint(skirmishCharacterId: number) {
@@ -37,7 +38,7 @@ export class SkirmishService {
   }
 
   private async postRemoveWoundPoint(skirmishCharacterId: number) {
-    return this.http.post('http://localhost:8080/removeWoundPoint', skirmishCharacterId).toPromise().then()
+    return firstValueFrom(this.http.post(`${environment.apiUrl}/removeWoundPoint`, skirmishCharacterId))
   }
 
   async addAdvantagePoint(skirmishCharacterId: number) {
@@ -45,7 +46,7 @@ export class SkirmishService {
   }
 
   private async postAddAdvantagePoint(skirmishCharacterId: number) {
-    return this.http.post('http://localhost:8080/addAdvantagePoint', skirmishCharacterId).toPromise().then()
+    return firstValueFrom(this.http.post(`${environment.apiUrl}/addAdvantagePoint`, skirmishCharacterId))
   }
 
   async removeAdvantagePoint(skirmishCharacterId: number) {
@@ -53,25 +54,25 @@ export class SkirmishService {
   }
 
   private async postRemoveAdvantagePoint(skirmishCharacterId: number) {
-    return this.http.post('http://localhost:8080/removeAdvantagePoint', skirmishCharacterId).toPromise().then()
+    return firstValueFrom(this.http.post(`${environment.apiUrl}/removeAdvantagePoint`, skirmishCharacterId))
   }
 
   async addGroupAdvantagePoint(groupId: number) {
-    await this.http.post('http://localhost:8080/addGroupAdvantagePoint', groupId).toPromise()
+    await firstValueFrom(this.http.post(`${environment.apiUrl}/addGroupAdvantagePoint`, groupId))
     await this.fetchSkirmishGroups()
   }
 
   async removeGroupAdvantagePoint(groupId: number) {
-    await this.http.post('http://localhost:8080/removeGroupAdvantagePoint', groupId).toPromise()
+    await firstValueFrom(this.http.post(`${environment.apiUrl}/removeGroupAdvantagePoint`, groupId))
     await this.fetchSkirmishGroups()
   }
 
   async addConditions(addConditions: AddConditions) {
-    return this.http.post('http://localhost:8080/addConditions', addConditions).toPromise().then()
+    return firstValueFrom(this.http.post(`${environment.apiUrl}/addConditions`, addConditions))
   }
 
   async fetchSkirmishGroups() {
-    return this.http.get<SkirmishGroup[]>('http://localhost:8080/skirmishGroups').toPromise()
+    return firstValueFrom(this.http.get<SkirmishGroup[]>(`${environment.apiUrl}/skirmishGroups`))
       .then(data => {
         if (data != null) {
           this.skirmishGroupsList = data
@@ -83,13 +84,13 @@ export class SkirmishService {
   }
 
   async addSkirmishGroup(skirmishGroup: SkirmishGroup) {
-    const newGroup = await this.http.post<SkirmishGroup>('http://localhost:8080/skirmishGroups', skirmishGroup).toPromise()
+    const newGroup = await firstValueFrom(this.http.post<SkirmishGroup>(`${environment.apiUrl}/skirmishGroups`, skirmishGroup))
     await this.fetchSkirmishGroups().then()
     return newGroup
   }
 
   async deleteAllSkirmishGroups() {
-    return this.http.delete('http://localhost:8080/skirmishGroups').toPromise().then(
+    return firstValueFrom(this.http.delete(`${environment.apiUrl}/skirmishGroups`)).then(
       async () => {
         await this.fetchSkirmishGroups().then()
       }
@@ -98,6 +99,6 @@ export class SkirmishService {
 
   async changeIsDeadValue(id: number, value: any) {
     const body = {id, value}
-    return this.http.post('http://localhost:8080/changeIsDeadValue', body).toPromise().then()
+    return firstValueFrom(this.http.post(`${environment.apiUrl}/changeIsDeadValue`, body))
   }
 }

@@ -1,5 +1,6 @@
+import {environment} from "../../../../environments/environment"
 import {Injectable} from '@angular/core'
-import {Subject} from "rxjs"
+import {Subject, firstValueFrom} from "rxjs"
 import {Talent} from "../../model/talent/talent.model"
 import {HttpClient} from "@angular/common/http"
 import {TranslateService} from "../translate-service/translate.service"
@@ -16,7 +17,7 @@ export class TalentService {
   }
 
   fetchTalents() {
-    return this.http.get<Talent[]>('http://localhost:8080/talent').toPromise()
+    return firstValueFrom(this.http.get<Talent[]>(`${environment.apiUrl}/talent`))
       .then(data => {
         if (data != null) {
           this.translationService.prepareTalentList(data)

@@ -1,5 +1,6 @@
+import {environment} from "../../../../environments/environment"
 import {Injectable} from '@angular/core'
-import {Subject} from "rxjs"
+import {Subject, firstValueFrom} from "rxjs"
 import {HttpClient} from "@angular/common/http"
 import {TranslateService} from "../translate-service/translate.service"
 import {Condition} from "../../model/condition/condition.model"
@@ -17,7 +18,7 @@ export class ConditionService {
   }
 
   fetchConditions() {
-    return this.http.get<Condition[]>('http://localhost:8080/condition').toPromise()
+    return firstValueFrom(this.http.get<Condition[]>(`${environment.apiUrl}/condition`))
       .then(data => {
         if (data != null) {
           this.translateService.prepareConditionList(data)

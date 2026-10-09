@@ -1,7 +1,8 @@
+import {environment} from "../../../../environments/environment"
 import {Injectable} from '@angular/core'
 import {HttpClient} from "@angular/common/http"
 import {Armor} from "../../model/armor/armor.model"
-import {Subject} from "rxjs"
+import {Subject, firstValueFrom} from "rxjs"
 import {Model} from "../../model/model"
 import {TranslateService} from "../translate-service/translate.service"
 import {tap} from "rxjs/operators";
@@ -32,7 +33,7 @@ export class ArmorService {
   }
 
   fetchArmors() {
-    return this.http.get<Armor[]>('http://localhost:8080/armor').pipe(
+    return firstValueFrom(this.http.get<Armor[]>(`${environment.apiUrl}/armor`).pipe(
       tap(data => {
         if (data) {
           this.translateService.prepareArmorsList(data);
@@ -44,16 +45,16 @@ export class ArmorService {
         this.armorsListChanged.next(this.armorsList.slice());
         this.armorsGroupsChanged.next(this.armorsGroups.slice());
       })
-    ).toPromise();
+    ));
   }
 
   async storeArmor(armor: Armor) {
-    await this.putArmor(armor).toPromise();
+    await firstValueFrom(this.putArmor(armor));
     await this.fetchArmors();
   }
 
   putArmor(armor: Armor) {
-    return this.http.put('http://localhost:8080/armor', armor)
+    return this.http.put(`${environment.apiUrl}/armor`, armor)
   }
 
   private groupArmors(armors: Armor[]) {
@@ -104,8 +105,7 @@ export class ArmorService {
   }
 
   private deleteArmor(id: number) {
-    return this.http
-      .delete(`http://localhost:8080/armor/${id}`)
-      .toPromise()
+    return firstValueFrom(this.http
+      .delete(`${environment.apiUrl}/armor/${id}`))
   }
 }

@@ -1,16 +1,14 @@
-import { TestBed } from '@angular/core/testing';
+import {describeListFetcher} from '../../testing/list-fetcher-testing'
+import {SkillService} from './skill.service'
 
-import { SkillService } from './skill.service';
-
-describe('SkillService', () => {
-  let service: SkillService;
-
-  beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(SkillService);
-  });
-
-  it('should be created', () => {
-    expect(service).toBeTruthy();
-  });
-});
+describeListFetcher({
+  serviceName: 'SkillService',
+  service: SkillService,
+  endpoint: 'skill',
+  sample: [{name: 'ATHLETICS'}, {name: 'BRIBERY'}],
+  expectedLength: 2,
+  emptiesListOnNull: true,
+  fetch: service => service.fetchSkills(),
+  list: service => service.skillList,
+  changed: service => service.skillListChanged
+})

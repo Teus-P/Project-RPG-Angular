@@ -1,5 +1,6 @@
+import {environment} from "../../../../environments/environment"
 import {Injectable} from '@angular/core';
-import {Subject} from "rxjs";
+import {Subject, firstValueFrom} from "rxjs";
 import {Model} from "../../model/model";
 import {HttpClient} from "@angular/common/http";
 import {TextResourceService} from "../text-resource-service/text-resource.service";
@@ -16,7 +17,7 @@ export class AvailabilityService {
   }
 
   fetchAvailabilities() {
-    return this.http.get<Model[]>('http://localhost:8080/availability').toPromise()
+    return firstValueFrom(this.http.get<Model[]>(`${environment.apiUrl}/availability`))
       .then(data => {
         if(data != undefined) {
           this.prepareAvailabilityListTranslation(data)

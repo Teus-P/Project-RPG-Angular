@@ -1,5 +1,6 @@
+import {environment} from "../../../../environments/environment"
 import {Injectable} from '@angular/core'
-import {Subject} from "rxjs"
+import {Subject, firstValueFrom} from "rxjs"
 import {SkirmishCharacter} from "../../model/skirmish/skirmish-character.model"
 import {HttpClient} from "@angular/common/http"
 import {TranslateService} from "../translate-service/translate.service"
@@ -35,7 +36,7 @@ export class SkirmishCharacterService {
   }
 
   fetchSkirmishCharacter() {
-    return this.http.get<SkirmishCharacter[]>('http://localhost:8080/skirmishCharacter').toPromise()
+    return firstValueFrom(this.http.get<SkirmishCharacter[]>(`${environment.apiUrl}/skirmishCharacter`))
       .then(data => {
         this.skirmishCharactersList = []
         if (data != null) {
@@ -51,9 +52,8 @@ export class SkirmishCharacterService {
   }
 
   private putSkirmishCharacter(skirmishCharacter: SkirmishCharacter) {
-    return this.http
-      .put('http://localhost:8080/skirmishCharacter', skirmishCharacter)
-      .toPromise()
+    return firstValueFrom(this.http
+      .put(`${environment.apiUrl}/skirmishCharacter`, skirmishCharacter))
   }
 
   async storeSkirmishCharactersGroup(characters: Character[], skirmishGroup: SkirmishGroup, number: number) {
@@ -97,9 +97,8 @@ export class SkirmishCharacterService {
   }
 
   private putSkirmishCharacters(skirmishCharacters: SkirmishCharacter[]) {
-    return this.http
-      .put('http://localhost:8080/skirmishCharacters', skirmishCharacters)
-      .toPromise()
+    return firstValueFrom(this.http
+      .put(`${environment.apiUrl}/skirmishCharacters`, skirmishCharacters))
   }
 
   async updateSkirmishCharacter(skirmishCharacter: SkirmishCharacter) {
@@ -131,9 +130,8 @@ export class SkirmishCharacterService {
   }
 
   private deleteSkirmishCharacter(id: number) {
-    return this.http
-      .delete(`http://localhost:8080/skirmishCharacter/${id}`)
-      .toPromise()
+    return firstValueFrom(this.http
+      .delete(`${environment.apiUrl}/skirmishCharacter/${id}`))
   }
 
   async removeAllSkirmishCharacters() {
@@ -145,9 +143,8 @@ export class SkirmishCharacterService {
   }
 
   private deleteAllSkirmishCharacters() {
-    return this.http
-      .delete('http://localhost:8080/skirmishCharacter')
-      .toPromise()
+    return firstValueFrom(this.http
+      .delete(`${environment.apiUrl}/skirmishCharacter`))
   }
 
   async reloadSkirmishCharacter(id: number) {

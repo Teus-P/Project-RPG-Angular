@@ -1,6 +1,7 @@
+import {environment} from "../../../../environments/environment"
 import {Injectable} from '@angular/core'
 import {HttpClient} from "@angular/common/http"
-import {Subject} from "rxjs"
+import {Subject, firstValueFrom} from "rxjs"
 import {Weapon} from "../../model/weapon/weapon.model"
 import {Model} from "../../model/model"
 import {TranslateService} from "../translate-service/translate.service"
@@ -31,7 +32,7 @@ export class WeaponService {
   }
 
   fetchWeapons() {
-    return this.http.get<Weapon[]>('http://localhost:8080/weapon').toPromise()
+    return firstValueFrom(this.http.get<Weapon[]>(`${environment.apiUrl}/weapon`))
       .then(data => {
         if (data != null) {
           this.prepareWeaponsList(data)
@@ -86,9 +87,8 @@ export class WeaponService {
   }
 
   putWeapon(weapon: Weapon) {
-    return this.http
-      .put('http://localhost:8080/weapon', weapon)
-      .toPromise()
+    return firstValueFrom(this.http
+      .put(`${environment.apiUrl}/weapon`, weapon))
   }
 
   getWeaponGroups() {
@@ -125,8 +125,7 @@ export class WeaponService {
   }
 
   private deleteWeapon(id: number) {
-    return this.http
-      .delete(`http://localhost:8080/weapon/${id}`)
-      .toPromise()
+    return firstValueFrom(this.http
+      .delete(`${environment.apiUrl}/weapon/${id}`))
   }
 }

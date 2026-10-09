@@ -1,3 +1,5 @@
+import {environment} from "../../../../environments/environment"
+import {firstValueFrom} from "rxjs"
 import {Injectable} from '@angular/core';
 import {SkirmishCharacter} from "../../model/skirmish/skirmish-character.model";
 import {HttpClient} from "@angular/common/http";
@@ -36,7 +38,7 @@ export class RoundService {
   }
 
   async postEndTurnCheck(endTurnCheck: EndTurnCheck) {
-    return await this.http.post<EndTurnCheck>('http://localhost:8080/endTurnCheck', endTurnCheck).toPromise()
+    return await firstValueFrom(this.http.post<EndTurnCheck>(`${environment.apiUrl}/endTurnCheck`, endTurnCheck))
       .then(async data => {
         let endTurnCheck = new EndTurnCheck();
         Object.assign(endTurnCheck, data);
@@ -59,14 +61,14 @@ export class RoundService {
       data: {endTurnCheck: endTurnCheck, testType: "Testy Stanów"}
     })
 
-    await dialogRef.afterClosed().toPromise().then(async () => {
+    await firstValueFrom(dialogRef.afterClosed()).then(async () => {
         await this.postEndTurnTestsCheck(endTurnCheck);
       }
     );
   }
 
   async postEndTurnTestsCheck(endTurnCheck: EndTurnCheck) {
-    return this.http.post<EndTurnCheck>('http://localhost:8080/endTurnTestsCheck', endTurnCheck).toPromise();
+    return firstValueFrom(this.http.post<EndTurnCheck>(`${environment.apiUrl}/endTurnTestsCheck`, endTurnCheck));
   }
 
   get roundNumber(): number {

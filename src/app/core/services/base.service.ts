@@ -1,6 +1,7 @@
+import {environment} from "../../../environments/environment"
 import {HttpClient} from "@angular/common/http";
 import {Model} from "../model/model";
-import {Subject} from "rxjs";
+import {Subject, firstValueFrom} from "rxjs";
 import {TextResourceService} from "./text-resource-service/text-resource.service";
 import {TextResourceKeys} from "../model/types";
 import {Injectable} from "@angular/core";
@@ -10,13 +11,13 @@ import {Injectable} from "@angular/core";
 })
 export class BaseService {
 
-  url = 'http://localhost:8080/'
+  url = `${environment.apiUrl}/`
 
   constructor(private http: HttpClient) {
   }
 
   async fetchMethod(endpoint: string, resourceType: TextResourceKeys, list: Model[], listChanged?: Subject<Model[]>) {
-    const data = await this.http.get<Model[]>(this.url + endpoint).toPromise();
+    const data = await firstValueFrom(this.http.get<Model[]>(this.url + endpoint));
     if (data) {
       this.prepareListTranslation(data, resourceType);
       list.length = 0;

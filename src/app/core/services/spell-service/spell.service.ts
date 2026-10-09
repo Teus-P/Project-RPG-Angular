@@ -1,5 +1,6 @@
+import {environment} from "../../../../environments/environment"
 import {Injectable} from '@angular/core'
-import {Subject} from "rxjs"
+import {Subject, firstValueFrom} from "rxjs"
 import {SpellGroup} from "../../model/spell/spell-group.model"
 import {HttpClient} from "@angular/common/http"
 import {TranslateService} from "../translate-service/translate.service"
@@ -18,7 +19,7 @@ export class SpellService {
   }
 
   fetchSpells() {
-    return this.http.get<Spell[]>('http://localhost:8080/spell').toPromise()
+    return firstValueFrom(this.http.get<Spell[]>(`${environment.apiUrl}/spell`))
       .then(data => {
         if (data != null) {
           this.translateService.prepareSpellList(data)

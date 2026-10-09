@@ -1,6 +1,7 @@
+import {environment} from "../../../../environments/environment"
 import {Injectable} from '@angular/core'
 import {Character} from "../../model/character/character.model"
-import {Subject} from "rxjs"
+import {Subject, firstValueFrom} from "rxjs"
 import {HttpClient} from "@angular/common/http"
 import {TranslateService} from "../translate-service/translate.service"
 
@@ -22,7 +23,7 @@ export class CharacterService {
   }
 
   async fetchCharacters() {
-    const data = await this.http.get<Character[]>('http://localhost:8080/character').toPromise()
+    const data = await firstValueFrom(this.http.get<Character[]>(`${environment.apiUrl}/character`))
     this.charactersList = []
     if (data != null) {
       for (let element of data) {
@@ -57,9 +58,8 @@ export class CharacterService {
   }
 
   private putCharacter(character: Character) {
-    return this.http
-      .put<Character>('http://localhost:8080/character', character)
-      .toPromise()
+    return firstValueFrom(this.http
+      .put<Character>(`${environment.apiUrl}/character`, character))
   }
 
   async removeCharacter(id: number) {
@@ -71,9 +71,8 @@ export class CharacterService {
   }
 
   private deleteCharacter(id: number) {
-    return this.http
-      .delete(`http://localhost:8080/character/${id}`)
-      .toPromise()
+    return firstValueFrom(this.http
+      .delete(`${environment.apiUrl}/character/${id}`))
   }
 
   getCharacters() {

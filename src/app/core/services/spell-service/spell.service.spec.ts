@@ -1,16 +1,17 @@
-import { TestBed } from '@angular/core/testing';
+import {describeListFetcher} from '../../testing/list-fetcher-testing'
+import {SpellService} from './spell.service'
 
-import { SpellService } from './spell.service';
-
-describe('SpellService', () => {
-  let service: SpellService;
-
-  beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(SpellService);
-  });
-
-  it('should be created', () => {
-    expect(service).toBeTruthy();
-  });
-});
+describeListFetcher({
+  serviceName: 'SpellService',
+  service: SpellService,
+  endpoint: 'spell',
+  sample: [
+    {name: 'FIREBALL', spellGroup: {name: 'FIRE'}},
+    {name: 'FLAME_BLADE', spellGroup: {name: 'FIRE'}}
+  ],
+  expectedLength: 1,
+  emptiesListOnNull: true,
+  fetch: service => service.fetchSpells(),
+  list: service => service.spellGroups,
+  changed: service => service.spellGroupsChanged
+})

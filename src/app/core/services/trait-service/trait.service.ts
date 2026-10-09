@@ -1,5 +1,6 @@
+import {environment} from "../../../../environments/environment"
 import {Injectable} from '@angular/core'
-import {Subject} from "rxjs"
+import {Subject, firstValueFrom} from "rxjs"
 import {HttpClient} from "@angular/common/http"
 import {TranslateService} from "../translate-service/translate.service"
 import {Trait} from "../../model/trait/trait.model"
@@ -17,7 +18,7 @@ export class TraitService {
   }
 
   fetchTraits() {
-    return this.http.get<Trait[]>('http://localhost:8080/creatureTrait').toPromise()
+    return firstValueFrom(this.http.get<Trait[]>(`${environment.apiUrl}/creatureTrait`))
       .then(data => {
         if (data != null) {
           for (let trait of data) {

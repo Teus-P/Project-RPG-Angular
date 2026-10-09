@@ -1,16 +1,14 @@
-import { TestBed } from '@angular/core/testing';
+import {describeListFetcher} from '../../testing/list-fetcher-testing'
+import {TalentService} from './talent.service'
 
-import { TalentService } from './talent.service';
-
-describe('TalentService', () => {
-  let service: TalentService;
-
-  beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(TalentService);
-  });
-
-  it('should be created', () => {
-    expect(service).toBeTruthy();
-  });
-});
+describeListFetcher({
+  serviceName: 'TalentService',
+  service: TalentService,
+  endpoint: 'talent',
+  sample: [{name: 'ACUTE_SENSE'}, {name: 'AMBIDEXTROUS'}],
+  expectedLength: 2,
+  emptiesListOnNull: true,
+  fetch: service => service.fetchTalents(),
+  list: service => service.talentList,
+  changed: service => service.talentListChanged
+})

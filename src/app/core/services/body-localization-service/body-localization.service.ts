@@ -1,5 +1,6 @@
+import {environment} from "../../../../environments/environment"
 import {Injectable} from '@angular/core'
-import {Subject} from "rxjs"
+import {Subject, firstValueFrom} from "rxjs"
 import {BodyLocalization} from "../../model/body-localization/body-localization.model"
 import {HttpClient} from "@angular/common/http"
 import {TextResourceService} from "../text-resource-service/text-resource.service"
@@ -15,7 +16,7 @@ export class BodyLocalizationService {
   }
 
   fetchBodyLocalizations() {
-    return this.http.get<BodyLocalization[]>('http://localhost:8080/bodyLocalization').toPromise()
+    return firstValueFrom(this.http.get<BodyLocalization[]>(`${environment.apiUrl}/bodyLocalization`))
       .then(data => {
         if (data != null) {
           this.prepareBodyLocalizationTranslation(data)

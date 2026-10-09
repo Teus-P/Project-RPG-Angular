@@ -1,16 +1,14 @@
-import { TestBed } from '@angular/core/testing';
+import {describeListFetcher} from '../../testing/list-fetcher-testing'
+import {TraitService} from './trait.service'
 
-import { TraitService } from './trait.service';
-
-describe('TraitService', () => {
-  let service: TraitService;
-
-  beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(TraitService);
-  });
-
-  it('should be created', () => {
-    expect(service).toBeTruthy();
-  });
-});
+describeListFetcher({
+  serviceName: 'TraitService',
+  service: TraitService,
+  endpoint: 'creatureTrait',
+  sample: [{name: 'ARMOUR'}, {name: 'BITE'}],
+  expectedLength: 2,
+  emptiesListOnNull: true,
+  fetch: service => service.fetchTraits(),
+  list: service => service.traitList,
+  changed: service => service.traitListChanged
+})

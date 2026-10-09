@@ -49,26 +49,28 @@ export class AppComponent implements OnInit {
   }
 
   protected async fetchData() {
-    await this.armorService.fetchArmors()
-    await this.armorService.fetchArmorCategories()
-    await this.armorService.fetchArmorPenalties()
-    await this.armorService.fetchArmorQualities()
-    await this.armorService.fetchArmorTypes()
-    await this.bodyLocalizationService.fetchBodyLocalizations()
-    await this.injuryService.fetchInjuries()
-    await this.conditionService.fetchConditions()
-    await this.weaponService.fetchWeapons()
-    await this.weaponService.fetchWeaponTypes()
-    await this.weaponService.fetchWeaponGroups()
-    await this.weaponService.fetchWeaponReaches()
-    await this.weaponService.fetchWeaponQualities()
-    await this.skillService.fetchSkills()
-    await this.talentService.fetchTalents()
-    await this.traitService.fetchTraits()
-    await this.spellService.fetchSpells()
-    await this.characterService.fetchCharacters()
-    await this.skirmishCharacterService.fetchSkirmishCharacter()
-    await this.availabilityService.fetchAvailabilities()
-    await this.skirmishService.fetchSkirmishGroups()
+    await Promise.all([
+      this.armorService.fetchArmors(),
+      this.armorService.fetchArmorCategories(),
+      this.armorService.fetchArmorPenalties(),
+      this.armorService.fetchArmorQualities(),
+      this.armorService.fetchArmorTypes(),
+      this.bodyLocalizationService.fetchBodyLocalizations(),
+      this.injuryService.fetchInjuries(),
+      this.conditionService.fetchConditions(),
+      this.weaponService.fetchWeapons(),
+      this.weaponService.fetchWeaponTypes(),
+      this.weaponService.fetchWeaponGroups(),
+      this.weaponService.fetchWeaponReaches(),
+      this.weaponService.fetchWeaponQualities(),
+      this.skillService.fetchSkills(),
+      this.talentService.fetchTalents(),
+      this.traitService.fetchTraits(),
+      this.spellService.fetchSpells(),
+      this.characterService.fetchCharacters(),
+      this.skirmishCharacterService.fetchSkirmishCharacter(),
+      this.availabilityService.fetchAvailabilities(),
+      this.skirmishService.fetchSkirmishGroups()
+    ])
   }
 }
