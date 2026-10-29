@@ -101,7 +101,9 @@ describe('Components subscribing to service subjects', () => {
       standalone: true,
       subjectCount: 1,
       providers: ([skirmishCharactersChanged]) => [
-        {provide: SkirmishCharacterService, useValue: {skirmishCharactersChanged, getSkirmishCharacters: () => []}}
+        {provide: SkirmishCharacterService, useValue: {skirmishCharactersChanged, getSkirmishCharacters: () => []}},
+        {provide: SkirmishService, useValue: {}},
+        {provide: MatDialog, useValue: {}}
       ]
     },
     {

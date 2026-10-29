@@ -1,90 +1,151 @@
 <h1 mat-dialog-title>{{this.text.getText().receiveDamageLabel}}</h1>
 <div mat-dialog-content>
-  <p>{{this.text.getText().damageForLabel}} {{this.skirmishCharacter.character.name}}</p>
+  <p class="subtitle" *ngIf="isAttack">{{attacker?.character?.name}} → {{skirmishCharacter.character.name}}</p>
+  <p class="subtitle" *ngIf="!isAttack">{{text.getText().damageForLabel}} {{skirmishCharacter.character.name}}</p>
 
-  <mat-form-field appearance="fill">
-    <mat-label>{{text.getText().valueLabel}}</mat-label>
-    <input matInput type="number" [(ngModel)]="receivedDamage.damage" required #damageInput="ngModel">
-    <mat-error *ngIf="damageInput.invalid && (damageInput.dirty || damageInput.touched)">
-      {{text.getText().fieldIsRequiresLabel}}
-    </mat-error>
-  </mat-form-field>
+  <div class="result-bar">
+    <div class="hero">
+      <span class="num">{{shownDamage ?? '–'}}</span>
+      <span class="unit">{{text.getText().damageLabel}}</span>
+      <a class="edit" *ngIf="isAttack" (click)="toggleManualEdit()">✎ {{text.getText().manualEditLabel}}</a>
+    </div>
+    <mat-form-field *ngIf="isAttack && manualEdit" appearance="fill">
+      <mat-label>{{text.getText().damageLabel}}</mat-label>
+      <input matInput type="number" [ngModel]="shownDamage"
+             (ngModelChange)="damageOverride = $event === '' ? null : $event; onInputChanged()">
+    </mat-form-field>
+    <p class="summary" *ngIf="breakdownSummary">{{breakdownSummary}}</p>
+    <p class="summary" *ngIf="preview && receivedDamage.bodyLocalization">{{mitigationSummary}}</p>
+    <p class="summary" *ngIf="preview?.shieldChange">{{describeShieldChange(preview!.shieldChange!)}}</p>
+    <p class="summary warn" *ngIf="preview?.missingRoll">{{text.getText().missingRollLabel}}</p>
+  </div>
 
-  <mat-form-field appearance="fill" class="example-full-width">
-    <mat-label>{{text.getText().localizationNameLabel}}</mat-label>
-    <mat-select [(ngModel)]="receivedDamage.bodyLocalization" [compareWith]="compareModels" required
-                #bodyLocalization="ngModel">
-      <mat-option *ngFor="let bodyLocalization of skirmishCharacter.character.bodyLocalizations"
-                  [value]="bodyLocalization.bodyLocalization.name">
-        {{bodyLocalization.bodyLocalization.nameTranslation}}
-      </mat-option>
-    </mat-select>
-    <mat-error *ngIf="bodyLocalization.invalid && (bodyLocalization.dirty || bodyLocalization.touched)">
-      {{text.getText().fieldIsRequiresLabel}}
-    </mat-error>
-  </mat-form-field>
-
-  <mat-form-field appearance="fill">
-    <mat-label>{{text.getText().shieldLabel}}</mat-label>
-    <input matInput type="number" [(ngModel)]="receivedDamage.shield">
-  </mat-form-field>
-
-  <section>
-    <mat-checkbox
-      [(ngModel)]="receivedDamage.isSuddenDeath"
-      color="primary">
-      {{text.getText().suddenDeath}}
-    </mat-checkbox>
-  </section>
-
-  <section>
-    <mat-checkbox
-      [(ngModel)]="receivedDamage.isIgnoringArmor"
-      color="primary">
-      {{text.getText().ignoringArmor}}
-    </mat-checkbox>
-  </section>
-
-  <section>
-    <mat-checkbox
-      [(ngModel)]="receivedDamage.isWeaponUndamaging"
-      color="primary">
-      {{text.getText().isWeaponUndamagingLabel}}
-    </mat-checkbox>
-    <ul>
-      <li>
-        <mat-checkbox
-          [(ngModel)]="receivedDamage.isLosingTest" color="primary"
-          [disabled]="!receivedDamage.isWeaponUndamaging">
-          {{text.getText().isCharacterLoseTestLabel}}
-        </mat-checkbox>
-      </li>
-    </ul>
-  </section>
-
-  <section>
-    <mat-checkbox
-      [(ngModel)]="isArmorDestroyed"
-      color="primary">
-      {{text.getText().destroyArmor}}
-    </mat-checkbox>
-    <ul>
-      <li>
+  <div class="attack-grid">
+    <div>
+      <ng-container *ngIf="isAttack; else manualFields">
         <mat-form-field appearance="fill">
-          <mat-label>{{text.getText().destroyArmorPoints}}</mat-label>
-          <input matInput type="number"
-                 [(ngModel)]="receivedDamage.destroyArmorValue"
-                 [disabled]="!isArmorDestroyed"
-          >
+          <mat-label>{{text.getText().weaponLabel}}</mat-label>
+          <mat-select [(ngModel)]="selectedWeaponId" (selectionChange)="onInputChanged()">
+            <mat-option *ngFor="let weapon of attackWeapons" [value]="weapon.id">
+              {{weapon.nameTranslation}}
+            </mat-option>
+          </mat-select>
         </mat-form-field>
-      </li>
-    </ul>
-  </section>
+
+        <div class="roll-row">
+          <mat-form-field appearance="fill">
+            <mat-label>{{text.getText().attackRollLabel}}</mat-label>
+            <input matInput type="number" min="1" max="100" [(ngModel)]="attackRoll"
+                   (ngModelChange)="onInputChanged()">
+            <mat-hint *ngIf="rollUnits !== null">{{text.getText().rollUnitsHint}}: {{rollUnits}}</mat-hint>
+          </mat-form-field>
+          <div class="stepper-box">
+            <span class="field-label">{{text.getText().successPointsLabel}}</span>
+            <div class="stepper">
+              <button type="button" (click)="changeSuccessPoints(-1)" aria-label="-1">−</button>
+              <output>{{successPoints > 0 ? '+' : ''}}{{successPoints}}</output>
+              <button type="button" (click)="changeSuccessPoints(1)" aria-label="+1">+</button>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+
+      <ng-template #manualFields>
+        <mat-form-field appearance="fill">
+          <mat-label>{{text.getText().damageLabel}}</mat-label>
+          <input matInput type="number" [(ngModel)]="receivedDamage.damage" required
+                 (ngModelChange)="onInputChanged()" #damageInput="ngModel">
+          <mat-error *ngIf="damageInput.invalid && (damageInput.dirty || damageInput.touched)">
+            {{text.getText().fieldIsRequiresLabel}}
+          </mat-error>
+        </mat-form-field>
+      </ng-template>
+
+      <mat-form-field appearance="fill">
+        <mat-label>{{text.getText().targetShieldLabel}}</mat-label>
+        <mat-select [(ngModel)]="shieldChoice" (selectionChange)="onShieldChoiceChanged()">
+          <mat-option value="none">{{text.getText().shieldChoiceNoneLabel}}</mat-option>
+          <mat-option *ngFor="let option of shieldOptions" [value]="option.id">{{option.label}}</mat-option>
+          <mat-option value="manual">{{text.getText().shieldChoiceManualLabel}}</mat-option>
+        </mat-select>
+        <mat-hint *ngIf="receivedDamage.shieldWeaponId">
+          {{text.getText().shieldValueHint}}: {{receivedDamage.shield}}
+        </mat-hint>
+      </mat-form-field>
+      <mat-form-field *ngIf="shieldChoice === 'manual'" appearance="fill">
+        <mat-label>{{text.getText().shieldValueHint}}</mat-label>
+        <input matInput type="number" [(ngModel)]="receivedDamage.shield" (ngModelChange)="onInputChanged()">
+      </mat-form-field>
+
+      <section *ngIf="isAttack">
+        <mat-checkbox [(ngModel)]="isCharging" color="primary" (ngModelChange)="onInputChanged()">
+          {{text.getText().chargeLabel}}
+        </mat-checkbox>
+      </section>
+      <section>
+        <mat-checkbox [(ngModel)]="receivedDamage.isSuddenDeath" color="primary">
+          {{text.getText().suddenDeath}}
+        </mat-checkbox>
+      </section>
+      <section>
+        <mat-checkbox [(ngModel)]="receivedDamage.isIgnoringArmor" color="primary"
+                      (ngModelChange)="onInputChanged()">
+          {{text.getText().ignoringArmor}}
+        </mat-checkbox>
+      </section>
+
+      <ng-container *ngIf="isAttack">
+        <section *ngIf="preview?.isWeaponUndamaging">
+          <mat-checkbox [(ngModel)]="receivedDamage.isLosingTest" color="primary">
+            {{text.getText().isCharacterLoseTestLabel}}
+          </mat-checkbox>
+        </section>
+        <ng-container *ngIf="preview && preview.qualities.length > 0">
+          <h4>{{text.getText().weaponQualitiesLabel}}</h4>
+          <app-attack-qualities [qualities]="preview.qualities"></app-attack-qualities>
+        </ng-container>
+      </ng-container>
+
+      <ng-container *ngIf="!isAttack">
+        <section>
+          <mat-checkbox [(ngModel)]="receivedDamage.isWeaponUndamaging" color="primary"
+                        (ngModelChange)="onInputChanged()">
+            {{text.getText().isWeaponUndamagingLabel}}
+          </mat-checkbox>
+          <ul>
+            <li>
+              <mat-checkbox [(ngModel)]="receivedDamage.isLosingTest" color="primary"
+                            [disabled]="!receivedDamage.isWeaponUndamaging">
+                {{text.getText().isCharacterLoseTestLabel}}
+              </mat-checkbox>
+            </li>
+          </ul>
+        </section>
+        <section>
+          <mat-checkbox [(ngModel)]="isArmorDestroyed" color="primary" (ngModelChange)="onInputChanged()">
+            {{receivedDamage.shieldWeaponId ? text.getText().damageShieldLabel : text.getText().destroyArmor}}
+          </mat-checkbox>
+          <ul>
+            <li>
+              <mat-form-field appearance="fill">
+                <mat-label>{{text.getText().destroyArmorPoints}}</mat-label>
+                <input matInput type="number" [(ngModel)]="receivedDamage.destroyArmorValue"
+                       [disabled]="!isArmorDestroyed" (ngModelChange)="onInputChanged()">
+              </mat-form-field>
+            </li>
+          </ul>
+        </section>
+      </ng-container>
+    </div>
+
+    <app-hit-location-picker [localizations]="skirmishCharacter.character.bodyLocalizations"
+                             [selected]="receivedDamage.bodyLocalization"
+                             (selectedChange)="onLocationSelected($event)"></app-hit-location-picker>
+  </div>
 </div>
 <div mat-dialog-actions>
-  <button mat-raised-button
-          color="primary"
-          (click)="saveAndCloseDialog()">
+  <button mat-button mat-dialog-close>{{text.getText().cancelLabel}}</button>
+  <button mat-raised-button color="primary" (click)="saveAndCloseDialog()">
     {{text.getText().saveLabel}}
   </button>
 </div>

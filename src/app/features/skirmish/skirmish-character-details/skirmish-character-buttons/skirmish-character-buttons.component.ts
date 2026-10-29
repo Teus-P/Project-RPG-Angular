@@ -6,6 +6,7 @@ import {SkirmishService} from "../../../../core/services/skirmish-service/skirmi
 import {Router} from "@angular/router";
 import {MatDialog} from "@angular/material/dialog";
 import {SkirmishCharacter} from "../../../../core/model/skirmish/skirmish-character.model";
+import {DamageReportService} from "../../damage-report.service";
 import {SkirmishCharacterService} from "../../../../core/services/skirmish-character-service/skirmish-character.service";
 
 @Component({
@@ -21,13 +22,15 @@ export class SkirmishCharacterButtonsComponent {
   constructor(public skirmishService: SkirmishService,
               public skirmishCharacterService: SkirmishCharacterService,
               protected router: Router,
-              protected dialog: MatDialog) {
+              protected dialog: MatDialog,
+              private damageReportService: DamageReportService) {
   }
 
   async onReceiveDamage() {
     const dialogRef = this.dialog.open(ReceiveDamageDialog, {
-      width: '20%',
-      data: this.skirmishCharacter,
+      width: '860px',
+      maxWidth: '95vw',
+      data: {target: this.skirmishCharacter},
     })
 
     dialogRef.afterClosed().subscribe(async receivedDamage => {
@@ -35,8 +38,7 @@ export class SkirmishCharacterButtonsComponent {
         if (this.skirmishCharacter.id == null) {
           throw new Error("Character is without an id.");
         }
-        await this.skirmishService.receiveDamage(receivedDamage)
-        this.skirmishCharacter = await this.skirmishCharacterService.reloadSkirmishCharacter(this.skirmishCharacter.id)
+        this.skirmishCharacter = await this.damageReportService.applyAndReport(receivedDamage, this.skirmishCharacter)
       }
     })
   }

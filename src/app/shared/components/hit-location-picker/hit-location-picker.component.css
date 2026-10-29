@@ -1,0 +1,69 @@
+.label {
+  display: block;
+  font-size: .8rem;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  opacity: .7;
+  margin-bottom: 6px;
+}
+
+.picker {
+  display: grid;
+  grid-template-columns: 130px 1fr;
+  gap: 16px;
+  align-items: center;
+}
+
+svg {
+  width: 100%;
+  height: auto;
+}
+
+.zone {
+  fill: var(--rpg-panel-hover, #352c20);
+  stroke: var(--rpg-line-strong, #5a4a30);
+  stroke-width: 2;
+  cursor: pointer;
+  transition: fill .15s;
+}
+
+.zone:hover {
+  fill: #4a3d2a;
+}
+
+.zone.on {
+  fill: rgba(201, 162, 85, .45);
+  stroke: var(--rpg-gold, #c9a255);
+}
+
+.zone.off {
+  opacity: .25;
+  cursor: default;
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.list li {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 4px 6px;
+  border-bottom: 1px dotted var(--rpg-line, #3d3426);
+  cursor: pointer;
+}
+
+.list li:hover {
+  background: var(--rpg-panel-hover, #352c20);
+}
+
+.list li.on {
+  color: var(--rpg-text-strong, #efe3c2);
+}
+
+.list li.on b {
+  color: var(--rpg-gold, #c9a255);
+}

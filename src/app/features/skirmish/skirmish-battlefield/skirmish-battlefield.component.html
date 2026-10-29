@@ -1,16 +1,25 @@
 <br>
-<div class="battlefield" #battlefield>
+<div class="battlefield" #battlefield (click)="onMapClick()" (contextmenu)="$event.preventDefault()">
   <button type="button" class="labels-toggle" [class.active]="showLabels"
           (mousedown)="$event.stopPropagation()" (click)="toggleLabels()">
     {{ text.getText().labelsLabel }}
   </button>
+
+  <div style="position:absolute;width:0;height:0;pointer-events:none" [matMenuTriggerFor]="tokenMenu"
+       [style.left.px]="menuPosition.x" [style.top.px]="menuPosition.y"></div>
+  <mat-menu #tokenMenu="matMenu">
+    <button mat-menu-item (click)="onMenuAttack()">{{ text.getText().attackLabel }}</button>
+    <button mat-menu-item (click)="onMenuToggleEngage()">
+      {{ isEngaged() ? text.getText().disengageLabel : text.getText().engageLabel }}
+    </button>
+  </mat-menu>
 
   <div *ngFor="let token of tokens"
        class="token-holder"
        [ngClass]="{
        'dead-character': token.isDead,
        'dragging': draggedToken === token,
-       'clicked': clickedToken === token,
+       'clicked': selectedToken === token,
        'label-shown': showLabels && getLabelPlacement(token) !== null
        }"
        [ngStyle]="{
@@ -20,6 +29,7 @@
        [title]="token.name"
        (mousedown)="onDragStart($event, token)"
        (click)="onTokenClick($event, token)"
+       (contextmenu)="onTokenContextMenu($event, token)"
   >
     <div class="token"
          [style.background-color]="'rgb(' + token.colorR + ',' + token.colorG + ',' + token.colorB + ')'">

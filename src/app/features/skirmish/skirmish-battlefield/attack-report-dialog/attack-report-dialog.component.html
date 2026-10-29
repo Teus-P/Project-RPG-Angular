@@ -1,0 +1,55 @@
+<h1 mat-dialog-title>{{ report.attackerName ? text.getText().attackReportLabel : text.getText().damageReportLabel }}</h1>
+<div mat-dialog-content>
+  <p>{{ report.attackerName ? report.attackerName + ' → ' + report.targetName : report.targetName }}</p>
+  <p>{{ text.getText().hitLocationLabel }}: {{ report.bodyLocalization }}</p>
+
+  <p>{{ text.getText().damageLabel }}: <b>{{ report.damage }}</b></p>
+
+  <ng-container *ngIf="!report.damageOverridden && report.breakdown.length > 0">
+    <h4>{{ text.getText().damageBreakdownLabel }}</h4>
+    <ul>
+      <li *ngFor="let entry of report.breakdown">{{ describeBreakdownEntry(entry) }}</li>
+    </ul>
+  </ng-container>
+
+  <p *ngIf="report.mitigation">{{ describeMitigation(report.mitigation) }}</p>
+  <p *ngIf="report.shieldChange">{{ describeShieldChange(report.shieldChange) }}</p>
+
+  <p>
+    {{ text.getText().woundsLabel }}: {{ report.woundsBefore }} → {{ report.woundsAfter }}
+    <span *ngIf="woundsLost > 0">(−{{ woundsLost }})</span>
+  </p>
+
+  <p *ngIf="report.hasDied">{{ text.getText().characterDiedLabel }}</p>
+
+  <ng-container *ngIf="report.armorChanges.length > 0">
+    <h4>{{ text.getText().armorDamageLabel }}</h4>
+    <ul>
+      <li *ngFor="let change of report.armorChanges">{{ change.name }}: {{ change.before }} → {{ change.after }}</li>
+    </ul>
+  </ng-container>
+
+  <ng-container *ngIf="report.newInjuries.length > 0">
+    <h4>{{ text.getText().newInjuriesLabel }}</h4>
+    <ul>
+      <li *ngFor="let injury of report.newInjuries">{{ injury }}</li>
+    </ul>
+  </ng-container>
+
+  <ng-container *ngIf="report.conditionChanges.length > 0">
+    <h4>{{ text.getText().conditionChangesLabel }}</h4>
+    <ul>
+      <li *ngFor="let change of report.conditionChanges">{{ change.name }}: {{ change.before }} → {{ change.after }}</li>
+    </ul>
+  </ng-container>
+
+  <ng-container *ngIf="report.qualities.length > 0">
+    <h4>{{ text.getText().usedWeaponQualitiesLabel }}</h4>
+    <app-attack-qualities [qualities]="report.qualities" [onlyRelevant]="true"></app-attack-qualities>
+  </ng-container>
+
+  <p *ngIf="hasNoEffect">{{ text.getText().noAttackEffectLabel }}</p>
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button color="primary" mat-dialog-close>{{ text.getText().closeLabel }}</button>
+</div>

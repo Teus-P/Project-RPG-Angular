@@ -29,6 +29,8 @@ import {EditArmorDialog} from './shared/components/dialog-window/edit-armor-dial
 import {RollDialogWindow} from "./shared/components/dialog-window/roll-dialog-window/roll-dialog-window.component";
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {EditWeaponDialog} from './shared/components/dialog-window/edit-weapon-dialog/edit-weapon-dialog.component';
+import {HitLocationPickerComponent} from './shared/components/hit-location-picker/hit-location-picker.component';
+import {AttackQualitiesComponent} from './shared/components/attack-qualities/attack-qualities.component';
 import {ReceiveDamageDialog} from './features/skirmish/skirmish-character-details/skirmish-character-buttons/dialog-window/receive-damage-dialog/receive-damage-dialog.component';
 import {
   BottomSheetDescription
@@ -149,6 +151,8 @@ import {
     ],
     bootstrap: [AppComponent], imports: [BrowserModule,
     SpellRowsPipe,
+    AttackQualitiesComponent,
+    HitLocationPickerComponent,
     SkillsListPipe,
     TalentsListPipe,
     FormsModule,

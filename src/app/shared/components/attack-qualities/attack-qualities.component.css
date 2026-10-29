@@ -1,0 +1,63 @@
+.qualities {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 4px 0 8px;
+  padding: 0;
+}
+
+.quality {
+  cursor: pointer;
+  padding: 2px 10px;
+  border: 1px solid var(--rpg-line-strong);
+  border-radius: 12px;
+}
+
+.quality:hover {
+  background: var(--rpg-panel-hover);
+}
+
+.quality.applied {
+  border-color: var(--rpg-gold);
+  background: rgba(201, 162, 85, 0.18);
+  color: var(--rpg-text-strong);
+}
+
+.quality.reminder {
+  border: 1px dashed var(--rpg-blood);
+  color: var(--rpg-text-strong);
+}
+
+.mark {
+  background: none;
+  margin-right: 4px;
+  font-weight: bold;
+  color: var(--rpg-gold);
+}
+
+.reminder .mark {
+  color: var(--rpg-blood);
+}
+
+.legend {
+  font-size: 0.8em;
+  color: var(--rpg-muted);
+  margin: 0 0 8px;
+}
+
+.legend span + span::before {
+  content: " · ";
+}
+
+.check {
+  width: 0.9em;
+  height: 0.9em;
+  vertical-align: -0.1em;
+  margin-right: 4px;
+  fill: none;
+  stroke: var(--rpg-gold);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}

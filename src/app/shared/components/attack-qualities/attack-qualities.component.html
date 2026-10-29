@@ -1,0 +1,14 @@
+<ul class="qualities" *ngIf="visibleQualities.length > 0">
+  <li *ngFor="let quality of visibleQualities"
+      class="quality"
+      [ngClass]="{'applied': quality.relevance === 'APPLIED', 'reminder': quality.relevance === 'REMINDER'}"
+      (click)="open(quality)">
+    <svg class="check" *ngIf="quality.relevance === 'APPLIED'" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5"/></svg>
+    <span class="mark" *ngIf="quality.relevance === 'REMINDER'">!</span>{{ label(quality) }}
+  </li>
+</ul>
+<p class="legend" *ngIf="showLegend && visibleQualities.length > 0">
+  {{ text.getText().qualityHintLabel }}
+  <span *ngIf="hasApplied"><svg class="check" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5"/></svg>{{ text.getText().qualityAppliedLegend }}</span>
+  <span *ngIf="hasReminder"><span class="mark">!</span> {{ text.getText().qualityReminderLegend }}</span>
+</p>

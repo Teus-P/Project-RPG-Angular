@@ -4,9 +4,15 @@ import {NgClass, NgForOf, NgIf, NgStyle} from "@angular/common";
 import {SkirmishCharacterService} from "../../../core/services/skirmish-character-service/skirmish-character.service";
 import {SkirmishCharacter} from "../../../core/model/skirmish/skirmish-character.model";
 import {TextResourceService} from "../../../core/services/text-resource-service/text-resource.service";
+import {MatDialog} from "@angular/material/dialog";
+import {MatMenuModule, MatMenuTrigger} from "@angular/material/menu";
+import {ReceiveDamageDialog} from "../skirmish-character-details/skirmish-character-buttons/dialog-window/receive-damage-dialog/receive-damage-dialog.component";
+import {ReceivedDamage} from "../../../core/model/receive-damage/receive-damage.model";
+import {DamageReportService} from "../damage-report.service";
 
 interface Token {
   name: string;
+  skirmishCharacterId?: number | null;
   shortName: string;
   isDead: boolean;
   x: number;
@@ -30,7 +36,8 @@ interface Rect {
     NgForOf,
     NgStyle,
     NgClass,
-    NgIf
+    NgIf,
+    MatMenuModule
   ],
   templateUrl: './skirmish-battlefield.component.html',
   styleUrl: './skirmish-battlefield.component.css'
@@ -45,39 +52,50 @@ export class SkirmishBattlefieldComponent implements OnInit {
   private labelPlacements = new Map<string, 'below' | 'above' | null>();
 
   draggedToken: any = null;
-  clickedToken: any = null;
+  selectedToken: Token | null = null;
+  menuTarget: Token | null = null;
+  menuPosition = {x: 0, y: 0};
+  private dragStartX = 0;
+  private dragStartY = 0;
+  private dragMoved = false;
   offsetX = 0;
   offsetY = 0;
 
   @ViewChild('battlefield', {static: true}) battlefield!: ElementRef<HTMLDivElement>;
+  @ViewChild(MatMenuTrigger) menuTrigger!: MatMenuTrigger;
 
 
-  constructor(private skirmishCharacterService: SkirmishCharacterService) {
+  constructor(private skirmishCharacterService: SkirmishCharacterService,
+              private damageReportService: DamageReportService,
+              private dialog: MatDialog) {
   }
 
   ngOnInit(): void {
     if (this.tokens.length == 0) {
       const storedTokensString = localStorage.getItem('battleMapTokens');
       this.tokens = storedTokensString ? JSON.parse(storedTokensString) : []
+      const skirmishCharacters = this.skirmishCharacterService.getSkirmishCharacters()
       if (this.tokens.length == 0) {
-        this.skirmishCharacterService.getSkirmishCharacters().forEach(skirmishCharacter => {
+        skirmishCharacters.forEach(skirmishCharacter => {
           this.skirmishCharactersToTokens(skirmishCharacter)
         })
       }
+      this.assignSkirmishCharacterIds(skirmishCharacters)
     }
 
     this.skirmishCharacterService.skirmishCharactersChanged.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(
       (skirmishCharacters: SkirmishCharacter[]) => {
         const tokensNames = new Set(this.tokens.map(token => token.name));
-        const charactersNames = new Set(skirmishCharacters.map(skirmishCharacter => skirmishCharacter.sequenceNumber == 1 ? skirmishCharacter.character.name : skirmishCharacter.character.name + ' ' + skirmishCharacter.sequenceNumber));
+        const charactersNames = new Set(skirmishCharacters.map(skirmishCharacter => this.tokenName(skirmishCharacter)));
 
         for (const character of skirmishCharacters) {
-          let name = character.sequenceNumber == 1 ? character.character.name : character.character.name + ' ' + character.sequenceNumber;
+          let name = this.tokenName(character);
           if (!tokensNames.has(name)) {
             this.skirmishCharactersToTokens(character)
           } else {
             let token = this.tokens.find(token => token.name === name)!;
             token.isDead = character.isDead;
+            token.skirmishCharacterId = character.id;
           }
         }
 
@@ -87,14 +105,28 @@ export class SkirmishBattlefieldComponent implements OnInit {
     )
   }
 
+  private tokenName(skirmishCharacter: SkirmishCharacter): string {
+    return skirmishCharacter.sequenceNumber == 1 ? skirmishCharacter.character.name : skirmishCharacter.character.name + ' ' + skirmishCharacter.sequenceNumber;
+  }
+
+  private assignSkirmishCharacterIds(skirmishCharacters: SkirmishCharacter[]) {
+    for (const skirmishCharacter of skirmishCharacters) {
+      const token = this.tokens.find(token => token.name === this.tokenName(skirmishCharacter));
+      if (token) {
+        token.skirmishCharacterId = skirmishCharacter.id;
+      }
+    }
+  }
+
   skirmishCharactersToTokens(skirmishCharacter: SkirmishCharacter) {
-    let name = skirmishCharacter.sequenceNumber == 1 ? skirmishCharacter.character.name : skirmishCharacter.character.name + ' ' + skirmishCharacter.sequenceNumber;
+    let name = this.tokenName(skirmishCharacter);
 
     if (!this.tokens.find(token => token.name == name)) {
       let shortName = name.split(' ').map(word => word[0]).join('').toUpperCase()
 
       this.tokens.push({
         name: name,
+        skirmishCharacterId: skirmishCharacter.id,
         shortName: shortName,
         isDead: skirmishCharacter.isDead,
         x: 100, y: 100,
@@ -108,6 +140,9 @@ export class SkirmishBattlefieldComponent implements OnInit {
   @HostListener('document:mousemove', ['$event'])
   onDrag(event: MouseEvent) {
     if (this.draggedToken) {
+      if (Math.hypot(event.clientX - this.dragStartX, event.clientY - this.dragStartY) > 4) {
+        this.dragMoved = true;
+      }
       const containerRect = this.battlefield.nativeElement.getBoundingClientRect();
 
       let newX = event.clientX - containerRect.left - this.offsetX;
@@ -131,22 +166,89 @@ export class SkirmishBattlefieldComponent implements OnInit {
   }
 
   onDragStart(event: MouseEvent, token: any) {
+    if (event.button !== 0) {
+      return;
+    }
     this.draggedToken = token;
+    this.dragMoved = false;
+    this.dragStartX = event.clientX;
+    this.dragStartY = event.clientY;
     const rect = (event.currentTarget as HTMLElement).getBoundingClientRect();
     this.offsetX = event.clientX - rect.left;
     this.offsetY = event.clientY - rect.top;
   }
 
   onTokenClick(event: MouseEvent, clickedToken: Token) {
-    if (event.shiftKey && this.clickedToken == null && !clickedToken.isDead) {
-      this.clickedToken = clickedToken;
-    } else if (event.shiftKey && this.clickedToken != null && !clickedToken.isDead) {
-      this.clickedToken.meleeTargetName = clickedToken.name
-      this.clickedToken = null
-    } else if ((event.shiftKey && this.clickedToken === clickedToken)) {
-      this.clickedToken = null
-      clickedToken.meleeTargetName = ''
+    event.stopPropagation();
+    if (this.dragMoved || clickedToken.isDead) {
+      return;
     }
+    this.selectedToken = this.selectedToken === clickedToken ? null : clickedToken;
+  }
+
+  onMapClick() {
+    this.selectedToken = null;
+  }
+
+  @HostListener('document:keydown.escape')
+  onEscape() {
+    this.selectedToken = null;
+  }
+
+  onTokenContextMenu(event: MouseEvent, target: Token) {
+    event.preventDefault();
+    event.stopPropagation();
+    if (this.selectedToken === null || this.selectedToken === target || target.isDead) {
+      return;
+    }
+    this.menuTarget = target;
+    const rect = this.battlefield.nativeElement.getBoundingClientRect();
+    this.menuPosition = {x: event.clientX - rect.left, y: event.clientY - rect.top};
+    this.menuTrigger.openMenu();
+  }
+
+  isEngaged(): boolean {
+    return !!this.selectedToken && !!this.menuTarget && this.selectedToken.meleeTargetName === this.menuTarget.name;
+  }
+
+  onMenuAttack() {
+    if (this.selectedToken && this.menuTarget && this.selectedToken.skirmishCharacterId != null
+      && this.menuTarget.skirmishCharacterId != null) {
+      this.openAttackDialog(this.selectedToken, this.menuTarget);
+    }
+  }
+
+  onMenuToggleEngage() {
+    if (!this.selectedToken || !this.menuTarget) {
+      return;
+    }
+    this.selectedToken.meleeTargetName = this.isEngaged() ? '' : this.menuTarget.name;
+    localStorage.setItem('battleMapTokens', JSON.stringify(this.tokens));
+  }
+
+  private openAttackDialog(attackerToken: Token, targetToken: Token) {
+    const attacker = this.skirmishCharacterService.getSkirmishCharacter(attackerToken.skirmishCharacterId!);
+    const target = this.skirmishCharacterService.getSkirmishCharacter(targetToken.skirmishCharacterId!);
+    if (!attacker || !target) {
+      return;
+    }
+
+    const damageDialog = this.dialog.open(ReceiveDamageDialog, {
+      width: '860px',
+      maxWidth: '95vw',
+      data: {target, attacker},
+    });
+    let isMeleeAttack = false;
+    damageDialog.beforeClosed().subscribe(() => isMeleeAttack = damageDialog.componentInstance.isMeleeAttack);
+    damageDialog.afterClosed().subscribe(async (receivedDamage: ReceivedDamage | undefined) => {
+      if (receivedDamage != undefined) {
+        if (isMeleeAttack) {
+          attackerToken.meleeTargetName = targetToken.name;
+          localStorage.setItem('battleMapTokens', JSON.stringify(this.tokens));
+        }
+        await this.damageReportService.applyAndReport(receivedDamage, target, attacker);
+      }
+    });
   }
 
   toggleLabels(): void {

@@ -1,0 +1,17 @@
+<span class="label">{{ text.getText().hitLocationLabel }}</span>
+<div class="picker">
+  <svg viewBox="0 0 120 256" role="group" [attr.aria-label]="text.getText().hitLocationLabel">
+    <rect *ngFor="let zone of zones" class="zone"
+          [ngClass]="{'on': selected === zone.name, 'off': !has(zone.name)}"
+          [attr.x]="zone.x" [attr.y]="zone.y" [attr.width]="zone.w" [attr.height]="zone.h" [attr.rx]="zone.rx"
+          (click)="select(zone.name)"/>
+  </svg>
+  <ul class="list">
+    <li *ngFor="let localization of localizations"
+        [ngClass]="{'on': selected === localization.bodyLocalization.name}"
+        (click)="select(localization.bodyLocalization.name)">
+      <span>{{ localization.bodyLocalization.nameTranslation }}</span>
+      <b>{{ armor(localization) }} {{ text.getText().armorPointsShortLabel }}</b>
+    </li>
+  </ul>
+</div>

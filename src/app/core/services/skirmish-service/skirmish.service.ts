@@ -2,6 +2,7 @@ import {environment} from "../../../../environments/environment"
 import {Injectable} from '@angular/core'
 import {HttpClient} from "@angular/common/http"
 import {ReceivedDamage} from "../../model/receive-damage/receive-damage.model"
+import {AttackResult, AttackWeapon} from "../../model/receive-damage/attack-result.model"
 import {AddConditions} from "../../model/condition/add-conditions.model"
 import {SkirmishGroup} from "../../model/skirmish/skirmish-group.model";
 import {Subject, firstValueFrom} from "rxjs";
@@ -17,12 +18,21 @@ export class SkirmishService {
   constructor(private http: HttpClient) {
   }
 
-  async receiveDamage(receivedDamage: ReceivedDamage) {
-    await this.postReceiveDamage(receivedDamage)
+  async receiveDamage(receivedDamage: ReceivedDamage): Promise<AttackResult> {
+    return this.postReceiveDamage(receivedDamage)
   }
 
   postReceiveDamage(receivedDamage: ReceivedDamage) {
-    return firstValueFrom(this.http.post(`${environment.apiUrl}/receiveDamage`, receivedDamage))
+    return firstValueFrom(this.http.post<AttackResult>(`${environment.apiUrl}/receiveDamage`, receivedDamage))
+  }
+
+  previewDamage(receivedDamage: ReceivedDamage) {
+    return firstValueFrom(this.http.post<AttackResult>(`${environment.apiUrl}/receiveDamage`, receivedDamage,
+      {params: {preview: true}}))
+  }
+
+  getAttackWeapons(skirmishCharacterId: number) {
+    return firstValueFrom(this.http.get<AttackWeapon[]>(`${environment.apiUrl}/attackWeapons/${skirmishCharacterId}`))
   }
 
   async addWoundPoint(skirmishCharacterId: number) {
